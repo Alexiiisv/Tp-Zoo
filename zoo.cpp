@@ -8,7 +8,6 @@ Zoo::Zoo(string name)
 
 string Zoo::getName()
 {
-
     return m_name;
 }
 

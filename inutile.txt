@@ -1,0 +1,11 @@
+
+    // Zoo zoo("Zoo de la Montagne");
+
+    // zoo.addAnimal(new Tigre("bob"));
+    // zoo.addAnimal(new Tigre("larry"));
+    // zoo.addAnimal(new Poule("poule 1"));
+    // zoo.addAnimal(new Poule("poule 2"));
+    // zoo.addAnimal(new Aigle("aigle 1"));
+    // zoo.addAnimal(new Aigle("aigle 2"));
+
+    // zoo.fire();
