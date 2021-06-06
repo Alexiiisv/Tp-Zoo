@@ -14,14 +14,16 @@ public:
     IAnimal();
     IAnimal(string m_name);
     virtual ~IAnimal();
+    virtual void UpdateAge();
 
     //setter
     virtual void SetRace(string race);
-    virtual void SetAge();
+    virtual void SetAge(int Age);
 
     //getter
     virtual string getName();
     virtual string getRace();
+    virtual int getAge();
 
 };
 

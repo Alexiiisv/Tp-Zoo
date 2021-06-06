@@ -27,11 +27,23 @@ string IAnimal::getRace()
     return m_race;
 }
 
+int IAnimal::getAge()
+{
+    return m_age;
+}
+
 void IAnimal::SetRace(string race)
 {
     m_race = race;
 }
-void IAnimal::SetAge()
+
+void IAnimal::SetAge(int Age)
+{
+    m_age = Age;
+}
+
+
+void IAnimal::UpdateAge()
 {
     m_age += 1;
 }

@@ -16,6 +16,7 @@ public:
     Zoo(string name = "");
     void addAnimal(IAnimal* animal);
     void fire();
+    void UpdateAge();
 
 
     //getter

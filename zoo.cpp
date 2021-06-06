@@ -28,9 +28,10 @@ void Zoo::getAName()
 }
 void Zoo::UpdateAge()
 {
-    AnimalIterator it = m_age.begin();
+    AnimalIterator it = m_animals.begin();
     while(it != m_animals.end()){
-        (*it)->setAge();
+        (*it)->UpdateAge();
+        (*it)->getAge();
         it++;
     }
 }

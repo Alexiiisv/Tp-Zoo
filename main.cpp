@@ -157,7 +157,11 @@ int main()
                 actionMonth(zoo, tiger, chicken, budget, eagle);
                 cout << "aigle " << eagle << " tigre " << tiger << " poulet " << chicken << " money " << budget << endl;
                 zoo.getAName();
+            } else if (nextMonth == 1)
+            {
+                zoo.UpdateAge();
             }
+            
         }
     }
 
