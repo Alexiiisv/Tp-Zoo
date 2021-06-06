@@ -8,6 +8,7 @@ class IAnimal
 {
     string m_name;
     string m_race;
+    int m_age;
 
 public:
     IAnimal();
@@ -16,6 +17,7 @@ public:
 
     //setter
     virtual void SetRace(string race);
+    virtual void SetAge();
 
     //getter
     virtual string getName();

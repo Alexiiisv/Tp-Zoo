@@ -31,3 +31,7 @@ void IAnimal::SetRace(string race)
 {
     m_race = race;
 }
+void IAnimal::SetAge()
+{
+    m_age += 1;
+}
