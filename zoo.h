@@ -14,9 +14,14 @@ class Zoo
     AnimalList m_animals;
 public:
     Zoo(string name = "");
-    string getName();
     void addAnimal(IAnimal* animal);
     void fire();
+
+
+    //getter
+    string getName();
+    void getAName();
+    void getARace();
 };
 
 #endif // ZOO_H

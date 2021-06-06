@@ -7,12 +7,19 @@ using namespace std;
 class IAnimal
 {
     string m_name;
+    string m_race;
 
 public:
     IAnimal();
     IAnimal(string m_name);
     virtual ~IAnimal();
-    virtual void fire() = 0;
+
+    //setter
+    virtual void SetRace(string race);
+
+    //getter
+    virtual string getName();
+    virtual string getRace();
 
 };
 

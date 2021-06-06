@@ -1,4 +1,6 @@
 #include "zoo.h"
+#include <iostream>
+using namespace std;
 
 Zoo::Zoo(string name)
     :m_name(name)
@@ -16,13 +18,20 @@ void Zoo::addAnimal(IAnimal *animal)
     m_animals.push_back(animal);
 }
 
-void Zoo::fire()
+void Zoo::getAName()
 {
     AnimalIterator it = m_animals.begin();
     while(it != m_animals.end()){
-        (*it)->fire();
+        (*it)->getName();
         it++;
     }
 }
 
-
+void Zoo::getARace()
+{
+    AnimalIterator it = m_animals.begin();
+    while(it != m_animals.end()){
+        (*it)->getRace();
+        it++;
+    }
+}

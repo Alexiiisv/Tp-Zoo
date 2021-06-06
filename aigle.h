@@ -9,8 +9,11 @@ class Aigle:public IAnimal
 {
 public:
     Aigle();
-    Aigle(string name);
-    virtual void fire();
+    Aigle(string name, string race);
+
+    //getter
+    virtual string getName();
+    virtual string getRace();
 };
 
 #endif // AIGLE_H

@@ -1,6 +1,6 @@
-#include <iostream>
 #include "ianimal.h"
 #include "aigle.h"
+#include <iostream>
 using namespace std;
 Aigle::Aigle()
 {
@@ -8,13 +8,20 @@ Aigle::Aigle()
 }
 
 
-Aigle::Aigle(string name)
+Aigle::Aigle(string name, string race)
     :IAnimal(name)
 {
-
+    IAnimal::SetRace(race);
 }
 
-void Aigle::fire()
+string Aigle::getName()
 {
-    cout << "Je pousse un cri" << endl;
+    cout << IAnimal::getName() << endl;
+    return "";
+}
+
+string Aigle::getRace()
+{
+    cout << IAnimal::getRace() << endl;
+    return "";
 }
