@@ -31,7 +31,6 @@ void Zoo::UpdateAge()
     AnimalIterator it = m_animals.begin();
     while(it != m_animals.end()){
         (*it)->UpdateAge();
-        (*it)->getAge();
         it++;
     }
 }
@@ -41,6 +40,15 @@ void Zoo::getARace()
     AnimalIterator it = m_animals.begin();
     while(it != m_animals.end()){
         (*it)->getRace();
+        it++;
+    }
+}
+
+void Zoo::getAGender()
+{
+    AnimalIterator it = m_animals.begin();
+    while(it != m_animals.end()){
+        (*it)->getGender();
         it++;
     }
 }

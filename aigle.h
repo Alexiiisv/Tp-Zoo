@@ -9,12 +9,13 @@ class Aigle:public IAnimal
 {
 public:
     Aigle();
-    Aigle(string name, string race);
+    Aigle(string name, string race, string gender);
     virtual void UpdateAge();
 
     //getter
     virtual string getName();
     virtual string getRace();
+    virtual string getGender();
     virtual int getAge();
 };
 

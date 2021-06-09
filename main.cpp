@@ -63,31 +63,22 @@ void actionMonth(Zoo &zoo, int &tigre, int &poules, double &budget, int &aigle)
 {
     char nom[16];
     int whatToBuy = 1;
+    int Gender = 2;
+    string gender[2] = {"Female", "Male"};
     while (whatToBuy != 0)
     {
-        cout << "que voulez-vous acheter ?\n3 | aigles\t\t4 | tigres\n5 | poules\t\t6 | coq\nentrez un des numeros pour acheter un animal" << endl;
+        cout << "que voulez-vous acheter ?\n3 | aigles\t\t4 | tigres\t\t0 | pour quitter le menu\n5 | poules\t\t6 | coq\nentrez un des numeros pour acheter un animal" << endl;
         scanf("%d", &whatToBuy);
         if (whatToBuy == 3)
         {
             cout << "give a name to your eagle" << endl;
             scanf("%15s", &nom);
+            cout << "Do you want a male or a female ?\n0 | Female\t1 | Male" << endl;
+            scanf("%d", &Gender);
             aigle += 1;
-            zoo.addAnimal(new Aigle(nom, "aigle"));
+            zoo.addAnimal(new Aigle(nom, "aigle", gender[Gender]));
             budget -= 1000;
         }
-        // else if (whatToBuy == 4)
-        // {
-        //     tigre += 1;
-        //     budget -= 3000;
-        // } else if (whatToBuy == 5)
-        // {
-        //     poules += 1;
-        //     budget -= 20;
-        // } else if (whatToBuy == 6)
-        // {
-        //     poules += 1;
-        //     budget -= 20;
-        // }
     }
 }
 // Exceptional events per month
@@ -125,7 +116,7 @@ int main()
     // Tous les mois
     while (year < 10)
     {
-
+    cout << "a" << endl;
         cout << zoo.getName() << endl;
         if (month != 0)
         {
@@ -156,7 +147,6 @@ int main()
             {
                 actionMonth(zoo, tiger, chicken, budget, eagle);
                 cout << "aigle " << eagle << " tigre " << tiger << " poulet " << chicken << " money " << budget << endl;
-                zoo.getAName();
             } else if (nextMonth == 1)
             {
                 zoo.UpdateAge();

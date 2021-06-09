@@ -23,6 +23,7 @@ public:
     string getName();
     void getAName();
     void getARace();
+    void getAGender();
 };
 
 #endif // ZOO_H

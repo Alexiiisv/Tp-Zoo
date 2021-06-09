@@ -7,12 +7,12 @@ Aigle::Aigle()
 
 }
 
-
-Aigle::Aigle(string name, string race)
+Aigle::Aigle(string name, string race, string gender)
     :IAnimal(name)
 {
     IAnimal::SetRace(race);
     IAnimal::SetAge(6);
+    IAnimal::SetGender(gender);
 }
 
 string Aigle::getName()
@@ -31,6 +31,12 @@ int Aigle::getAge()
 {
     cout << IAnimal::getAge() << endl;
     return 0;
+}
+
+string Aigle::getGender()
+{
+    cout << IAnimal::getGender() << endl;
+    return "";
 }
 
 void Aigle::UpdateAge()
