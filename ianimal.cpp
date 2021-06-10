@@ -3,20 +3,18 @@
 using namespace std;
 
 IAnimal::IAnimal()
-    :m_name("Animal sans Nom")
+    : m_name("Animal sans Nom")
 {
-
 }
 
 IAnimal::IAnimal(string name)
-    :m_name(name)
+    : m_name(name)
 {
-
 }
 
 IAnimal::~IAnimal()
 {
-        cout << "L'aigle " << m_name << " est mort" << endl;
+
 }
 
 string IAnimal::getName()
@@ -54,8 +52,7 @@ void IAnimal::SetGender(string gender)
     m_gender = gender;
 }
 
-
 void IAnimal::UpdateAge()
 {
-       m_age += 1;
+    m_age += 1;
 }
