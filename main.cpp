@@ -87,7 +87,7 @@ void buyHabitats(int &eaglehabitat, double &budget, Zoo &zoo)
     if (whatToBuy == 3)
     {
         eaglehabitat += 1;
-        zoo.addHabitat(new EagleHabitat("aigle", 5));
+        zoo.addHabitat(new EagleHabitat("aigle"));
         budget -= 2000;
     }
 }
@@ -168,8 +168,8 @@ int main()
         cout << "Year : " << year << "\nMonth : " << month << "\nBudget : " << budget << endl;
 
         // PERTE D'UN ANIMAL LORSQU'ILS SONT TROP NOMBREUX DANS UN HABITAT
-        cout << eagle << endl;
-        if (eagle/eagleHabitat > 4 && rand()% 2 == 1) {
+        float ratio = (float)eagle/(float)eagleHabitat;
+        if (ratio > 4 && rand()% 2 == 1) {
             cout << "Vous avez perdu un aigle" << endl;
             eagle -= 1;
         }
@@ -191,8 +191,8 @@ int main()
             else if (nextMonth == 1)
             {
                 zoo.UpdateAge();
-                zoo.GetHabitatRace();
             }
+                zoo.GetHabitatSize();
         }
     }
 

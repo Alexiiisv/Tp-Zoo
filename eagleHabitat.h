@@ -9,7 +9,7 @@ class EagleHabitat:public IHabitat
 {
 public:
     EagleHabitat();
-    EagleHabitat(string type, int capa);
+    EagleHabitat(string type);
     virtual int getCapacity();
 };
 

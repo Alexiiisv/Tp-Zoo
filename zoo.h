@@ -29,7 +29,7 @@ public:
     void getAName();
     void getARace();
     void getAGender();
-    void GetHabitatRace();
+    void GetHabitatSize();
 };
 
 #endif // ZOO_H

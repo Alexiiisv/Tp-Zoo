@@ -41,7 +41,7 @@ void Zoo::UpdateAge()
     }
 }
 
-void Zoo::GetHabitatRace()
+void Zoo::GetHabitatSize()
 {
     HabitatIterator it = m_habitats.begin();
     while(it != m_habitats.end()){

@@ -7,10 +7,10 @@ EagleHabitat::EagleHabitat()
 
 }
 
-EagleHabitat::EagleHabitat(string type, int capa)
+EagleHabitat::EagleHabitat(string type)
     :IHabitat(type)
 {
-    IHabitat::SetCapacity(capa);
+    IHabitat::SetCapacity(4);
 }
 
 int EagleHabitat::getCapacity()
