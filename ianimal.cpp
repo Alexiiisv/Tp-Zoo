@@ -2,11 +2,6 @@
 #include <iostream>
 using namespace std;
 
-IAnimal::IAnimal()
-    : m_name("Animal sans Nom")
-{
-}
-
 IAnimal::IAnimal(string name)
     : m_name(name)
 {
@@ -32,11 +27,20 @@ int IAnimal::getAge()
     return m_age;
 }
 
+float IAnimal::getFood()
+{
+    return m_food;
+}
+
 string IAnimal::getGender()
 {
     return m_gender;
 }
 
+void IAnimal::SetFood(float food)
+{
+    m_food = food;
+}
 void IAnimal::SetRace(string race)
 {
     m_race = race;

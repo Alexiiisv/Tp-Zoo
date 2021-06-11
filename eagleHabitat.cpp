@@ -15,6 +15,10 @@ EagleHabitat::EagleHabitat(string type)
 
 int EagleHabitat::getCapacity()
 {
-    cout << IHabitat::getCapacity() << endl;
-    return 0;
+    return IHabitat::getCapacity();
+}
+
+string EagleHabitat::getType()
+{
+    return IHabitat::getType();
 }

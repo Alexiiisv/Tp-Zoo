@@ -4,11 +4,6 @@
 
 using namespace std;
 
-Tigre::Tigre()
-{
-
-}
-
 Tigre::Tigre(string name)
     :IAnimal(name)
 {

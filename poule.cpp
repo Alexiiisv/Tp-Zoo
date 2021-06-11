@@ -4,11 +4,6 @@
 
 using namespace std;
 
-Poule::Poule()
-{
-
-}
-
 Poule::Poule(string name)
     :IAnimal(name)
 {

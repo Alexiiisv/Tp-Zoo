@@ -14,3 +14,7 @@ else if (whatToBuy == 4)
     budget -= 20;
 }
 
+main : 
+
+int tiger = 0, eagle = 0, chicken = 0, coq = 0;
+int tigerHabitat = tiger / 2, eagleHabitat = eagle / 4, chickenHabitat = chicken / 10;

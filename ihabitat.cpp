@@ -27,3 +27,8 @@ int IHabitat::getCapacity()
 {
     return m_capacity;
 }
+
+string IHabitat::getType()
+{
+    return m_type;
+}

@@ -2,44 +2,41 @@
 #include "aigle.h"
 #include <iostream>
 using namespace std;
-Aigle::Aigle()
-{
-
-}
-
-Aigle::Aigle(string name, string race, string gender)
+Aigle::Aigle(string name, string race, string gender, float food)
     :IAnimal(name)
 {
     IAnimal::SetRace(race);
     IAnimal::SetAge(6);
     IAnimal::SetGender(gender);
+    IAnimal::SetFood(food);
 }
 
 string Aigle::getName()
 {
-    cout << IAnimal::getName() << endl;
-    return "";
+    return IAnimal::getName();
 }
 
 string Aigle::getRace()
 {
-    cout << IAnimal::getRace() << endl;
-    return "";
+    return IAnimal::getRace();
 }
 
 int Aigle::getAge()
 {
-    cout << IAnimal::getAge() << endl;
-    return 0;
+    return IAnimal::getAge();
 }
 
 string Aigle::getGender()
 {
-    cout << IAnimal::getGender() << endl;
-    return "";
+    return IAnimal::getGender();
 }
 
 void Aigle::UpdateAge()
 {
     IAnimal::UpdateAge();
+}
+
+float Aigle::getFood()
+{
+    return IAnimal::getFood();
 }

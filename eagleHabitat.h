@@ -11,6 +11,7 @@ public:
     EagleHabitat();
     EagleHabitat(string type);
     virtual int getCapacity();
+    virtual string getType();
 };
 
 #endif // EAGLEHABITAT_H

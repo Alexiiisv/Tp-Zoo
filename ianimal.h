@@ -10,9 +10,9 @@ class IAnimal
     string m_race;
     string m_gender;
     int m_age;
+    float m_food;
 
 public:
-    IAnimal();
     IAnimal(string m_name);
     virtual ~IAnimal();
     virtual void UpdateAge();
@@ -21,12 +21,14 @@ public:
     virtual void SetRace(string race);
     virtual void SetGender(string gender);
     virtual void SetAge(int Age);
+    virtual void SetFood(float food);
 
     //getter
     virtual string getName();
     virtual string getRace();
     virtual string getGender();
     virtual int getAge();
+    virtual float getFood();
 
 };
 

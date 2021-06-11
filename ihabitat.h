@@ -16,6 +16,7 @@ public:
     
     virtual ~IHabitat();
     virtual int getCapacity();
+    virtual string getType();
     virtual void SetCapacity(int capacity);
 };
 
