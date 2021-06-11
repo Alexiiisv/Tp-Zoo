@@ -18,7 +18,17 @@ int EagleHabitat::getCapacity()
     return IHabitat::getCapacity();
 }
 
+void EagleHabitat::getAnimal()
+{
+    IHabitat::getAnimal();
+}
+
 string EagleHabitat::getType()
 {
     return IHabitat::getType();
+}
+
+void EagleHabitat::addAnimal(IAnimal *animal)
+{
+    IHabitat::addAnimal(animal);
 }

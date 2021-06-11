@@ -8,7 +8,7 @@ using namespace std;
 class Aigle:public IAnimal
 {
 public:
-    Aigle(string name, string race, string gender, float food);
+    Aigle(string name, string race, string gender, float food, int age);
     virtual void UpdateAge();
 
     //getter

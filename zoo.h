@@ -17,7 +17,7 @@ class Zoo
     AnimalList m_animals;
     HabitatList m_habitats;
     float viande, budget;
-    int tigre = 0, aigle = 0, poules = 0, coq = 0, month = 0, year = 0;
+    int tigre = 0, aigle = 0, poules = 0, coq = 0, month, year;
     int tigre_Habitat, aigle_Habitat, poules_Habitat;
 public:
     Zoo(string name = "");
@@ -46,16 +46,20 @@ public:
     int getHPoules();
     int getAGender();
     int getAGender(string gender, string race);
+    void getInfo();
     void getAName();
     void getARace();
     void getAllInfo(string race);
     void GetHabitatSize();
+    void GetHabitatType(string type);
+    void GetHabitatAnimal();
 
     //setter
     void setFood(float food);
     void setMonth(float month);
     void setYear(float year);
     void setBudget(float budget);
+    void setAnimalHabitat(IAnimal* animal, int HAnimal);
 };
 
 #endif // ZOO_H

@@ -5,6 +5,8 @@ using namespace std;
 Zoo::Zoo(string name)
     : m_name(name)
 {
+    month = 0;
+    viande = 0;
 }
 
 void Zoo::addAnimal(IAnimal *animal)
@@ -14,6 +16,7 @@ void Zoo::addAnimal(IAnimal *animal)
     {
         cout << "tu a acheter un " << animal->getRace() << endl;
         aigle += 1;
+        setAnimalHabitat(animal, 0);
     }
     
 }
@@ -159,6 +162,11 @@ int Zoo::getAGender(string gender, string race)
     return result;
 }
 
+void Zoo::getInfo()
+{
+    cout << getName() <<  "\nYear : " << getYear() << "\nMonth : " << getMonth() << "\nBudget : " << getBudget() << endl;
+}
+
 void Zoo::getAName()
 {
     AnimalIterator it = m_animals.begin();
@@ -195,8 +203,6 @@ void Zoo::getAllInfo(string race)
             cout << "Age\t" << (*it)->getAge()/12 << " ans " << (*it)->getAge()%12 << " mois" << endl;
             cout << "race\t" << (*it)->getRace() << endl;
             cout << "food\t" << (*it)->getFood() << endl;
-            cout << "food\t" << getAGender("Male", "aigle") << endl;
-            cout << "food\t" << getAGender("Female", "aigle") << endl;
             cout << "---------------" << endl;
         }
         it++;
@@ -213,6 +219,32 @@ void Zoo::GetHabitatSize()
     }
 }
 
+void Zoo::GetHabitatType(string type)
+{
+    HabitatIterator it = m_habitats.begin();
+    while (it != m_habitats.end())
+    {
+        if ((*it)->getType() == type)
+        {
+            cout << (*it)->getType() << "zergfojuin" << endl;
+        }
+        it++;
+    }
+}
+
+void Zoo::GetHabitatAnimal()
+{
+    int i = 1;
+    HabitatIterator it = m_habitats.begin();
+    while (it != m_habitats.end())
+    {
+        cout << "habitat numero " << i << endl;
+        (*it)->getAnimal();
+        it++;
+        i++;
+    }
+}
+
 
 /*
 SETTER
@@ -220,7 +252,7 @@ SETTER
 
 void Zoo::setFood(float food) 
 {
-    viande += food;
+    viande = food;
 }
 
 void Zoo::setYear(float Year) 
@@ -236,4 +268,18 @@ void Zoo::setMonth(float Month)
 void Zoo::setBudget(float Budget) 
 {
     budget = Budget;
+}
+void Zoo::setAnimalHabitat(IAnimal* animal, int HAnimal)
+{
+    int i;
+    HabitatIterator it = m_habitats.begin();
+    while (it != m_habitats.end())
+    {
+        if (i == HAnimal)
+        {
+            (*it)->addAnimal(animal);
+        }
+        it++;
+        i++;
+    }
 }

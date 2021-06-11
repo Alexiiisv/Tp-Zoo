@@ -10,6 +10,10 @@ class EagleHabitat:public IHabitat
 public:
     EagleHabitat();
     EagleHabitat(string type);
+    void addAnimal(IAnimal* animal);
+    
+    // getter
+    void getAnimal();
     virtual int getCapacity();
     virtual string getType();
 };

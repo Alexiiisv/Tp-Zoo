@@ -2,11 +2,11 @@
 #include "aigle.h"
 #include <iostream>
 using namespace std;
-Aigle::Aigle(string name, string race, string gender, float food)
+Aigle::Aigle(string name, string race, string gender, float food, int age)
     :IAnimal(name)
 {
     IAnimal::SetRace(race);
-    IAnimal::SetAge(6);
+    IAnimal::SetAge(age);
     IAnimal::SetGender(gender);
     IAnimal::SetFood(food);
 }
