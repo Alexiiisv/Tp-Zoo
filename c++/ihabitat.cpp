@@ -24,7 +24,8 @@ void IHabitat::addAnimal(IAnimal *animal)
 
 void IHabitat::delAnimal(int qtt, string state)
 {
-    if (m_capacity < nbr_animals && state == "plein")
+    int random = rand()%2;
+    if (m_capacity < nbr_animals && state == "plein" && random == 1)
     {
         cout << "un animal va canner : " << m_animals[qtt]->getName() << endl;
         m_animals.erase(m_animals.begin()+qtt);
