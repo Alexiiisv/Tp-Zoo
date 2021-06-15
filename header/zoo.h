@@ -21,14 +21,18 @@ class Zoo
     int tigre_Habitat, aigle_Habitat, poules_Habitat;
 public:
     Zoo(string name = "");
+    void addAnimal(IAnimal* animal, int habitat);
     void addAnimal(IAnimal* animal);
     void addHabitat(IHabitat* habitat);
-    void fire();
+    void SellHabitat(string Race);
+    void FireHabitat(string Race);
     void NextMonth();
     void UpdateAge();
     void UpdateFood();
     void UpdateHabitat();
+    void VolDanimal(string state);
     void UpdateBudget(float budget);
+    void SwitchHabitat(int hab1, int IdAni, int hab2);
 
 
     //getter
@@ -46,6 +50,7 @@ public:
     void GetHabitatSize();
     void GetHabitatType(string type);
     int GetAnimalNbrByRace(string type);
+    int GetHabitatNbrByRace(string type);
     void GetHabitatAnimal();
 
     //setter

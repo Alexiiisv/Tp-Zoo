@@ -22,7 +22,7 @@ public:
     IHabitat();
     IHabitat(string m_type);
     void addAnimal(IAnimal* animal);
-    void delAnimal(int qtt);
+    void delAnimal(int qtt, string state);
     void UpdateAge();
     
     virtual ~IHabitat();
@@ -30,6 +30,8 @@ public:
     virtual float getFood();
     virtual int getnbrAnimals();
     virtual int getCapacity();
+    virtual float getSingleAnimalInfoI(string info, int id);
+    virtual string getSingleAnimalInfoS(string info, int id);
     virtual string getType();
     int getAGender(string gender, string race);
     virtual void SetCapacity(int capacity);

@@ -22,14 +22,27 @@ void IHabitat::addAnimal(IAnimal *animal)
     nbr_animals++;
 }
 
-void IHabitat::delAnimal(int qtt)
+void IHabitat::delAnimal(int qtt, string state)
 {
-    if (m_capacity < nbr_animals)
+    if (m_capacity < nbr_animals && state == "plein")
     {
         cout << "un animal va canner : " << m_animals[qtt]->getName() << endl;
         m_animals.erase(m_animals.begin()+qtt);
         nbr_animals--;
     }
+    if (state == "Deplacement")
+    {
+        cout << "un animal a ete deplace : " << m_animals[qtt]->getName() << endl;
+        m_animals.erase(m_animals.begin()+qtt);
+        nbr_animals--;
+    }
+    if (state == "vol")
+    {
+        cout << "un animal a ete deplace : " << m_animals[qtt]->getName() << endl;
+        m_animals.erase(m_animals.begin()+qtt);
+        nbr_animals--;
+    }
+    
     
 }
 
@@ -87,6 +100,49 @@ void IHabitat::SetCapacity(int capacity)
 int IHabitat::getCapacity()
 {
     return m_capacity;
+}
+
+string IHabitat::getSingleAnimalInfoS(string info, int id)
+{
+    AnimalIterator it = m_animals.begin();
+    while (it != m_animals.end())
+    {
+        if ((*it) == m_animals[id])
+        {
+            if (info == "Name")
+            {
+                return (*it)->getName();
+            }else if (info == "Gender")
+            {
+                return (*it)->getGender();
+            }else if (info == "Race")
+            {
+                return (*it)->getRace();
+            }
+        }
+        it++;
+    }
+    return "";
+}
+
+float IHabitat::getSingleAnimalInfoI(string info, int id)
+{
+    AnimalIterator it = m_animals.begin();
+    while (it != m_animals.end())
+    {
+        if ((*it) == m_animals[id])
+        {
+            if (info == "Age")
+            {
+                return (*it)->getAge();
+            }else if (info == "Food")
+            {
+                return (*it)->getFood();
+            }
+        }
+        it++;
+    }
+    return 0;
 }
 
 string IHabitat::getType()
