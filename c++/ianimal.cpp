@@ -1,4 +1,4 @@
-#include "ianimal.h"
+#include "../header/ianimal.h"
 #include <iostream>
 using namespace std;
 
@@ -9,7 +9,7 @@ IAnimal::IAnimal(string name)
 
 IAnimal::~IAnimal()
 {
-
+    cout << "tamer" << endl;
 }
 
 string IAnimal::getName()

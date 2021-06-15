@@ -1,4 +1,4 @@
-#include "zoo.h"
+#include "../header/zoo.h"
 #include <iostream>
 using namespace std;
 
@@ -7,15 +7,14 @@ Zoo::Zoo(string name)
 {
     month = 0;
     viande = 0;
+    year = 0;
 }
 
 void Zoo::addAnimal(IAnimal *animal)
 {
-    m_animals.push_back(animal);
     if (animal->getRace() == "aigle")
     {
         cout << "tu a acheter un " << animal->getRace() << endl;
-        aigle += 1;
         setAnimalHabitat(animal, 0);
     }
     
@@ -35,29 +34,45 @@ void Zoo::NextMonth()
     month += 1;
 }
 
+void Zoo::UpdateAge()
+{
+    HabitatIterator it = m_habitats.begin();
+    while (it != m_habitats.end())
+    {
+        (*it)->UpdateAge();
+        it++;
+    }
+}
+
 void Zoo::UpdateFood()
 {
-    AnimalIterator it = m_animals.begin();
-    while (it != m_animals.end())
-    {
+    HabitatIterator it = m_habitats.begin();
+    while (it != m_habitats.end())
+    {        
         viande -= (*it)->getFood()*30;
         if (viande <= 0)
         {
             viande = 0;
+            break;
         }
         
         it++;
     }
 }
 
-void Zoo::UpdateAge()
+void Zoo::UpdateHabitat()
 {
-    AnimalIterator it = m_animals.begin();
-    while (it != m_animals.end())
+    int i = 1;
+    HabitatIterator it = m_habitats.begin();
+    while (it != m_habitats.end())
     {
-        (*it)->UpdateAge();
-        cout << (*it)->getAge() << endl;
+        if ((*it)->getType() == "aigle")
+        {
+            (*it)->delAnimal(rand()%5);
+        }
+        
         it++;
+        i++;
     }
 }
 
@@ -96,31 +111,6 @@ int Zoo::getYear()
     return year;
 }
 
-int Zoo::getAigle()
-{
-    return aigle;
-}
-
-int Zoo::getGAigle()
-{
-    return aigle;
-}
-
-int Zoo::getTigre()
-{
-    return tigre;
-}
-
-int Zoo::getPoules()
-{
-    return poules;
-}
-
-int Zoo::getCoq()
-{
-    return coq;
-}
-
 int Zoo::getHAigle()
 {
     return aigle_Habitat;
@@ -136,27 +126,13 @@ int Zoo::getHPoules()
     return poules_Habitat;
 }
 
-int Zoo::getAGender()
-{
-    AnimalIterator it = m_animals.begin();
-    while (it != m_animals.end())
-    {
-        cout << (*it)->getGender() << endl;
-        it++;
-    }
-    return 0;
-}
-
 int Zoo::getAGender(string gender, string race)
 {
     int result = 0;
-    AnimalIterator it = m_animals.begin();
-    while (it != m_animals.end())
+    HabitatIterator it = m_habitats.begin();
+    while (it != m_habitats.end())
     {
-        if ((*it)->getGender() == gender && (*it)->getRace() == race)
-        {
-            result +=1;
-        }
+        result += (*it)->getAGender(gender, race);
         it++;
     }
     return result;
@@ -167,44 +143,14 @@ void Zoo::getInfo()
     cout << getName() <<  "\nYear : " << getYear() << "\nMonth : " << getMonth() << "\nBudget : " << getBudget() << endl;
 }
 
-void Zoo::getAName()
-{
-    AnimalIterator it = m_animals.begin();
-    while (it != m_animals.end())
-    {
-        cout << (*it)->getName() << endl;
-        it++;
-    }
-}
-
-void Zoo::getARace()
-{
-    AnimalIterator it = m_animals.begin();
-    while (it != m_animals.end())
-    {
-        cout << (*it)->getRace() << endl;
-        it++;
-    }
-}
-
 void Zoo::getAllInfo(string race)
 {
     int i;
-    AnimalIterator it = m_animals.begin();
-    cout << "---------------" << endl;
-    while (it != m_animals.end())
+    HabitatIterator it = m_habitats.begin();
+    cout << "-------------------" << endl;
+    while (it != m_habitats.end())
     {
-        if ((*it)->getRace() == race)
-        {
-            i++;
-            cout << race << " " << i << endl;
-            cout << "Nom\t" << (*it)->getName() << endl;
-            cout << "Sexe\t" << (*it)->getGender() << endl;
-            cout << "Age\t" << (*it)->getAge()/12 << " ans " << (*it)->getAge()%12 << " mois" << endl;
-            cout << "race\t" << (*it)->getRace() << endl;
-            cout << "food\t" << (*it)->getFood() << endl;
-            cout << "---------------" << endl;
-        }
+        (*it)->getAnimal();
         it++;
     }
 }
@@ -243,6 +189,21 @@ void Zoo::GetHabitatAnimal()
         it++;
         i++;
     }
+}
+
+int Zoo::GetAnimalNbrByRace(string race)
+{
+    int result = 0;
+    HabitatIterator it = m_habitats.begin();
+    while (it != m_habitats.end())
+    {
+        if ((*it)->getType() == race)
+        {
+            result += (*it)->getnbrAnimals();
+        }
+        it++;
+    }
+    return result;
 }
 
 

@@ -1,5 +1,5 @@
-#include "ianimal.h"
-#include "aigle.h"
+#include "../header/ianimal.h"
+#include "../header/aigle.h"
 #include <iostream>
 using namespace std;
 Aigle::Aigle(string name, string race, string gender, float food, int age)
@@ -9,6 +9,10 @@ Aigle::Aigle(string name, string race, string gender, float food, int age)
     IAnimal::SetAge(age);
     IAnimal::SetGender(gender);
     IAnimal::SetFood(food);
+}
+Aigle::~Aigle()
+{
+    cout << " la pute " << endl;
 }
 
 string Aigle::getName()

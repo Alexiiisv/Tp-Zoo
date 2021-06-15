@@ -14,10 +14,10 @@ typedef HabitatList::iterator HabitatIterator;
 class Zoo
 {
     string m_name;
-    AnimalList m_animals;
+    // AnimalList m_animals;
     HabitatList m_habitats;
     float viande, budget;
-    int tigre = 0, aigle = 0, poules = 0, coq = 0, month, year;
+    int month, year;
     int tigre_Habitat, aigle_Habitat, poules_Habitat;
 public:
     Zoo(string name = "");
@@ -27,6 +27,7 @@ public:
     void NextMonth();
     void UpdateAge();
     void UpdateFood();
+    void UpdateHabitat();
     void UpdateBudget(float budget);
 
 
@@ -36,22 +37,15 @@ public:
     float getBudget();
     int getMonth();
     int getYear();
-    int getAigle();
-    int getGAigle();
-    int getTigre();
-    int getPoules();
-    int getCoq();
     int getHAigle();
     int getHTigre();
     int getHPoules();
-    int getAGender();
     int getAGender(string gender, string race);
     void getInfo();
-    void getAName();
-    void getARace();
     void getAllInfo(string race);
     void GetHabitatSize();
     void GetHabitatType(string type);
+    int GetAnimalNbrByRace(string type);
     void GetHabitatAnimal();
 
     //setter

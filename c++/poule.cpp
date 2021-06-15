@@ -1,6 +1,6 @@
 #include <iostream>
-#include "ianimal.h"
-#include "poule.h"
+#include "../header/ianimal.h"
+#include "../header/poule.h"
 
 using namespace std;
 

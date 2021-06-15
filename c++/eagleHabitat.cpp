@@ -1,5 +1,5 @@
-#include "ihabitat.h"
-#include "eagleHabitat.h"
+#include "../header/ihabitat.h"
+#include "../header/eagleHabitat.h"
 #include <iostream>
 using namespace std;
 EagleHabitat::EagleHabitat()
@@ -31,4 +31,23 @@ string EagleHabitat::getType()
 void EagleHabitat::addAnimal(IAnimal *animal)
 {
     IHabitat::addAnimal(animal);
+}
+
+// void EagleHabitat::delAnimal(int qtt)
+// {
+//     cout << "coucou" << endl;
+//     if (EagleHabitat::getCapacity() < IHabitat::getnbrAnimals())
+//     {
+//         cout << "test" << endl;
+//     }
+    
+//     IHabitat::delAnimal(qtt);
+// }
+void EagleHabitat::UpdateAge()
+{
+    IHabitat::UpdateAge();
+}
+float EagleHabitat::getFood()
+{
+    return IHabitat::getFood();
 }

@@ -11,11 +11,14 @@ public:
     EagleHabitat();
     EagleHabitat(string type);
     void addAnimal(IAnimal* animal);
+    void delAnimal(int qtt);
+    void UpdateAge();
     
     // getter
     void getAnimal();
     virtual int getCapacity();
     virtual string getType();
+    virtual float getFood();
 };
 
 #endif // EAGLEHABITAT_H

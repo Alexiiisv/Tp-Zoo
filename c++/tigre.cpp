@@ -1,6 +1,6 @@
 #include <iostream>
-#include "ianimal.h"
-#include "tigre.h"
+#include "../header/ianimal.h"
+#include "../header/tigre.h"
 
 using namespace std;
 
