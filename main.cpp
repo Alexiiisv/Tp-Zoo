@@ -132,79 +132,19 @@ void switchHabitat(Zoo zoo)
 
     while (skip != 0)
     {
-        cout << "De quel Habitat voulez-vous déplacer l'animal" << endl;
+        cout << "De quel habitat voulez-vous deplacer l'animal\nVous avez " << zoo.GetHabitatNbrByRace("aigle") << " habitat pour les aigles" << endl;
         scanf("%d", &initialHabitat);
-        cout << "Quel animal de cet habitat voulez-vous déplacer ?" << endl;
+        cout << "Quel animal de cet habitat voulez-vous deplacer ?\n" << endl;
+        zoo.GetHabitatAnimal(to_string(initialHabitat));
         scanf("%d", &animal);
         cout << "Dans quel habitat voulez-vous placer l'animal choisi" << endl;
+        zoo.GetHabitatAnimal("aigle");
         scanf("%d", &destination);
 
         cout << "Appuyez sur 0 pour confirmer" << endl;
         scanf("%d", &skip);
     }
     zoo.SwitchHabitat(initialHabitat, animal, destination);
-}
-// Eagles eggs
-void EagleEggs(int month, Zoo zoo, int &eagleEggs)
-{
-    int randDeath = 0, mort = 0;
-
-    // Reproduction des aigles en Mars
-    if (month == 3)
-    {
-        // Calcule le ratio de femelle/male
-        if (zoo.getAGender("Female", "aigle") >= zoo.getAGender("Male", "aigle"))
-        {
-            int ratio = zoo.getAGender("Female", "aigle") - zoo.getAGender("Male", "aigle");
-            int nbFemellePonte = zoo.getAGender("Female", "aigle") - ratio;
-            eagleEggs = nbFemellePonte * 2; // chaque aigle femelle pond 2 oeufs
-            cout << "nombre d'oeufs d'aigle : " << eagleEggs << endl;
-        }
-        cout << "FAITES L'AMOUR" << endl;
-    }
-    // Eclosion des oeufs en mai
-    else if (month == 5)
-    {
-        // range over each eggs to see if they die
-        for (int i = 0; i < eagleEggs; i++)
-        {
-            randDeath = rand() % 2; // Generate 0 or 1
-            // Lorsqu'un aigle est mort né
-            if (randDeath == 1)
-            {
-                eagleEggs--;
-                mort++;
-            }
-        }
-        cout << "nb de bb aigles : " << eagleEggs << endl;
-        cout << "nb de bb aigles MORT : " << mort << endl;
-        for (int i = 0; i < eagleEggs; i++)
-        {
-            srand(time(0));
-            int randSex = rand() % 2;
-            float food;
-            string sex;
-            char name[16];
-
-            switch (randSex)
-            {
-            case 0:
-                sex = "Male";
-                food = 0.25;
-                break;
-            default:
-                sex = "Female";
-                food = 0.3;
-                break;
-            }
-            cout << "Donnez un nom au bebe aigle numero " << i << endl;
-            scanf("%15s", &name);
-            cout << name << endl;
-
-            zoo.addAnimal(new Aigle(name, "aigle", sex, food, 0), 0);
-        }
-        eagleEggs = 0;
-    }
 }
 // Get visitors revenues
 int VisitorRevenue(int visitor)
@@ -240,6 +180,7 @@ int VisitorRevenue(int visitor)
 // Get number of visitors
 int Visitor(int tiger, int eagle, int chicken, int month)
 {
+    srand(time(0));
     double variation = (rand() % 41) - 20; // generate random number (-20 / 20)
     if (month >= 5 && month <= 9)
     {

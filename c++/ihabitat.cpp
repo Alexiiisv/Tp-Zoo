@@ -109,13 +109,18 @@ void IHabitat::getAnimal()
 
 float IHabitat::getFood()
 {
-    float food = 0; 
+    float food = 0;
+    int fmenseinte = 0;
     AnimalIterator it = m_animals.begin();
     while (it != m_animals.end())
     {
         food += (*it)->getFood()*30;
+        
+        
         it++;
     }
+    fmenseinte = getEagleEggs()/2;
+    food += (0.3*fmenseinte)*30;
     return food;
 }
 

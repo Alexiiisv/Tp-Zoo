@@ -402,6 +402,7 @@ int Zoo::GetAnimalNbrByRace(string State)
         if ((*it)->getType() == State) //tigre/aigle/poules
         {
             result += (*it)->getnbrAnimals();
+            result -= (*it)->getEagleEggs()/2;
         }else if (id == stoi(State))
         {
             return (*it)->getnbrAnimals();
