@@ -2,6 +2,11 @@
 #include <cmath>
 #include <time.h>
 #include <stdlib.h>
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
 #include "./header/zoo.h"
 #include "./header/aigle.h"
 #include "./header/eagleHabitat.h"
@@ -10,28 +15,41 @@
 
 using namespace std;
 
+void Clear()
+{
+#if defined _WIN32
+    system("cls");
+    //clrscr(); // including header file : conio.h
+#elif defined(__LINUX__) || defined(__gnu_linux__) || defined(__linux__)
+    system("clear");
+    //std::cout<< u8"\033[2J\033[1;1H"; //Using ANSI Escape Sequences
+#elif defined(__APPLE__)
+    system("clear");
+#endif
+}
+
 // Avoir toutes les infos à propos du zoo
-void infoZoo(Zoo zoo)
+void infoZoo(Zoo zoo, bool nbEagleSuccess, bool moneySuccess, bool &nbTotalVisitorSucess)
 {
     int Gender = 2;
     int info = 1;
     float food;
     while (info != 0)
     {
-        cout << "Que voulez-vous afficher ?\n1 | Infos sur les animaux\t\t2 | Nombre d'habitats\t\t0 pour quitter le menu\n3 | Quantite de nourriture" << endl;
+        cout << "Que voulez-vous afficher ?\n1 | Infos sur les animaux\t\t2 | Nombre d'habitats\t\t0 pour quitter le menu\n3 | Quantite de nourriture\t\t4 | Les succes" << endl;
         scanf("%d", &info);
-        // cout << "\x1B[2J\x1B[H" << endl;
 
-        if (info == 1)
-        // infos sur les animaux
+        switch (info)
         {
+        case 1: // Affiche les infos des animaux
             cout << "\x1B[2J\x1B[HSur quel race vous-voulez des informations ?\n3 | Aigles\t\t4 | Tigres\t\t0 | pour quitter le menu\n5 | Poules"
                  << endl;
             scanf("%d", &info);
             if (info == 3)
             // infos sur les aigles
             {
-                cout << "\n          ///,        ////\n          \\  /,      /  >.\n           \\  /,   _/  /.\n            \\_  /_/   /.\n             \\__/_   <\n             /<<< \\_\\_\n            /,)^>>_._ \\\n            (/   \\\\ /\\\\\\\n                 // ````\n                ((`\n" << endl;
+                cout << "\n          ///,        ////\n          \\  /,      /  >.\n           \\  /,   _/  /.\n            \\_  /_/   /.\n             \\__/_   <\n             /<<< \\_\\_\n            /,)^>>_._ \\\n            (/   \\\\ /\\\\\\\n                 // ````\n                ((`\n"
+                     << endl;
 
                 cout << "Nombre d'aigle actuel : " << zoo.GetAnimalNbrByRace("aigle") << endl;                                                           //nb d'aigle
                 cout << "Vous avez " << zoo.getAGender("Male", "aigle") << " male(s) et " << zoo.getAGender("Female", "aigle") << " femelle(s)" << endl; // nb de male et de femelle
@@ -52,16 +70,54 @@ void infoZoo(Zoo zoo)
             {
                 cout << "poules" << endl;
             }
-        }
-        else if (info == 2)
-        // infos sur les habitats
-        {
+            break;
+        case 2: // Affiche les infos des habitats
             zoo.GetHabitatAnimal("All Habitat");
+            break;
+        case 3: // Affiche la quantité de nourriture
+            cout
+                << "Quantite de viande : "
+                << zoo.getFood()
+                << endl;
+            break;
+        case 4: // Affiche les succès
+            cout << std::boolalpha << nbEagleSuccess << "\t| Ami des aigles\tAvoir plus de 12 aigles" << endl;
+            cout << std::boolalpha << moneySuccess << "\t| Riche as fuck\t\tAtteindre plus de 100000$" << endl;
+            cout << std::boolalpha << nbTotalVisitorSucess << "\t| Parc d'attraction\tAtteindre plus de 1000 visiteurs\n" << endl;
+            break;
+        default:
+            break;
         }
-        else if (info == 3)
-        // infos sur la nourriture
+    }
+}
+// Check les succès
+void checkSuccess(Zoo zoo, bool &nbEagleSuccess, bool &moneySuccess, int all_visitors, bool &nbTotalVisitorSuccess)
+{
+    string message;
+    if ((nbEagleSuccess == false && (zoo.getAGender("Female", "aigle") + zoo.getAGender("Male", "aigle")) >= 12) || (moneySuccess == false && zoo.getBudget() >= 100000) || (nbTotalVisitorSuccess == false && all_visitors >= 1000))
+    {
+        if (nbEagleSuccess == false && (zoo.getAGender("Female", "aigle") + zoo.getAGender("Male", "aigle")) >= 12)
         {
-            cout << "Quantite de viande : " << zoo.getFood() << endl;
+            nbEagleSuccess = true;
+            message = "Succes deverouiller : Ami des aigles (vous possedez 12 aigles ou plus)";
+        }
+        else if (moneySuccess == false && zoo.getBudget() >= 100000)
+        {
+            moneySuccess = true;
+            message = "Succes deverouiller : Riche as fuck (Vous avec atteint un budget de 100000$)";
+        }
+        else if (all_visitors >= 1000)
+        {
+            nbTotalVisitorSuccess = true;
+            message = "Succes deverouiller : Parc d'attraction (Vous avez atteint 1000 visiteurs au cumule)";
+        }
+
+        for (int i = 6; i > 0; i--)
+        {
+            cout << "\n\n\n\n\n\n\n         .* *.               `o`o`\n         *. .*              o`o`o`o      ^,^,^\n           * \\               `o`o`     ^,^,^,^,^\n              \\     ***        |       ^,^,^,^,^\t" << message << "\n               \\   *****       |        /^,^,^\n                \\   ***        |       /\n    ~@~*~@~      \\   \\         |      /\n  ~*~@~*~@~*~     \\   \\        |     /\n  ~*~@smd@~*~      \\   \\       |    /     #$#$#        .`'.;.\n  ~*~@~*~@~*~       \\   \\      |   /     #$#$#$#   00  .`,.',\n    ~@~*~@~ \\        \\   \\     |  /      /#$#$#   /|||  `.,'\n_____________\\________\\___\\____|_/______/_________|\\/\\___||______" << endl;
+            cout << i << endl;
+            Sleep(1000);
+            Clear();
         }
     }
 }
@@ -122,6 +178,32 @@ void EagleEggs(int month, Zoo zoo, int &eagleEggs)
         }
         cout << "nb de bb aigles : " << eagleEggs << endl;
         cout << "nb de bb aigles MORT : " << mort << endl;
+        for (int i = 0; i < eagleEggs; i++)
+        {
+            srand(time(0));
+            int randSex = rand() % 2;
+            float food;
+            string sex;
+            char name[16];
+
+            switch (randSex)
+            {
+            case 0:
+                sex = "Male";
+                food = 0.25;
+                break;
+            default:
+                sex = "Female";
+                food = 0.3;
+                break;
+            }
+            cout << "Donnez un nom au bebe aigle numero " << i << endl;
+            scanf("%15s", &name);
+            cout << name << endl;
+
+            zoo.addAnimal(new Aigle(name, "aigle", sex, food, 0), 0);
+        }
+        eagleEggs = 0;
     }
 }
 // Get visitors revenues
@@ -354,7 +436,6 @@ void specialEvent(Zoo &zoo)
     int fireEvent = 0, stealingEvent = 0, nuisiblesEvent = 0, rottenEvent = 0;
     srand(time(0));
     fireEvent = rand() % 100;
-    cout << fireEvent << endl;
     if (fireEvent == 69) // nice random number
     {
         cout << "FEU !!!!" << endl;
@@ -376,7 +457,6 @@ void specialEvent(Zoo &zoo)
         }
     }
     stealingEvent = rand() % 100;
-    cout << stealingEvent << endl;
     if (stealingEvent == 69) // nice random number
     {
         cout << "VOL !!!!" << endl;
@@ -397,13 +477,11 @@ void specialEvent(Zoo &zoo)
         }
     }
     nuisiblesEvent = rand() % 100;
-    cout << nuisiblesEvent << endl;
     if (nuisiblesEvent < 20)
     {
         cout << "NUISIBLE !!!!" << endl;
     }
     rottenEvent = rand() % 100;
-    cout << rottenEvent << endl;
     if (rottenEvent < 10)
     {
         cout << "VIANDE AVARIEE !!!!" << endl;
@@ -411,20 +489,6 @@ void specialEvent(Zoo &zoo)
         cout << "tu n'as plus que " << zoo.getFood() << " de viandes." << endl;
     }
 }
-
-void Clear()
-{
-#if defined _WIN32
-    system("cls");
-    //clrscr(); // including header file : conio.h
-#elif defined(__LINUX__) || defined(__gnu_linux__) || defined(__linux__)
-    system("clear");
-    //std::cout<< u8"\033[2J\033[1;1H"; //Using ANSI Escape Sequences
-#elif defined(__APPLE__)
-    system("clear");
-#endif
-}
-
 int main()
 {
     Zoo zoo("Zoo de la Montagne");
@@ -434,6 +498,7 @@ int main()
     int tiger = 0, chicken = 0, coq = 0;
     int eagleEggs = 0;
     bool enoughMeat = false;
+    bool nbEagleSuccess = false, moneySuccess = false, nbTotalVisitorSuccess = false;
 
     while (zoo.getYear() < 10)
     // Tous les mois
@@ -443,8 +508,9 @@ int main()
         {
             visitor = Visitor(tiger, zoo.GetAnimalNbrByRace("aigle"), chicken, month); // calcul le nb de visiteur
             all_visitors += visitor;                                                   // calcul le nb de visiteurs total
-            zoo.UpdateBudget(VisitorRevenue(visitor));                                 // calcul le revenue lié aux visiteurs
-            specialEvent(zoo);                                                         // créé les événements spéciaux
+
+            zoo.UpdateBudget(VisitorRevenue(visitor)); // calcul le revenue lié aux visiteurs
+            specialEvent(zoo);                         // créé les événements spéciaux
         }
         zoo.NextMonth(); // incrémente la variable tout les mois
         checkAllAnimals(zoo);
@@ -459,9 +525,9 @@ int main()
         zoo.getInfo(); // affiche l'année, le mois et le budget, chaque mois
 
         // PONTES D'OEUFS DES AIGLES
-        if (enoughMeat && (zoo.getMonth() % 12 == 3 || zoo.getMonth() % 12 == 5))
+        if (enoughMeat)
         {
-            EagleEggs(zoo.getMonth() % 12, zoo, eagleEggs);
+            zoo.reproduction(zoo.getMonth() % 12);
         }
 
         nextMonth = 0;
@@ -469,13 +535,13 @@ int main()
         // Action pour le mois
         {
 
-            cout << "\n1 | Passer le mois\t\t2 | Achat / Vente\t\t3 | Avoir des information sur le zoo\n4 | Changer un animal d'habitat" << endl;
+            cout << "\n1 | Passer le mois\t\t2 | Achat / Vente\t\t3 | Avoir des information sur le zoo\n4 | Changer un animal d'habitat\t0 | Quitter" << endl;
             scanf("%d", &nextMonth);
             Clear();
 
             if (nextMonth == 3)
             {
-                infoZoo(zoo);
+                infoZoo(zoo, nbEagleSuccess, moneySuccess, nbTotalVisitorSuccess);
             }
             else if (nextMonth == 2)
             //  Actions pour le mois actuel
@@ -496,11 +562,19 @@ int main()
             {
                 switchHabitat(zoo);
             }
-            cout << "consommation de viande des animaux : " << ((((zoo.getAGender("Female", "aigle") * 9) + (zoo.getAGender("Male", "aigle") * 7.5)) * 3)) << endl;
+            else if (nextMonth == 0)
+            {
+                return 0;
+            }
+
+            cout << "consommation de viande des animaux : " << (((zoo.getAGender("Female", "aigle") * 9) + (zoo.getAGender("Male", "aigle") * 7.5))) << endl;
             // Affiche la quantité de nourritre
             cout << "Quantite de nourriture : " << zoo.getFood() << endl;
             zoo.getInfo();
             Clear();
+
+            // Verifie si un succes a été débloqué
+            checkSuccess(zoo, nbEagleSuccess, moneySuccess, all_visitors, nbTotalVisitorSuccess);
 
             // CHECKING FOOD STORAGE
             if (zoo.getFood() == 0)
@@ -522,6 +596,7 @@ int main()
         }
     }
     // fin de la partie
-    cout << "\x1B[2J\x1B[HLa Partie est finie\nA la fin tu avais " << zoo.getBudget() << " dollars\nTon zoo a acceuilli " << all_visitors << " visiteurs sur " << year << " ans" << endl;
+    Clear();
+    cout << "La Partie est finie\nA la fin tu avais " << zoo.getBudget() << " dollars\nTon zoo a acceuilli " << all_visitors << " visiteurs sur " << year << " ans" << endl;
     return 0;
 }

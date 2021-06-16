@@ -14,7 +14,7 @@ class IHabitat
 {
 private:
     string m_type;
-    int m_capacity, nbr_animals = 0;
+    int m_capacity, nbr_animals = 0, bb = 0, EagleEggs = 0;
     AnimalList m_animals;
 
 public:
@@ -30,11 +30,13 @@ public:
     virtual int getAnimalValue(int IdAni);
     virtual int getnbrAnimals();
     virtual int getCapacity();
+    virtual int getEagleEggs();
     virtual float getSingleAnimalInfoI(string info, int id);
     virtual string getSingleAnimalInfoS(string info, int id);
     virtual string getType();
-    int getAGender(string gender, string race);
+    int getAGender(string gender, string race, int age);
     virtual void SetCapacity(int capacity);
+    virtual void SetEagleEggs(int eagleEggs);
 };
 
 #endif // HABITAT_H

@@ -24,8 +24,23 @@ void IHabitat::addAnimal(IAnimal *animal)
 
 void IHabitat::delAnimal(int qtt, string state)
 {
+    bool child = true;
+    if (state == "Plein")
+    {
+        AnimalIterator it = m_animals.begin();
+        while (it != m_animals.end())
+        {
+            if ((*it)->getAge() == 0 || (*it)->getAge() == 1)
+            {
+                child = false;
+                break;
+            }
+            it++;
+        }
+    }
+
     int random = rand()%2;
-    if (m_capacity < nbr_animals && state == "Plein" && random == 1)
+    if (m_capacity < nbr_animals && state == "Plein" && random == 1 && child)
     {
         cout << "un animal va canner : " << m_animals[qtt]->getName() << endl;
         m_animals.erase(m_animals.begin()+qtt);
@@ -81,11 +96,12 @@ void IHabitat::getAnimal()
     AnimalIterator it = m_animals.begin();
     while (it != m_animals.end())
     {
-        cout << "Nom\t" << (*it)->getName() << endl;
-        cout << "Sexe\t" << (*it)->getGender() << endl;
-        cout << "Age\t" << (*it)->getAge()/12 << " ans " << (*it)->getAge()%12 << " mois" << endl;
-        cout << "race\t" << (*it)->getRace() << endl;
-        cout << "food\t" << (*it)->getFood() << endl;
+        cout << "Nom\t\t" << (*it)->getName() << endl;
+        cout << "Sexe\t\t" << (*it)->getGender() << endl;
+        cout << "Age\t\t" << (*it)->getAge()/12 << " ans " << (*it)->getAge()%12 << " mois" << endl;
+        cout << "race\t\t" << (*it)->getRace() << endl;
+        cout << "food\t\t" << (*it)->getFood() << endl;
+        cout << "fertilite\t" << (*it)->getFertile() << endl;
         cout << "-------------------" << endl;
         it++;
     }
@@ -145,6 +161,11 @@ int IHabitat::getCapacity()
     return m_capacity;
 }
 
+int IHabitat::getEagleEggs()
+{
+    return EagleEggs;
+}
+
 string IHabitat::getSingleAnimalInfoS(string info, int id)
 {
     AnimalIterator it = m_animals.begin();
@@ -193,16 +214,38 @@ string IHabitat::getType()
     return m_type;
 }
 
-int IHabitat::getAGender(string gender, string race) {
+int IHabitat::getAGender(string gender, string race, int age) {
     int result = 0;
     AnimalIterator it = m_animals.begin();
     while (it != m_animals.end())
     {
         if ((*it)->getGender() == gender && (*it)->getRace() == race)
         {
-            result +=1;
+            if (age == 4)
+            {
+                result +=1;
+            }
+            else if (age == 1 && ((*it)->getAge() >= 0 && (*it)->getAge() < 48 )) //enfant
+            {
+                result +=1;
+            }
+            else if (age == 2 && ((*it)->getAge() >= 48 && (*it)->getAge() < 168 )) //adulte
+            {
+                result +=1;
+            }
+            else if (age == 3 && ((*it)->getAge() > 168 && (*it)->getAge() <= 300 )) //vieux
+            {
+                result +=1;
+            }
         }
         it++;
     }
+    
+    
     return result;
+}
+
+void IHabitat::SetEagleEggs(int eagleEggs)
+{
+    EagleEggs = eagleEggs;
 }

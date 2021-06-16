@@ -25,6 +25,7 @@ public:
     void FireHabitat(string Race);
     void NextMonth();
     void UpdateAge();
+    void reproduction(int state);
     void UpdateFood();
     void UpdateHabitat();
     void VolDanimal(string state);

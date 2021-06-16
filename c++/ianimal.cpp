@@ -37,6 +37,10 @@ string IAnimal::getGender()
     return m_gender;
 }
 
+int IAnimal::getFertile()
+{
+    return m_fertile;
+}
 void IAnimal::SetFood(float food)
 {
     m_food = food;
@@ -56,7 +60,24 @@ void IAnimal::SetGender(string gender)
     m_gender = gender;
 }
 
+void IAnimal::SetFertile(int fertile)
+{
+    m_fertile = fertile;
+}
+
 void IAnimal::UpdateAge()
 {
     m_age += 1;
+    if (m_age == 48 && m_fertile == 0)
+    {
+        m_fertile = 1;
+        cout << "fertile" << endl;
+    }
+    if (m_age == 168 && m_fertile == 1)
+    {
+        m_fertile = 0;
+        cout << "plus fertile" << endl;
+    }
+    
+    
 }
