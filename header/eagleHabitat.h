@@ -11,8 +11,7 @@ public:
     EagleHabitat();
     EagleHabitat(string type);
     void addAnimal(IAnimal* animal);
-    void delAnimal(int qtt, string state);
-    void UpdateAge();
+    void UpdateAge(int Id);
     
     // getter
     void getAnimal();

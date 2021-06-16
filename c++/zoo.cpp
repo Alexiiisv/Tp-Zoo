@@ -15,7 +15,7 @@ void Zoo::addAnimal(IAnimal *animal, int habitat)
 {
     if (animal->getRace() == "aigle")
     {
-        cout << "tu a acheter un " << animal->getRace() << endl;
+        cout << "tu as acheter un " << animal->getRace() << endl;
         setAnimalHabitat(animal, habitat);
     }
     
@@ -54,6 +54,23 @@ void Zoo::SellHabitat(string Race)
     }
     
 }
+
+void Zoo::SellAnimal(int IdAni, int IdHab)
+{
+    int id = 1;
+    HabitatIterator it = m_habitats.begin();
+    while (it != m_habitats.end())
+    {
+        if (IdHab == id)
+        {
+            budget += (*it)->getAnimalValue(IdAni);
+            (*it)->delAnimal(IdAni-1, "Vente");
+        }
+        it++;
+        id++;
+    }
+}
+
 //Fire event
 void Zoo::FireHabitat(string Race)
 {
@@ -81,10 +98,24 @@ void Zoo::NextMonth()
 //update the age of all animal by one
 void Zoo::UpdateAge()
 {
+    int Id = 0, nbrani;
+    string todo = "";
     HabitatIterator it = m_habitats.begin();
     while (it != m_habitats.end())
     {
-        (*it)->UpdateAge();
+        nbrani = (*it)->getnbrAnimals();
+        while (Id != nbrani)
+        {
+            todo = (*it)->UpdateAge(Id);
+            if (todo == "A Kill")
+            {
+                (*it)->delAnimal(Id, "Creve");
+                Id--;
+            }
+            Id++;
+            nbrani = (*it)->getnbrAnimals();
+        }
+        Id = 0;
         it++;
     }
 }
@@ -113,7 +144,7 @@ void Zoo::UpdateHabitat()
     {
         if ((*it)->getType() == "aigle")
         {
-            (*it)->delAnimal(rand()%5, "plein");
+            (*it)->delAnimal(rand()%5, "Plein");
         }
         
         it++;
@@ -129,7 +160,7 @@ void Zoo::VolDanimal(string state)
         if (m_habitats[randhab]->getnbrAnimals() != 0)
         {
             int randani = rand() % m_habitats[randhab]->getnbrAnimals();
-            m_habitats[randhab]->delAnimal(randani, "vol");
+            m_habitats[randhab]->delAnimal(randani, "Vol");
             if (state == "poule")
             {
                 cout << "Une " << state << " a ete vole" << endl;
@@ -265,30 +296,48 @@ void Zoo::GetHabitatType(string type)
     }
 }
 //Get information about animal per habitat
-void Zoo::GetHabitatAnimal()
+void Zoo::GetHabitatAnimal(string State)
 {
     int i = 1;
     HabitatIterator it = m_habitats.begin();
     while (it != m_habitats.end())
     {
-        cout << "habitat " << (*it)->getType() << endl;
-        (*it)->getAnimal();
+        if (State == "All Habitat")
+        {
+            cout << "habitat " << (*it)->getType() << endl;
+            (*it)->getAnimal();
+        } else if (State == (*it)->getType()) 
+        {
+            cout << "habitat " << (*it)->getType() << " " << i << endl;
+            (*it)->getAnimal();
+        } else if (stoi(State) == i)
+        {
+            cout << "habitat " << (*it)->getType()  << " " << i <<  endl;
+            (*it)->getAnimal();
+            break;
+        }
+                
         it++;
         i++;
     }
 }
 //Get the amount of animal per race
-int Zoo::GetAnimalNbrByRace(string race)
+int Zoo::GetAnimalNbrByRace(string State)
 {
-    int result = 0;
+    int result = 0, id = 1;
     HabitatIterator it = m_habitats.begin();
     while (it != m_habitats.end())
     {
-        if ((*it)->getType() == race)
+        if ((*it)->getType() == State) //tigre/aigle/poules
         {
             result += (*it)->getnbrAnimals();
+        }else if (id == stoi(State))
+        {
+            return (*it)->getnbrAnimals();
         }
+        
         it++;
+        id++;
     }
     return result;
 }

@@ -7,14 +7,11 @@
 #include <string>
 
 using namespace std;
-typedef vector <IAnimal*> AnimalList;
-typedef AnimalList::iterator AnimalIterator;
 typedef vector <IHabitat*> HabitatList;
 typedef HabitatList::iterator HabitatIterator;
 class Zoo
 {
     string m_name;
-    // AnimalList m_animals;
     HabitatList m_habitats;
     float viande, budget;
     int month, year;
@@ -22,9 +19,9 @@ class Zoo
 public:
     Zoo(string name = "");
     void addAnimal(IAnimal* animal, int habitat);
-    void addAnimal(IAnimal* animal);
     void addHabitat(IHabitat* habitat);
     void SellHabitat(string Race);
+    void SellAnimal(int IdAni, int IdHab);
     void FireHabitat(string Race);
     void NextMonth();
     void UpdateAge();
@@ -49,9 +46,9 @@ public:
     void getAllInfo(string race);
     void GetHabitatSize();
     void GetHabitatType(string type);
-    int GetAnimalNbrByRace(string type);
+    int GetAnimalNbrByRace(string State);
     int GetHabitatNbrByRace(string type);
-    void GetHabitatAnimal();
+    void GetHabitatAnimal(string State);
 
     //setter
     void setFood(float food);

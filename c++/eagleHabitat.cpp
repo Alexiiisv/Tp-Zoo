@@ -33,19 +33,9 @@ void EagleHabitat::addAnimal(IAnimal *animal)
     IHabitat::addAnimal(animal);
 }
 
-// void EagleHabitat::delAnimal(int qtt)
-// {
-//     cout << "coucou" << endl;
-//     if (EagleHabitat::getCapacity() < IHabitat::getnbrAnimals())
-//     {
-//         cout << "test" << endl;
-//     }
-    
-//     IHabitat::delAnimal(qtt);
-// }
-void EagleHabitat::UpdateAge()
+void EagleHabitat::UpdateAge(int Id)
 {
-    IHabitat::UpdateAge();
+    IHabitat::UpdateAge(Id);
 }
 float EagleHabitat::getFood()
 {

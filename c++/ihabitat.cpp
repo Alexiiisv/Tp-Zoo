@@ -25,7 +25,7 @@ void IHabitat::addAnimal(IAnimal *animal)
 void IHabitat::delAnimal(int qtt, string state)
 {
     int random = rand()%2;
-    if (m_capacity < nbr_animals && state == "plein" && random == 1)
+    if (m_capacity < nbr_animals && state == "Plein" && random == 1)
     {
         cout << "un animal va canner : " << m_animals[qtt]->getName() << endl;
         m_animals.erase(m_animals.begin()+qtt);
@@ -37,25 +37,38 @@ void IHabitat::delAnimal(int qtt, string state)
         m_animals.erase(m_animals.begin()+qtt);
         nbr_animals--;
     }
-    if (state == "vol")
+    if (state == "Vol")
     {
-        cout << "un animal a ete deplace : " << m_animals[qtt]->getName() << endl;
+        cout << "un animal a ete vole : " << m_animals[qtt]->getName() << endl;
         m_animals.erase(m_animals.begin()+qtt);
         nbr_animals--;
+    }
+    if (state == "Vente")
+    {
+        cout << "un animal a ete vendu : " << m_animals[qtt]->getName() << endl;
+        m_animals.erase(m_animals.begin()+qtt);
+        nbr_animals--;
+    }
+    if (state == "Creve")
+    {
+        cout << "un animal a canner de vieillesse : " << m_animals[qtt]->getName() << endl;
+        cout << getnbrAnimals() << endl;
+        m_animals.erase(m_animals.begin()+qtt);
+        nbr_animals -= 1;
+        cout << nbr_animals << endl;
     }
     
     
 }
 
-void IHabitat::UpdateAge()
+string IHabitat::UpdateAge(int id)
 {
-    AnimalIterator it = m_animals.begin();
-    while (it != m_animals.end())
-    {
-        (*it)->UpdateAge();
-        cout << (*it)->getAge() << endl;
-        it++;
-    }
+        m_animals[id]->UpdateAge();
+        if (m_animals[id]->getAge() == 300)
+        {
+            return "A Kill";
+        }
+        return "Alive";
 }
 
 IHabitat::~IHabitat()
@@ -89,6 +102,35 @@ float IHabitat::getFood()
     }
     return food;
 }
+
+int IHabitat::getAnimalValue(int IdAni)
+{
+    int id = 1;
+    AnimalIterator it = m_animals.begin();
+    while (it != m_animals.end())
+    {
+        if (IdAni == id)
+        {
+            if ((*it)->getAge() < 48) //inferieur a 4ans
+            {
+                return 500;
+            }
+            if ((*it)->getAge() >= 48 && (*it)->getAge() < 168) //entre 4ans et 14ans
+            {
+                return 2000;
+            }
+            if ((*it)->getAge() >= 168 && (*it)->getAge() < 300) //entre 14ans et 25ans
+            {
+                return 400;
+            }
+            
+        }
+        it++;
+        id++;
+    }
+    return 0;
+}
+
 int IHabitat::getnbrAnimals() 
 {
     return nbr_animals;
