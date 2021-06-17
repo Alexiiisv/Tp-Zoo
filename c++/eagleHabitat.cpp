@@ -37,7 +37,7 @@ void EagleHabitat::UpdateAge(int Id)
 {
     IHabitat::UpdateAge(Id);
 }
-float EagleHabitat::getFood()
+float EagleHabitat::getMeat()
 {
-    return IHabitat::getFood();
+    return IHabitat::getMeat();
 }

@@ -23,10 +23,11 @@ public:
     void addAnimal(IAnimal* animal);
     void delAnimal(int qtt, string state);
     string UpdateAge(int id);
+    virtual void UpdateMalade(int year, int month);
     
     virtual ~IHabitat();
     virtual void getAnimal();
-    virtual float getFood();
+    virtual float getMeat();
     virtual int getAnimalValue(int IdAni);
     virtual int getnbrAnimals();
     virtual int getCapacity();

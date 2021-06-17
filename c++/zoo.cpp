@@ -122,6 +122,19 @@ void Zoo::UpdateAge()
     }
 }
 
+void Zoo::UpdateMalade()
+{
+    HabitatIterator it = m_habitats.begin();
+    while (it != m_habitats.end())
+    {
+        if (getYear() > 0 && getMonth() == 1)
+        {
+            (*it)->UpdateMalade(getYear(), getMonth());
+        }
+        it++;
+    }
+}
+
 void Zoo::reproduction(int state)
 {
     int F = 0, M = 0, randDeath = 0, mort = 0;
@@ -189,14 +202,32 @@ void Zoo::reproduction(int state)
     }
 }
 //update the food situation about the animal consumption
-void Zoo::UpdateFood()
+void Zoo::UpdateMeat()
 {
     HabitatIterator it = m_habitats.begin();
     while (it != m_habitats.end())
     {        
         if ((*it)->getType() == "aigle")
         {
-            viande -= (*it)->getFood();
+            viande -= (*it)->getMeat();
+            if (viande <= 0)
+            {
+                viande = 0;
+                break;
+            }
+        }
+        it++;
+    }
+}
+
+void Zoo::UpdateSeed()
+{
+    HabitatIterator it = m_habitats.begin();
+    while (it != m_habitats.end())
+    {        
+        if ((*it)->getType() == "poule")
+        {
+            viande -= (*it)->getMeat();
             if (viande <= 0)
             {
                 viande = 0;
@@ -280,9 +311,14 @@ string Zoo::getName()
     return m_name;
 }
 //Get value of the zoo
-float Zoo::getFood()
+float Zoo::getMeat()
 {
     return viande;
+}
+
+float Zoo::getSeed()
+{
+    return graines;
 }
 //Get the budget of the zoo
 float Zoo::getBudget()
@@ -434,10 +470,16 @@ int Zoo::GetHabitatNbrByRace(string race)
 SETTER
 */
 //Set the amount of food the user buy
-void Zoo::setFood(float food) 
+void Zoo::setMeat(float food) 
 {
     viande = food;
 }
+
+void Zoo::setSeed(float Seed) 
+{
+    graines = Seed;
+}
+
 //Set the year
 void Zoo::setYear(float Year) 
 {

@@ -17,7 +17,7 @@ public:
     void getAnimal();
     virtual int getCapacity();
     virtual string getType();
-    virtual float getFood();
+    virtual float getMeat();
 };
 
 #endif // EAGLEHABITAT_H

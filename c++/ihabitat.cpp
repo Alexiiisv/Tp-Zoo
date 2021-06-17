@@ -86,6 +86,20 @@ string IHabitat::UpdateAge(int id)
         return "Alive";
 }
 
+void IHabitat::UpdateMalade(int year, int month)
+{
+    AnimalIterator it = m_animals.begin();
+    while (it != m_animals.end())
+    {
+        if (year > 0 && month == 1)
+        {
+            (*it)->SetMaladeOnce(0);
+        }
+        it++;
+    }
+    
+}
+
 IHabitat::~IHabitat()
 {
     
@@ -96,25 +110,28 @@ void IHabitat::getAnimal()
     AnimalIterator it = m_animals.begin();
     while (it != m_animals.end())
     {
-        cout << "Nom\t\t" << (*it)->getName() << endl;
-        cout << "Sexe\t\t" << (*it)->getGender() << endl;
-        cout << "Age\t\t" << (*it)->getAge()/12 << " ans " << (*it)->getAge()%12 << " mois" << endl;
-        cout << "race\t\t" << (*it)->getRace() << endl;
-        cout << "food\t\t" << (*it)->getFood() << endl;
-        cout << "fertilite\t" << (*it)->getFertile() << endl;
+        cout << "-------------------" << endl;
+        cout << "Nom\t\t\t" << (*it)->getName() << endl;
+        cout << "Sexe\t\t\t" << (*it)->getGender() << endl;
+        cout << "Age\t\t\t" << (*it)->getAge()/12 << " ans " << (*it)->getAge()%12 << " mois" << endl;
+        cout << "race\t\t\t" << (*it)->getRace() << endl;
+        cout << "food\t\t\t" << (*it)->getMeat() << endl;
+        cout << "fertilite\t\t" << (*it)->getFertile() << endl;
+        cout << "malade\t\t\t" << (*it)->getMalade() << endl;
+        cout << "deja tombe malade\t" << (*it)->getMaladeOnce() << endl;
         cout << "-------------------" << endl;
         it++;
     }
 }
 
-float IHabitat::getFood()
+float IHabitat::getMeat()
 {
     float food = 0;
     int fmenseinte = 0;
     AnimalIterator it = m_animals.begin();
     while (it != m_animals.end())
     {
-        food += (*it)->getFood()*30;
+        food += (*it)->getMeat()*30;
         
         
         it++;
@@ -206,7 +223,7 @@ float IHabitat::getSingleAnimalInfoI(string info, int id)
                 return (*it)->getAge();
             }else if (info == "Food")
             {
-                return (*it)->getFood();
+                return (*it)->getMeat();
             }
         }
         it++;

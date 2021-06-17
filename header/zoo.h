@@ -13,7 +13,7 @@ class Zoo
 {
     string m_name;
     HabitatList m_habitats;
-    float viande, budget;
+    float viande, graines, budget;
     int month, year;
     int tigre_Habitat, aigle_Habitat, poules_Habitat;
 public:
@@ -25,8 +25,10 @@ public:
     void FireHabitat(string Race);
     void NextMonth();
     void UpdateAge();
+    void UpdateMalade();
     void reproduction(int state);
-    void UpdateFood();
+    void UpdateMeat();
+    void UpdateSeed();
     void UpdateHabitat();
     void VolDanimal(string state);
     void UpdateBudget(float budget);
@@ -35,7 +37,8 @@ public:
 
     //getter
     string getName();
-    float getFood();
+    float getMeat();
+    float getSeed();
     float getBudget();
     int getMonth();
     int getYear();
@@ -52,7 +55,8 @@ public:
     void GetHabitatAnimal(string State);
 
     //setter
-    void setFood(float food);
+    void setMeat(float food);
+    void setSeed(float Seed);
     void setMonth(float month);
     void setYear(float year);
     void setBudget(float budget);

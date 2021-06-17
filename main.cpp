@@ -36,7 +36,7 @@ void infoZoo(Zoo zoo, bool nbEagleSuccess, bool moneySuccess, bool nbTotalVisito
     float food;
     while (info != 0)
     {
-        cout << "Que voulez-vous afficher ?\n1 | Infos sur les animaux\t\t2 | Nombre d'habitats\t\t0 pour quitter le menu\n3 | Quantite de nourriture\t\t4 | Les succes" << endl;
+        cout << "Que voulez-vous afficher ?\n1 | Infos sur les animaux\t\t2 | Nombre d'habitats\n3 | Quantite de nourriture\t\t4 | Les succes\t\t0 pour quitter le menu" << endl; //5 graines
         scanf("%d", &info);
 
         switch (info)
@@ -76,17 +76,23 @@ void infoZoo(Zoo zoo, bool nbEagleSuccess, bool moneySuccess, bool nbTotalVisito
         case 3: // Affiche la quantité de nourriture
             cout
                 << "Quantite de viande : "
-                << zoo.getFood()
+                << zoo.getMeat()
                 << endl;
             break;
         case 4: // Affiche les succès
             cout << std::boolalpha << nbEagleSuccess << "\t| Ami des aigles\tAvoir plus de 12 aigles" << endl;
             cout << std::boolalpha << moneySuccess << "\t| Riche as fuck\t\tAtteindre plus de 100000$" << endl;
-            cout << std::boolalpha << nbTotalVisitorSucess << "\t| Parc d'attraction\tAtteindre plus de 1000 visiteurs\n"
+            cout << std::boolalpha << nbTotalVisitorSucess << "\t| Parc d'attraction\tAtteindre plus de 1000 visiteurs"
                  << endl;
-            cout << std::boolalpha << nbTotalVisitorSucess << "\t| Parc d'attraction\tAtteindre plus de 1000 visiteurs\n"
+            cout << std::boolalpha << nbTotalVisitorSucess << "\t| Plus apprecie que les maisons closes\tAtteindre 150 en un seul mois\n"
                  << endl;
 
+            break;
+        case 5: // Affiche la quantité de nourriture
+            cout
+                << "Quantite de graine : "
+                << zoo.getSeed()
+                << endl;
             break;
         default:
             break;
@@ -300,10 +306,10 @@ void buyHabitats(int &eaglehabitat, Zoo &zoo)
 void actionMonth(Zoo &zoo, int &tigre, int &poules, int aigle, int eagleHabitat)
 {
     int whichRace = 0, habitat = 0, whatToBuy = 1, animal = 0;
-    float food;
+    float food, seed;
     while (whatToBuy != 0)
     {
-        cout << "Que voulez-vous faire :\nAcheter :\t1 | Habitats\t\t2 | Animaux\t\t3 | viandes\t\t0 pour quitter le menu\nVendre :\t4 | Habitats\t\t5 | Animaux" << endl;
+        cout << "Que voulez-vous faire :\nAcheter :\t1 | Habitats\t\t2 | Animaux\t\t3 | viandes\t\t4 | Graines\t\t0 pour quitter le menu\nVendre :\t5 | Habitat\t\t6 | Animaux" << endl;
         scanf("%d", &whatToBuy);
 
         switch (whatToBuy)
@@ -317,11 +323,18 @@ void actionMonth(Zoo &zoo, int &tigre, int &poules, int aigle, int eagleHabitat)
         case 3: // achat de viande
             cout << "Quelle quantite de viande voulez-vous acheter ? " << endl;
             scanf("%f", &food);
-            zoo.setFood(zoo.getFood() + food);
+            zoo.setMeat(zoo.getMeat() + food);
             zoo.UpdateBudget(-food * 5);
-            cout << zoo.getFood() << endl;
+            cout << zoo.getMeat() << endl;
             break;
-        case 4: // vente d'habitat
+        case 4: // achat de graine
+            cout << "Quelle quantite de graine voulez-vous acheter ? " << endl;
+            scanf("%f", &seed);
+            zoo.setSeed(zoo.getSeed() + seed);
+            zoo.UpdateBudget(-seed * 2.5);
+            cout << zoo.getSeed() << endl;
+            break;
+        case 5: // vente d'habitat
             cout << "Vendre un habitat de :\t1 | Tigre\t\t 2 | Poule\t\t3| Aigle" << endl;
             scanf("%d", &whichRace);
             switch (whichRace)
@@ -338,7 +351,7 @@ void actionMonth(Zoo &zoo, int &tigre, int &poules, int aigle, int eagleHabitat)
                 break;
             }
             break;
-        case 5: // vente d'animaux
+        case 6: // vente d'animaux
             cout << "Vendre un :\t1 | Tigre\t\t 2 | Poule\t\t3| Aigle\t\t4 | Coq" << endl;
             scanf("%d", &whichRace);
             switch (whichRace)
@@ -438,16 +451,15 @@ void specialEvent(Zoo &zoo)
     if (rottenEvent < 10)
     {
         cout << "VIANDE AVARIEE !!!!" << endl;
-        zoo.setFood(zoo.getFood() * 0.8);
-        cout << "tu n'as plus que " << zoo.getFood() << " de viandes." << endl;
+        zoo.setMeat(zoo.getMeat() * 0.8);
+        cout << "tu n'as plus que " << zoo.getMeat() << " de viandes." << endl;
     }
 }
 int main()
 {
     Zoo zoo("Zoo de la Montagne");
     zoo.setBudget(80000);
-    int month = 0, year = 0, nextMonth = 0;
-    int visitor = 0, all_visitors = 0;
+    int visitor = 0, all_visitors = 0, nextMonth = 0;
     int tiger = 0, chicken = 0, coq = 0;
     bool enoughMeat = false;
     bool nbEagleSuccess = false, moneySuccess = false, nbTotalVisitorSuccess = false, nbMonthVisitorsSuccess = false;
@@ -457,7 +469,7 @@ int main()
     {
         if (zoo.getMonth() != 0) // tous les mois sauf celui quand le code se lance
         {
-            visitor = Visitor(tiger, zoo.GetAnimalNbrByRace("aigle"), chicken, month); // calcul le nb de visiteur
+            visitor = Visitor(tiger, zoo.GetAnimalNbrByRace("aigle"), chicken, zoo.getMonth()); // calcul le nb de visiteur
             all_visitors += visitor;                                                   // calcul le nb de visiteurs total
 
             zoo.UpdateBudget(VisitorRevenue(visitor)); // calcul le revenue lié aux visiteurs
@@ -469,6 +481,7 @@ int main()
         {
             zoo.setMonth(1);
             zoo.setYear(1);
+            zoo.UpdateMalade();
             zoo.UpdateBudget(subvention(tiger, zoo.GetAnimalNbrByRace("aigle"), zoo.getMonth(), zoo.getYear()));
         }
         zoo.getInfo(); // affiche l'année, le mois et le budget, chaque mois
@@ -501,7 +514,7 @@ int main()
                 break;
             case 1: // Lorsque le mois est passé, met a jour la nourriture et l'age des animaux
                 zoo.UpdateAge();
-                zoo.UpdateFood();
+                zoo.UpdateMeat();
                 zoo.UpdateHabitat();
                 break;
             default:
@@ -510,18 +523,18 @@ int main()
             }
 
             cout << "consommation de viande des animaux : " << (((zoo.getAGender("Female", "aigle") * 9) + (zoo.getAGender("Male", "aigle") * 7.5))) << endl;
-            cout << "Quantite de nourriture : " << zoo.getFood() << endl;
+            cout << "Quantite de nourriture : " << zoo.getMeat() << endl;
             zoo.getInfo(); // Affiche la quantité de nourritre
-            Clear();
+            // Clear();
 
             checkSuccess(zoo, nbEagleSuccess, moneySuccess, all_visitors, nbTotalVisitorSuccess, nbMonthVisitorsSuccess, visitor); // Verifie si un succes a été débloqué
 
-            if (zoo.getFood() == 0) // CHECKING FOOD STORAGE
+            if (zoo.getMeat() == 0) // CHECKING FOOD STORAGE
             {
                 cout << "Attention !! Plus de viandes" << endl; // Affiche un message lorsqu'il n'y a plus de nourriture
                 enoughMeat = false;
             }
-            else if (zoo.getFood() < ((((zoo.getAGender("Female", "aigle") * 9) + (zoo.getAGender("Male", "aigle") * 7.5)) * 3)))
+            else if (zoo.getMeat() < ((((zoo.getAGender("Female", "aigle") * 9) + (zoo.getAGender("Male", "aigle") * 7.5)) * 3)))
             {
                 cout << "3 mois ou moins de viande restant" << endl; // Affiche un message lorsqu'il reste moins de 3 mois de viandes
                 enoughMeat = true;
@@ -534,6 +547,6 @@ int main()
     }
     // fin de la partie
     Clear();
-    cout << "La Partie est finie\nA la fin tu avais " << zoo.getBudget() << " dollars\nTon zoo a acceuilli " << all_visitors << " visiteurs sur " << year << " ans" << endl;
+    cout << "La Partie est finie\nA la fin tu avais " << zoo.getBudget() << " dollars\nTon zoo a acceuilli " << all_visitors << " visiteurs sur " << zoo.getYear() << " ans" << endl;
     return 0;
 }

@@ -16,7 +16,7 @@ public:
     virtual string getName();
     virtual string getRace();
     virtual string getGender();
-    virtual float getFood();
+    virtual float getMeat();
     virtual int getAge();
 };
 

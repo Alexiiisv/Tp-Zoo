@@ -9,20 +9,23 @@ Aigle::Aigle(string name, string race, string gender, float food, int age)
     IAnimal::SetAge(age);
     IAnimal::SetGender(gender);
     IAnimal::SetFood(food);
+    IAnimal::SetMaladeOnce(0);
     cout << age << endl;
-    if (age < 48 || age > 168)
+    if (age < 48 || age >= 168)
     {
         cout << "pas fertile" << endl;
         IAnimal::SetFertile(0);
+        IAnimal::SetMalade(0, 0);
     } else {
         cout << "fertile" << endl;
         IAnimal::SetFertile(1);
+        IAnimal::SetMalade(0, 1);
     }
     
 }
 Aigle::~Aigle()
 {
-    cout << " la pute " << endl;
+
 }
 
 string Aigle::getName()
@@ -50,7 +53,7 @@ void Aigle::UpdateAge()
     IAnimal::UpdateAge();
 }
 
-float Aigle::getFood()
+float Aigle::getMeat()
 {
-    return IAnimal::getFood();
+    return IAnimal::getMeat();
 }

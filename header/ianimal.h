@@ -9,7 +9,9 @@ class IAnimal
     string m_name;
     string m_race;
     string m_gender;
+    int m_malade;
     int m_fertile;
+    int m_Maladeonce = 0;
     int m_age;
     float m_food;
 
@@ -23,6 +25,8 @@ public:
     virtual void SetGender(string gender);
     virtual void SetFertile(int fertile);
     virtual void SetAge(int Age);
+    virtual void SetMaladeOnce(int Monce);
+    virtual void SetMalade(int malade, int fertile);
     virtual void SetFood(float food);
 
     //getter
@@ -30,8 +34,10 @@ public:
     virtual string getRace();
     virtual string getGender();
     virtual int getFertile();
+    virtual int getMalade();
+    virtual int getMaladeOnce();
     virtual int getAge();
-    virtual float getFood();
+    virtual float getMeat();
 
 };
 
