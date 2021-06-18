@@ -11,11 +11,20 @@ Zoo::Zoo(string name)
     month = 0;
     viande = 0;
     year = 0;
+    aigle_Habitat = 0;
+    poules_Habitat = 0;
+    tigre_Habitat = 0;
 }
 //Add an animal to a specific habitat
 void Zoo::addAnimal(IAnimal *animal, int habitat)
 {
+    cout << animal->getRace() << endl;
     if (animal->getRace() == "aigle")
+    {
+        cout << "tu as acheter un " << animal->getRace() << endl;
+        setAnimalHabitat(animal, habitat);
+    }
+    if (animal->getRace() == "poule")
     {
         cout << "tu as acheter un " << animal->getRace() << endl;
         setAnimalHabitat(animal, habitat);
@@ -30,6 +39,11 @@ void Zoo::addHabitat(IHabitat *habitat)
     {
         aigle_Habitat += 1;
         budget -= 2000;
+    }
+    if (habitat->getType() == "poule")
+    {
+        poules_Habitat += 1;
+        budget -= 300;
     }
 }
 //Sell a habitat
@@ -227,10 +241,10 @@ void Zoo::UpdateSeed()
     {        
         if ((*it)->getType() == "poule")
         {
-            viande -= (*it)->getMeat();
-            if (viande <= 0)
+            graines -= (*it)->getMeat();
+            if (graines <= 0)
             {
-                viande = 0;
+                graines = 0;
                 break;
             }
         }
@@ -417,7 +431,7 @@ void Zoo::GetHabitatAnimal(string State)
         {
             cout << "habitat " << (*it)->getType() << " " << i << endl;
             (*it)->getAnimal();
-        } else if (stoi(State) == i)
+        } else if (State != "poule" && State != "aigle" && State != "tigre" && stoi(State) == i)
         {
             cout << "habitat " << (*it)->getType()  << " " << i <<  endl;
             (*it)->getAnimal();
@@ -439,7 +453,7 @@ int Zoo::GetAnimalNbrByRace(string State)
         {
             result += (*it)->getnbrAnimals();
             result -= (*it)->getEagleEggs()/2;
-        }else if (id == stoi(State))
+        }else if (State != "poule" && State != "aigle" && State != "tigre" && id == stoi(State))
         {
             return (*it)->getnbrAnimals();
         }
@@ -502,12 +516,16 @@ void Zoo::setAnimalHabitat(IAnimal* animal, int HAnimal)
     HabitatIterator it = m_habitats.begin();
     while (it != m_habitats.end())
     {
-        if (i == HAnimal)
+        cout << "lelelelel" << endl;
+        if (i == HAnimal && (*it)->getType() == animal->getRace())
         {
             (*it)->addAnimal(animal);
             break;
+        } else if (i != HAnimal && (*it)->getType() == animal->getRace())
+        {
+            i++;
         }
+        
         it++;
-        i++;
     }
 }

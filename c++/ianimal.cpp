@@ -93,6 +93,8 @@ void IAnimal::UpdateAge()
 {
     srand(time(0));
     m_age += 1;
+    if (m_race == "aigle")
+    {
     if (m_age == 48 && m_fertile == 0)
     {
         m_fertile = 1;
@@ -104,7 +106,7 @@ void IAnimal::UpdateAge()
         cout << "plus fertile" << endl;
     }
     cout << "lel1" << endl;
-    if (getMalade() == 0 && rand()%10 < 7 && getMaladeOnce() == 0)
+    if (getMalade() == 0 && rand()%10 == 1 && getMaladeOnce() == 0)
     {
         SetMalade(1, 0);
         SetMaladeOnce(1);
@@ -122,5 +124,20 @@ void IAnimal::UpdateAge()
         }
         cout << getName() << " n'est plus malade" << endl;
     }
+    }
+    else if (m_race == "poule")
+    {
+        if (m_age == 48 && m_fertile == 0)
+        {
+            m_fertile = 1;
+            cout << "fertile" << endl;
+        }
+        if (m_age == 168 && m_fertile == 1)
+        {
+            m_fertile = 0;
+            cout << "plus fertile" << endl;
+        }
+    }
+    
     
 }
