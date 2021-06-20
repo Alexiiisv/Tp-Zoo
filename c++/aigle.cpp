@@ -2,6 +2,7 @@
 #include "../header/aigle.h"
 #include <iostream>
 using namespace std;
+int id = 1;
 Aigle::Aigle(string name, string race, string gender, float food, int age)
     :IAnimal(name)
 {
@@ -9,6 +10,9 @@ Aigle::Aigle(string name, string race, string gender, float food, int age)
     IAnimal::SetAge(age);
     IAnimal::SetGender(gender);
     IAnimal::SetFood(food);
+    IAnimal::SetId(id);
+    id++;
+    IAnimal::SetMat(0);
     IAnimal::SetMaladeOnce(0);
     cout << age << endl;
     if (age < 48 || age >= 168)

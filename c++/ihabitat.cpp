@@ -38,7 +38,6 @@ void IHabitat::delAnimal(int qtt, string state)
             it++;
         }
     }
-
     int random = rand()%2;
     if (m_capacity < nbr_animals && state == "Plein" && random == 1 && child)
     {
@@ -100,6 +99,29 @@ void IHabitat::UpdateMalade(int year, int month)
     
 }
 
+void IHabitat::UpdMating()
+{
+    //"Female" "Male"
+    AnimalIterator an1 = m_animals.begin();
+    while (an1 != m_animals.end())
+    {
+        if ((*an1)->getMat() == 0)
+        {
+            AnimalIterator an2 = m_animals.begin();
+            while (an2 != m_animals.end())
+            {
+                if ((*an2)->getGender() != (*an1)->getGender() && (*an2)->getId() != (*an1)->getId() && (*an2)->getMat() == 0)
+                {
+                    (*an1)->SetMat((*an2)->getId());
+                    (*an2)->SetMat((*an1)->getId());
+                }
+                an2++;
+            }
+        }
+        an1++;
+    }
+}
+
 IHabitat::~IHabitat()
 {
     
@@ -112,6 +134,11 @@ void IHabitat::getAnimal()
     {
         cout << "-------------------" << endl;
         cout << "Nom\t\t\t" << (*it)->getName() << endl;
+        if ((*it)->getRace() == "aigle")
+        {
+        cout << "Id\t\t\t" << (*it)->getId() << endl;
+        cout << "mate\t\t\t" << (*it)->getMat() << endl;
+        }
         cout << "Sexe\t\t\t" << (*it)->getGender() << endl;
         cout << "Age\t\t\t" << (*it)->getAge()/12 << " ans " << (*it)->getAge()%12 << " mois" << endl;
         cout << "race\t\t\t" << (*it)->getRace() << endl;

@@ -155,61 +155,64 @@ void Zoo::reproduction(int state)
     HabitatIterator it = m_habitats.begin();
     while (it != m_habitats.end())
     {  
-        if (state == 3)
+        if ((*it)->getType() == "aigle")
         {
-           
-            F = (*it)->getAGender("Female", "aigle", 2);
-            M = (*it)->getAGender("Male", "aigle", 2);
-            cout << "\tfemme " << F << "\n\thomme " << M << endl;
-            if (F >= M)
+            if (state == 3)
             {
-                int ratio = F - M;
-                int nbFemellePonte = F - ratio;
-                (*it)->SetEagleEggs(nbFemellePonte * 2); // chaque aigle femelle pond 2 oeufs
-                cout << "nombre d'oeufs d'aigle : " << (*it)->getEagleEggs() << endl;
-            }
-        }
-        else if (state == 5)
-        {
-            // range over each eggs to see if they die
-            for (int i = 0; i < (*it)->getEagleEggs(); i++)
-            {
-                randDeath = rand() % 2; // Generate 0 or 1
-                // Lorsqu'un aigle est mort né
-                if (randDeath == 1)
+            
+                F = (*it)->getAGender("Female", "aigle", 2);
+                M = (*it)->getAGender("Male", "aigle", 2);
+                cout << "\tfemme " << F << "\n\thomme " << M << endl;
+                if (F >= M)
                 {
-                    (*it)->SetEagleEggs((*it)->getEagleEggs()-1);
-                    mort++;
+                    int ratio = F - M;
+                    int nbFemellePonte = F - ratio;
+                    (*it)->SetEagleEggs(nbFemellePonte * 2); // chaque aigle femelle pond 2 oeufs
+                    cout << "nombre d'oeufs d'aigle : " << (*it)->getEagleEggs() << endl;
                 }
             }
-            cout << "nb de bb aigles : " << (*it)->getEagleEggs() << endl;
-            cout << "nb de bb aigles MORT : " << mort << endl;
-            for (int i = 0; i < (*it)->getEagleEggs(); i++)
+            else if (state == 5)
             {
-                srand(time(0));
-                int randSex = rand() % 2;
-                float food;
-                string sex;
-                char name[16];
-
-                switch (randSex)
+                // range over each eggs to see if they die
+                for (int i = 0; i < (*it)->getEagleEggs(); i++)
                 {
-                case 0:
-                    sex = "Male";
-                    food = 0.25;
-                    break;
-                default:
-                    sex = "Female";
-                    food = 0.3;
-                    break;
+                    randDeath = rand() % 2; // Generate 0 or 1
+                    // Lorsqu'un aigle est mort né
+                    if (randDeath == 1)
+                    {
+                        (*it)->SetEagleEggs((*it)->getEagleEggs()-1);
+                        mort++;
+                    }
                 }
-                cout << "Donnez un nom au bebe aigle numero " << i << endl;
-                scanf("%15s", &name);
-                cout << name << endl;
+                cout << "nb de bb aigles : " << (*it)->getEagleEggs() << endl;
+                cout << "nb de bb aigles MORT : " << mort << endl;
+                for (int i = 0; i < (*it)->getEagleEggs(); i++)
+                {
+                    srand(time(0));
+                    int randSex = rand() % 2;
+                    float food;
+                    string sex;
+                    char name[16];
 
-                (*it)->addAnimal(new Aigle(name, "aigle", sex, food, 0));
+                    switch (randSex)
+                    {
+                    case 0:
+                        sex = "Male";
+                        food = 0.25;
+                        break;
+                    default:
+                        sex = "Female";
+                        food = 0.3;
+                        break;
+                    }
+                    cout << "Donnez un nom au bebe aigle numero " << i << endl;
+                    scanf("%15s", &name);
+                    cout << name << endl;
+
+                    (*it)->addAnimal(new Aigle(name, "aigle", sex, food, 0));
+                }
+                (*it)->SetEagleEggs(0);
             }
-            (*it)->SetEagleEggs(0);
         }
         
         it++;
@@ -261,6 +264,7 @@ void Zoo::UpdateHabitat()
         if ((*it)->getType() == "aigle")
         {
             (*it)->delAnimal(rand()%5, "Plein");
+            (*it)->UpdMating();
         }
         
         it++;

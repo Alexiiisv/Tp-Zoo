@@ -24,6 +24,7 @@ public:
     void delAnimal(int qtt, string state);
     string UpdateAge(int id);
     virtual void UpdateMalade(int year, int month);
+    virtual void UpdMating();
     
     virtual ~IHabitat();
     virtual void getAnimal();
