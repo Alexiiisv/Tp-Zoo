@@ -32,7 +32,7 @@ public:
     void UpdateHabitat();
     void VolDanimal(string state);
     void UpdateBudget(float budget);
-    void SwitchHabitat(int hab1, int IdAni, int hab2);
+    void SwitchHabitat(int hab1, int IdAni, int hab2, string race);
 
 
     //getter

@@ -129,11 +129,13 @@ IHabitat::~IHabitat()
 
 void IHabitat::getAnimal()
 {
+    int id= 1;
     AnimalIterator it = m_animals.begin();
     while (it != m_animals.end())
     {
         cout << "-------------------" << endl;
-        cout << "Nom\t\t\t" << (*it)->getName() << endl;
+        cout << (*it)->getRace() << "\t" << id << endl;
+        cout << "\nNom\t\t\t" << (*it)->getName() << endl;
         if ((*it)->getRace() == "aigle")
         {
         cout << "Id\t\t\t" << (*it)->getId() << endl;
@@ -141,13 +143,13 @@ void IHabitat::getAnimal()
         }
         cout << "Sexe\t\t\t" << (*it)->getGender() << endl;
         cout << "Age\t\t\t" << (*it)->getAge()/12 << " ans " << (*it)->getAge()%12 << " mois" << endl;
-        cout << "race\t\t\t" << (*it)->getRace() << endl;
         cout << "food\t\t\t" << (*it)->getMeat() << endl;
         cout << "fertilite\t\t" << (*it)->getFertile() << endl;
         cout << "malade\t\t\t" << (*it)->getMalade() << endl;
         cout << "deja tombe malade\t" << (*it)->getMaladeOnce() << endl;
         cout << "-------------------" << endl;
         it++;
+        id++;
     }
 }
 

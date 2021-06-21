@@ -141,24 +141,62 @@ void checkSuccess(Zoo zoo, bool &nbEagleSuccess, bool &moneySuccess, int all_vis
 // Changer un animal d'habitat
 void switchHabitat(Zoo zoo)
 {
-    int initialHabitat = 0, animal = 0, destination = 0, skip = 1;
+    int initialHabitat = 0, animal = 0, destination = 0, skip = 1, whichAnimal = 0;
 
-    while (skip != 0)
+    while (whichAnimal != 1 && whichAnimal != 2 && whichAnimal != 3 && whichAnimal != 4)
     {
-        cout << "De quel habitat voulez-vous deplacer l'animal\nVous avez " << zoo.GetHabitatNbrByRace("aigle") << " habitat pour les aigles" << endl;
-        scanf("%d", &initialHabitat);
-        cout << "Quel animal de cet habitat voulez-vous deplacer ?\n"
-             << endl;
-        zoo.GetHabitatAnimal(to_string(initialHabitat));
-        scanf("%d", &animal);
-        cout << "Dans quel habitat voulez-vous placer l'animal choisi" << endl;
-        zoo.GetHabitatAnimal("aigle");
-        scanf("%d", &destination);
+        cout << "Quel animal voulez-vous deplacer ?\n1 | aigle\t\t2 | tigre\t\t3 | poule/coq\t\t0 | quitter le menu" << endl;
+        scanf("%d", &whichAnimal);
 
-        cout << "Appuyez sur 0 pour confirmer" << endl;
-        scanf("%d", &skip);
+        switch (whichAnimal)
+        {
+        case 1: // Déplacer un aigle
+            while (skip != 0)
+            {
+                // choix de l'habitat de départ
+                cout << "De quel habitat voulez-vous deplacer l'animal\nVous avez " << zoo.GetHabitatNbrByRace("aigle") << " habitat pour les aigles" << endl;
+                scanf("%d", &initialHabitat);
+                // choix de l'animal a déplacer
+                cout << "Quel animal de cet habitat voulez-vous deplacer ?\n"
+                     << endl;
+                zoo.GetHabitatAnimal(to_string(initialHabitat));
+                scanf("%d", &animal);
+                // choix de l'habitat de destination
+                cout << "Dans quel habitat voulez-vous placer l'animal choisi" << endl;
+                zoo.GetHabitatAnimal("aigle");
+                scanf("%d", &destination);
+
+                cout << "Appuyez sur 0 pour confirmer" << endl;
+                scanf("%d", &skip);
+            }
+            zoo.SwitchHabitat(initialHabitat, animal, destination, "aigle");
+            break;
+        case 2: // Déplacer un tigre
+            break;
+        case 3:
+            while (skip != 0)
+            {
+                // choix de l'habitat de départ
+                cout << "De quel habitat voulez-vous deplacer l'animal\nVous avez " << zoo.GetHabitatNbrByRace("poule") << " habitat pour les poules" << endl;
+                scanf("%d", &initialHabitat);
+                // choix de l'animal a déplacer
+                cout << "Quel animal de cet habitat voulez-vous deplacer ?\n" << endl;
+                zoo.GetHabitatAnimal(to_string(initialHabitat));
+                scanf("%d", &animal);
+                // choix de l'habitat de destination
+                cout << "Dans quel habitat voulez-vous placer l'animal choisi" << endl;
+                zoo.GetHabitatAnimal("poule");
+                scanf("%d", &destination);
+
+                cout << "Appuyez sur 0 pour confirmer" << endl;
+                scanf("%d", &skip);
+            }
+            zoo.SwitchHabitat(initialHabitat, animal, destination, "poule");
+            break;
+        default:
+            break;
+        }
     }
-    zoo.SwitchHabitat(initialHabitat, animal, destination);
 }
 // Get visitors revenues
 int VisitorRevenue(int visitor)

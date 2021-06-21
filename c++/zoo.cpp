@@ -1,5 +1,6 @@
 #include "../header/zoo.h"
 #include "../header./aigle.h"
+#include "../header./poule.h"
 
 #include <time.h>
 #include <iostream>
@@ -309,18 +310,26 @@ void Zoo::UpdateBudget(float Budget)
     budget += Budget;
 }
 //switch a animal from the habitat 1 to the habitat 2
-void Zoo::SwitchHabitat(int hab1, int IdAni, int hab2)
+void Zoo::SwitchHabitat(int hab1, int IdAni, int hab2, string race)
 {
     HabitatIterator it = m_habitats.begin();
     while (it != m_habitats.end())
     {
-        if ((*it) == m_habitats[hab1-1])
+        if ((*it) == m_habitats[hab1-1] && race == "aigle")
         {
             m_habitats[hab2-1]->addAnimal( new Aigle((*it)->getSingleAnimalInfoS("Name", IdAni-1), (*it)->getSingleAnimalInfoS("Race", IdAni-1), (*it)->getSingleAnimalInfoS("Gender", IdAni-1), (*it)->getSingleAnimalInfoI("Food", IdAni-1), (*it)->getSingleAnimalInfoI("Age", IdAni-1))); //zoo.addAnimal(new Aigle(nom, "aigle", gender[genre], food, age), habitat - 1);
             m_habitats[hab2-1]->getAnimal();
             m_habitats[hab1-1]->delAnimal(IdAni-1, "Deplacement");
             break;
         }
+        else if ((*it) == m_habitats[hab1-1] && race == "poule")
+        {
+            m_habitats[hab2-1]->addAnimal( new Poule((*it)->getSingleAnimalInfoS("Name", IdAni-1), (*it)->getSingleAnimalInfoS("Race", IdAni-1), (*it)->getSingleAnimalInfoI("Food", IdAni-1), (*it)->getSingleAnimalInfoI("Age", IdAni-1))); //zoo.addAnimal(new Poule(randomStr(6), "poule", 0.15, 6), habitat - 1);
+            m_habitats[hab2-1]->getAnimal();
+            m_habitats[hab1-1]->delAnimal(IdAni-1, "Deplacement");
+            break;
+        }
+        
     it++;
     }
 }
