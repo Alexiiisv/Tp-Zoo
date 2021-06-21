@@ -217,13 +217,14 @@ void buyAnimal(Zoo &zoo)
     char nom[16];
     int whatToBuy = 1, choix_age = 0, age = 0, genre = 10, habitat = 0;
     float food;
+    bool nomoni = true;
     string gender[2] = {"Female", "Male"};
     cout << "que voulez-vous acheter ?\n3 | aigles\t\t4 | tigres\t\t0 | pour quitter le menu\n5 | poules\t\t6 | coq\nentrez un des numeros pour acheter un animal" << endl;
     scanf("%d", &whatToBuy);
     if (whatToBuy == 3)
     {
 
-        if (zoo.GetHabitatNbrByRace("aigle") > 0)
+        if (zoo.GetHabitatNbrByRace("aigle") > 0 && zoo.getBudget() >= 1000)
         {
             while (genre != 0 && genre != 1)
             {
@@ -240,18 +241,46 @@ void buyAnimal(Zoo &zoo)
                 {
                 case 1:
                     cout << "Enfant" << endl;
-                    zoo.UpdateBudget(-1000);
-                    age = 120 / 10 / 1 / 2;
+                    if (zoo.getBudget() - 1000 < 0)
+                    {
+                        nomoni = false;
+                        cout << "t'as pas la tune pour acheter un aigle" << endl;
+                        break;
+                    }
+                    else if (zoo.getBudget() - 1000 >= 0)
+                    {
+                        zoo.UpdateBudget(-1000);
+                        age = 120 / 10 / 1 / 2;
+                    }
                     break;
                 case 2:
                     cout << "Adulte" << endl;
-                    zoo.UpdateBudget(-4000);
-                    age = 12 * 4;
+                    if (zoo.getBudget() - 4000 < 0)
+                    {
+                        nomoni = false;
+                        cout << "t'as pas la tune pour acheter un aigle" << endl;
+                        break;
+                    }
+                    else if (zoo.getBudget() - 4000 >= 0)
+                    {
+                        zoo.UpdateBudget(-4000);
+                        age = 12 * 4;
+                    }
                     break;
                 case 3:
                     cout << "Vieux" << endl;
-                    zoo.UpdateBudget(-2000);
-                    age = 12 * 14;
+
+                    if (zoo.getBudget() - 2000 < 0)
+                    {
+                        nomoni = false;
+                        cout << "t'as pas la tune pour acheter un aigle" << endl;
+                        break;
+                    }
+                    else if (zoo.getBudget() - 2000 >= 0)
+                    {
+                        zoo.UpdateBudget(-2000);
+                        age = 12 * 14;
+                    }
                     break;
                 default:
                     break;
@@ -261,52 +290,65 @@ void buyAnimal(Zoo &zoo)
                     choix_age = 0;
                 }
             }
-
-            switch (genre)
+            if (nomoni)
             {
-            case 0: // consommation de viande aigle femelle
-                food = 0.3;
-                break;
-
-            default: // consommation de viande aigle male
-                food = 0.25;
-                break;
-            }
-            cout << habitat << endl;
-
-            while (habitat == 0)
-            {
-                cout << "Dans quelle habitat voulez-vous l'introduire ?\nVous avez " << zoo.GetHabitatNbrByRace("aigle") << " d'habitat pour les aigles" << endl;
-                scanf("%d", &habitat);
-                if (habitat > zoo.GetHabitatNbrByRace("aigle"))
+                switch (genre)
                 {
-                    habitat = 0;
+                case 0: // consommation de viande aigle femelle
+                    food = 0.3;
+                    break;
+
+                default: // consommation de viande aigle male
+                    food = 0.25;
+                    break;
                 }
+                cout << habitat << endl;
+
+                while (habitat == 0)
+                {
+                    cout << "Dans quelle habitat voulez-vous l'introduire ?\nVous avez " << zoo.GetHabitatNbrByRace("aigle") << " d'habitat pour les aigles" << endl;
+                    scanf("%d", &habitat);
+                    if (habitat > zoo.GetHabitatNbrByRace("aigle"))
+                    {
+                        habitat = 0;
+                    }
+                }
+                zoo.addAnimal(new Aigle(nom, "aigle", gender[genre], food, age), habitat - 1);
             }
-            zoo.addAnimal(new Aigle(nom, "aigle", gender[genre], food, age), habitat - 1);
+
             habitat = 0;
         }
-        else
+        else if (zoo.GetHabitatNbrByRace("aigle") == 0)
         {
-            cout << "Vous n'avez pas d'habitat d'aigle ! Veuillez en acheter un\n";
+            cout << "Vous n'avez pas d'habitat d'aigle ! Veuillez en acheter un" << endl;
+        }
+        else if (zoo.getBudget() < 1000)
+        {
+            cout << "Vous n'avez pas assez d'argent pour acheter un aigle" << endl;
         }
     }
     else if (whatToBuy == 5)
     {
-        if (zoo.GetHabitatNbrByRace("poule") > 0)
+        if (zoo.getBudget() - 20 >= 0)
         {
-            while (habitat == 0)
+            if (zoo.GetHabitatNbrByRace("poule") > 0)
             {
-                cout << "Dans quelle habitat voulez-vous l'introduire ?\nVous avez " << zoo.GetHabitatNbrByRace("poule") << " d'habitat pour les poules" << endl;
-                scanf("%d", &habitat);
-                if (habitat > zoo.GetHabitatNbrByRace("poule"))
+                while (habitat == 0)
                 {
-                    habitat = 0;
+                    cout << "Dans quelle habitat voulez-vous l'introduire ?\nVous avez " << zoo.GetHabitatNbrByRace("poule") << " d'habitat pour les poules" << endl;
+                    scanf("%d", &habitat);
+                    if (habitat > zoo.GetHabitatNbrByRace("poule"))
+                    {
+                        habitat = 0;
+                    }
                 }
+                zoo.UpdateBudget(-20);
+                zoo.addAnimal(new Poule(randomStr(6), "poule", 0.15, 6), habitat - 1);
+                habitat = 0;
             }
-            zoo.UpdateBudget(-20);
-            zoo.addAnimal(new Poule(randomStr(6), "poule", 0.15, 6), habitat - 1);
-            habitat = 0;
+        }
+        else
+        {
         }
     }
 }
@@ -324,7 +366,6 @@ void buyHabitats(Zoo &zoo)
             zoo.addHabitat(new EagleHabitat("aigle"));
             break;
         case 5: // achat habitat de poule
-            cout << "achat d'habitat de poules" << endl;
             zoo.addHabitat(new ChickenHabitat("poule"));
             break;
         default:
@@ -353,16 +394,31 @@ void actionMonth(Zoo &zoo)
         case 3: // achat de viande
             cout << "Quelle quantite de viande voulez-vous acheter ? " << endl;
             scanf("%f", &food);
-            zoo.setMeat(zoo.getMeat() + food);
-            zoo.UpdateBudget(-food * 5);
-            cout << zoo.getMeat() << endl;
+            if (zoo.getBudget() - (food * 5) >= 0)
+            {
+                zoo.setMeat(zoo.getMeat() + food);
+                zoo.UpdateBudget(-food * 5);
+                cout << zoo.getMeat() << endl;
+            }
+            else
+            {
+                cout << "Vous n'avez pas assez d'argent pour acheter " << food << " de viande" << endl;
+            }
             break;
         case 4: // achat de graine
             cout << "Quelle quantite de graine voulez-vous acheter ? " << endl;
             scanf("%f", &seed);
-            zoo.setSeed(zoo.getSeed() + seed);
-            zoo.UpdateBudget(-seed * 2.5);
-            cout << zoo.getSeed() << endl;
+            if (zoo.getBudget() - (seed * 2.5) >= 0)
+            {
+                zoo.setSeed(zoo.getSeed() + seed);
+                zoo.UpdateBudget(-seed * 2.5);
+                cout << zoo.getSeed() << endl;
+            }
+            else
+            {
+                cout << "Vous n'avez pas assez d'argent pour acheter " << seed << " de graines" << endl;
+            }
+
             break;
         case 5: // vente d'habitat
             cout << "Vendre un habitat de :\t1 | Tigre\t\t 2 | Poule\t\t3| Aigle" << endl;

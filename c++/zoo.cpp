@@ -34,16 +34,22 @@ void Zoo::addAnimal(IAnimal *animal, int habitat)
 //Buy a habitat
 void Zoo::addHabitat(IHabitat *habitat)
 {
-    m_habitats.push_back(habitat);
-    if (habitat->getType() == "aigle")
+    if (habitat->getType() == "aigle" && budget-2000 >= 0)
     {
         aigle_Habitat += 1;
         budget -= 2000;
+        m_habitats.push_back(habitat);
+        cout << "achat d'habitat d'aigles" << endl;
     }
-    if (habitat->getType() == "poule")
+    else if (habitat->getType() == "poule" && budget-300 >= 0)
     {
         poules_Habitat += 1;
         budget -= 300;
+        m_habitats.push_back(habitat);
+        cout << "achat d'habitat de poules" << endl;
+    }
+    else {
+        cout << "tu n'as pas assez d'argent pour acheter un habitat pour les " << habitat->getType() << endl;
     }
 }
 //Sell a habitat
