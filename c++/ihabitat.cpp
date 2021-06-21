@@ -39,12 +39,22 @@ void IHabitat::delAnimal(int qtt, string state)
         }
     }
     int random = rand()%2;
-    if (m_capacity < nbr_animals && state == "Plein" && random == 1 && child)
+    if (m_capacity < nbr_animals && state == "Plein" && random == 1 && child && m_type == "aigle")
     {
         cout << "un animal va canner : " << m_animals[qtt]->getName() << endl;
         m_animals.erase(m_animals.begin()+qtt);
         nbr_animals--;
     }
+    else if (m_capacity < nbr_animals && state == "Plein" && random == 1 && child && m_type == "poule")
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            m_animals.erase(m_animals.begin());
+            nbr_animals--;
+        }
+        
+    }
+    
     if (state == "Deplacement")
     {
         cout << "un animal a ete deplace : " << m_animals[qtt]->getName() << endl;
@@ -285,6 +295,37 @@ int IHabitat::getAGender(string gender, string race, int age) {
                 result +=1;
             }
             else if (age == 3 && ((*it)->getAge() > 168 && (*it)->getAge() <= 300 )) //vieux
+            {
+                result +=1;
+            }
+        }
+        it++;
+    }
+    
+    
+    return result;
+}
+
+int IHabitat::getARace(string race, int age) {
+    int result = 0;
+    AnimalIterator it = m_animals.begin();
+    while (it != m_animals.end())
+    {
+        if ((*it)->getRace() == race)
+        {
+            if (age == 4)
+            {
+                result +=1;
+            }
+            else if (age == 1 && ((*it)->getAge() >= 0 && (*it)->getAge() < 6 )) //enfant
+            {
+                result +=1;
+            }
+            else if (age == 2 && ((*it)->getAge() >= 6 && (*it)->getAge() < 64 )) //adulte
+            {
+                result +=1;
+            }
+            else if (age == 3 && ((*it)->getAge() > 64 && (*it)->getAge() <= 180 )) //vieux
             {
                 result +=1;
             }

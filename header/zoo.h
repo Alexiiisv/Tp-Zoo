@@ -26,7 +26,9 @@ public:
     void NextMonth();
     void UpdateAge();
     void UpdateMalade();
-    void reproduction(int state);
+    void ReproductionAigle(int state);
+    void ReproductionPoule(int date);
+    // void reproduction(int state);
     void UpdateMeat();
     void UpdateSeed();
     void UpdateHabitat();
@@ -45,6 +47,7 @@ public:
     int getHAigle();
     int getHTigre();
     int getHPoules();
+    float getConsobyRace(string race);
     int getAGender(string gender, string race);
     void getInfo();
     void getAllInfo(string race);

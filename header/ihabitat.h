@@ -37,6 +37,7 @@ public:
     virtual string getSingleAnimalInfoS(string info, int id);
     virtual string getType();
     int getAGender(string gender, string race, int age);
+    int getARace(string Race, int age);
     virtual void SetCapacity(int capacity);
     virtual void SetEagleEggs(int eagleEggs);
 };
