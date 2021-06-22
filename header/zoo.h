@@ -27,6 +27,7 @@ public:
     void UpdateAge();
     void UpdateMalade();
     void ReproductionAigle(int state);
+    void ReproductionTigre();
     void ReproductionPoule(int date);
     // void reproduction(int state);
     void UpdateMeat();

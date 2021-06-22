@@ -88,7 +88,11 @@ void IHabitat::delAnimal(int qtt, string state)
 string IHabitat::UpdateAge(int id)
 {
         m_animals[id]->UpdateAge();
-        if (m_animals[id]->getAge() == 300)
+        if (m_animals[id]->getAge() == 300 && m_type == "aigle")
+        {
+            return "A Kill";
+        }
+        if (m_animals[id]->getAge() == 180 && m_type == "poule")
         {
             return "A Kill";
         }
@@ -179,14 +183,17 @@ float IHabitat::getMeat()
     food += (0.3*fmenseinte)*30;
     return food;
 }
-
+bool IHabitat::getAccouche()
+{
+    return accouche;
+}
 int IHabitat::getAnimalValue(int IdAni)
 {
     int id = 1;
     AnimalIterator it = m_animals.begin();
     while (it != m_animals.end())
     {
-        if (IdAni == id)
+        if (IdAni == id && (*it)->getRace() == "aigle")
         {
             if ((*it)->getAge() < 48) //inferieur a 4ans
             {
@@ -202,6 +209,31 @@ int IHabitat::getAnimalValue(int IdAni)
             }
             
         }
+        else if (IdAni == id && (*it)->getRace() == "poule")
+        {
+            return 10;
+        }
+        else if (IdAni == id && (*it)->getRace() == "coq")
+        {
+            return 20;
+        }
+        else if (IdAni == id && (*it)->getRace() == "tigre")
+        {
+            if ((*it)->getAge() < 48) //inferieur a 4ans
+            {
+                return 1500;
+            }
+            if ((*it)->getAge() >= 48 && (*it)->getAge() < 168) //entre 4ans et 14ans
+            {
+                return 60000;
+            }
+            if ((*it)->getAge() >= 168 && (*it)->getAge() < 300) //entre 14ans et 25ans
+            {
+                return 10000;
+            }
+            
+        }
+        else 
         it++;
         id++;
     }
@@ -220,6 +252,11 @@ void IHabitat::SetCapacity(int capacity)
 int IHabitat::getCapacity()
 {
     return m_capacity;
+}
+
+int IHabitat::getTbb()
+{
+    return tbb;
 }
 
 int IHabitat::getEagleEggs()
@@ -340,4 +377,12 @@ int IHabitat::getARace(string race, int age) {
 void IHabitat::SetEagleEggs(int eagleEggs)
 {
     EagleEggs = eagleEggs;
+}
+void IHabitat::SetTbb(int Tbb)
+{
+    tbb = Tbb;
+}
+void IHabitat::setAccouche(bool Accouche)
+{
+    accouche = Accouche;
 }

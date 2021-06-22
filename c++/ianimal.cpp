@@ -118,31 +118,28 @@ void IAnimal::UpdateAge()
         if (m_age == 48 && m_fertile == 0)
         {
             m_fertile = 1;
-            cout << "fertile" << endl;
+            cout << "aigle fertile" << endl;
         }
 
         if (m_age == 168 && m_fertile == 1)
         {
             m_fertile = 0;
-            cout << "plus fertile" << endl;
+            cout << "aigle plus fertile" << endl;
         }
 
         if (m_mat != 0 && m_age < 168 && m_age >= 48)
         {
             m_fertile = 1;
-            cout << "devenue fidèle" << endl;
+            cout << "aigle devenue fidèle" << endl;
         }
         
-
-        cout << "lel1" << endl;
-        if (getMalade() == 0 && rand()%10 == 1 && getMaladeOnce() == 0)
+        if (getMalade() == 0 && rand()%5 == 1 && getMaladeOnce() == 0)
         {
             SetMalade(1, 0);
             SetMaladeOnce(1);
             age = getAge();
             cout << getName() << " est tombe malade" << endl;
         }
-        cout << getAge() << " lel2 " << age+1 << endl;
         if (getMalade() == 1 && age+1 == getAge() && getMaladeOnce() == 1)
         {
             if (getFertile() == 1)
@@ -154,19 +151,58 @@ void IAnimal::UpdateAge()
             cout << getName() << " n'est plus malade" << endl;
         }
     }
-    else if (m_race == "poule")
+    else if (m_race == "poule" || m_race == "coq")
     {
-        if (m_age == 48 && m_fertile == 0)
+        //set la fertilité de la poule par rapport a son age
+        if (m_age == 6 && m_fertile == 0)
         {
             m_fertile = 1;
-            cout << "fertile" << endl;
+            cout << "poule / coq fertile" << endl;
         }
+        if (m_age == 96 && m_fertile == 1)
+        {
+            m_fertile = 0;
+            cout << "poule / coq plus fertile" << endl;
+        }
+
+        //maladie poule
+        if (getMalade() == 0 && rand()%10 == 1 && getMaladeOnce() == 0)
+        {
+            SetMalade(1, 0);
+            SetMaladeOnce(1);
+            age = getAge();
+            cout << getName() << " est tombe malade" << endl;
+        }
+        if (getMalade() == 1 && age+1 == getAge() && getMaladeOnce() == 1)
+        {
+            if (getFertile() == 1)
+            {
+                SetMalade(0, 1);
+            }else {
+                SetMalade(0, 0);
+            }
+            cout << getName() << " n'est plus malade" << endl;
+        }
+    }
+    else if (m_race == "tigre")
+    {
+        if (m_age == 48 && m_fertile == 0 && m_gender == "Female")
+        {
+            m_fertile = 1;
+            cout << "tigre femme fertile" << endl;
+        }
+        if (m_age == 72 && m_fertile == 0 && m_gender == "Male")
+        {
+            m_fertile = 1;
+            cout << "tigre homme fertile" << endl;
+        }
+
         if (m_age == 168 && m_fertile == 1)
         {
             m_fertile = 0;
-            cout << "plus fertile" << endl;
+            cout << "tigre plus fertile" << endl;
         }
+
     }
-    
     
 }

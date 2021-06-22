@@ -1,19 +1,24 @@
 #ifndef TIGRE_H
 #define TIGRE_H
-
-#include "ianimal.h"
-
 #include <string>
+#include "ianimal.h"
 
 using namespace std;
 
+
 class Tigre:public IAnimal
 {
-
 public:
-    Tigre();
-    Tigre(string name);
-    virtual void fire();
+    Tigre(string name, string race, string gender, float food, int age);
+    ~Tigre();
+    virtual void UpdateAge();
+
+    //getter
+    virtual string getName();
+    virtual string getRace();
+    virtual string getGender();
+    virtual float getMeat();
+    virtual int getAge();
 };
 
 #endif // TIGRE_H

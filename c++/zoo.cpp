@@ -1,5 +1,6 @@
 #include "../header/zoo.h"
 #include "../header./aigle.h"
+#include "../header./tigre.h"
 #include "../header./poule.h"
 #include "../header./coq.h"
 // #include "../main.cpp"
@@ -32,6 +33,7 @@ Zoo::Zoo(string name)
 {
     month = 0;
     viande = 0;
+    graines = 0;
     year = 0;
     aigle_Habitat = 0;
     poules_Habitat = 0;
@@ -41,16 +43,8 @@ Zoo::Zoo(string name)
 void Zoo::addAnimal(IAnimal *animal, int habitat)
 {
     cout << animal->getRace() << endl;
-    if (animal->getRace() == "aigle")
-    {
-        cout << "tu as acheter un " << animal->getRace() << endl;
-        setAnimalHabitat(animal, habitat);
-    }
-    if (animal->getRace() == "poule" || animal->getRace() == "coq")
-    {
-        cout << "tu as acheter un " << animal->getRace() << endl;
-        setAnimalHabitat(animal, habitat);
-    }
+    cout << "tu as acheter un " << animal->getRace() << endl;
+    setAnimalHabitat(animal, habitat);
     
 }
 //Buy a habitat
@@ -69,6 +63,13 @@ void Zoo::addHabitat(IHabitat *habitat)
         budget -= 300;
         m_habitats.push_back(habitat);
         cout << "achat d'habitat de poules / coq" << endl;
+    }
+    else if (habitat->getType() == "tigre" && budget-2000 >= 0)
+    {
+        tigre_Habitat += 1;
+        budget -= 2000;
+        m_habitats.push_back(habitat);
+        cout << "achat d'habitat de tigres" << endl;
     }
     else {
         cout << "tu n'as pas assez d'argent pour acheter un habitat pour les " << habitat->getType() << endl;
@@ -90,7 +91,7 @@ void Zoo::SellHabitat(string Race)
     }
     cout << less << endl;
     m_habitats.erase(m_habitats.begin()+less);
-    if (Race == "Poule")
+    if (Race == "poule")
     {
         budget += 50;
     } else {
@@ -246,6 +247,90 @@ void Zoo::ReproductionAigle(int state)
         it++;
     }
 }
+void Zoo::ReproductionTigre()
+{
+    int F = 15, M = 51, randDeath = 0, mort = 0;
+    HabitatIterator it = m_habitats.begin();
+    while (it != m_habitats.end())
+    {  
+        if ((*it)->getType() == "tigre")
+        {
+            cout << "initial " << (*it)->getTbb() << endl;
+            if ((*it)->getAccouche() && (*it)->getTbb() < 20)
+            {
+                (*it)->SetTbb((*it)->getTbb()+1);
+            }
+            else if ((*it)->getAccouche() && (*it)->getTbb() == 20)
+            {
+                (*it)->SetTbb(0);
+                (*it)->setAccouche(false);
+            }
+            else if ((*it)->getTbb() == 0)
+            {
+                F = (*it)->getAGender("Female", "tigre", 2);
+                M = (*it)->getAGender("Male", "tigre", 2);
+                cout << "\tfemme " << F << "\n\thomme " << M << endl;
+                int ratio = F - M;
+                if (ratio < 0) ratio = 0;
+                int nbFemellePonte = F - ratio;
+                (*it)->SetEagleEggs(nbFemellePonte * 3); // chaque tigre femelle pond 3 enfants
+                cout << "nombre de tigre enceinte : " << (*it)->getEagleEggs()/3 << endl;
+                (*it)->SetTbb((*it)->getTbb()+1);
+            }
+            else if ((*it)->getTbb() > 0)
+            {
+                cout << "before " << (*it)->getTbb() << endl;
+                (*it)->SetTbb((*it)->getTbb()+1);
+                cout << "after " << (*it)->getTbb() << endl;
+                if ((*it)->getTbb() == 4)
+                {
+                // range over each eggs to see if they die
+                for (int i = 0; i < (*it)->getEagleEggs(); i++)
+                {
+                    randDeath = rand() % 3; // Generate 0 or 1 or 2
+                    // Lorsqu'un tigre est mort né
+                    if (randDeath == 1)
+                    {
+                        (*it)->SetEagleEggs((*it)->getEagleEggs()-1);
+                        mort++;
+                    }
+                }
+                cout << "nb de bb tigres : " << (*it)->getEagleEggs() << endl;
+                cout << "nb de bb tigres MORT : " << mort << endl;
+                for (int i = 0; i < (*it)->getEagleEggs(); i++)
+                {
+                    srand(time(0));
+                    int randSex = rand() % 2;
+                    float food;
+                    string sex;
+                    char name[16];
+
+                    switch (randSex)
+                    {
+                    case 0:
+                        sex = "Male";
+                        food = 12;
+                        break;
+                    default:
+                        sex = "Female";
+                        food = 10;
+                        break;
+                    }
+                    cout << "Donnez un nom au bebe tigre numero " << i << endl;
+                    scanf("%15s", &name);
+                    cout << name << endl;
+
+                    (*it)->addAnimal(new Tigre(name, "tigre", sex, food, 0));
+                }
+                (*it)->SetEagleEggs(0);
+                (*it)->setAccouche(true);
+                }
+            }
+        }
+        
+        it++;
+    }
+}
 
 void Zoo::ReproductionPoule(int date)
 {
@@ -313,7 +398,7 @@ void Zoo::UpdateMeat()
     HabitatIterator it = m_habitats.begin();
     while (it != m_habitats.end())
     {        
-        if ((*it)->getType() == "aigle")
+        if ((*it)->getType() == "aigle" || (*it)->getType() == "tigre")
         {
             viande -= (*it)->getMeat();
             if (viande <= 0)
@@ -485,7 +570,7 @@ float Zoo::getConsobyRace(string race)
     {        
         if ((*it)->getType() == race)
         {
-            result = (*it)->getMeat();
+            result += (*it)->getMeat();
             
         }
         it++;
@@ -581,7 +666,11 @@ int Zoo::GetAnimalNbrByRace(string State)
         if ((*it)->getType() == State) //tigre/aigle/poules
         {
             result += (*it)->getnbrAnimals();
-            result -= (*it)->getEagleEggs()/2;
+            if (State == "aigle")
+            {
+                result -= (*it)->getEagleEggs()/2;
+            }
+            
         }else if (State != "poule" && State != "aigle" && State != "tigre" && id == stoi(State))
         {
             return (*it)->getnbrAnimals();
