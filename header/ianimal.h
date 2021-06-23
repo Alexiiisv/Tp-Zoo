@@ -10,6 +10,7 @@ class IAnimal
     string m_race;
     string m_gender;
     int m_malade;
+    int m_alive;
     int m_id;
     int m_fertile;
     int m_mat;
@@ -27,6 +28,7 @@ public:
     virtual void SetGender(string gender);
     virtual void SetFertile(int fertile);
     virtual void SetAge(int Age);
+    virtual void SetAlive(int Alive);
     virtual void SetId(int Id);
     virtual void SetIntMalade(int IntMalade);
     virtual void SetMat(int Mat);
@@ -40,6 +42,7 @@ public:
     virtual string getGender();
     virtual int getFertile();
     virtual int getMalade();
+    virtual int getAlive();
     virtual int getId();
     virtual int getIntMalade();
     virtual int getMat();

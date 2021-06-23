@@ -12,14 +12,14 @@ Tigre::Tigre(string name, string race, string gender, float food, int age)
     IAnimal::SetGender(gender);
     IAnimal::SetFood(food);
     IAnimal::SetMaladeOnce(0);
-    // if (gender == "Male" && age < 72)
-    // {
-    //     IAnimal::SetMalade(0, 0);
-    // }
-    // else
-    // {
-    // }
-    IAnimal::SetMalade(0, 1);
+    if ((gender == "Male" && age < 48) || age >= 168 || age < 48)
+    {
+        IAnimal::SetMalade(0, 0);
+    }
+    else
+    {
+        IAnimal::SetMalade(0, 1);
+    }
 }
 Tigre::~Tigre()
 {

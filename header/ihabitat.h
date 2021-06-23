@@ -23,6 +23,7 @@ public:
     IHabitat(string m_type);
     void addAnimal(IAnimal* animal);
     void delAnimal(int qtt, string state);
+    void SetFertilite(int qtt);
     string UpdateAge(int id);
     virtual void UpdateMalade(int year, int month);
     virtual void UpdMating();

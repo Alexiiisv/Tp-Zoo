@@ -118,7 +118,9 @@ void Zoo::FireHabitat(string Race)
     if (GetHabitatNbrByRace(Race) != 0)
     {
         int randHab = rand() % GetHabitatNbrByRace(Race);
-        m_habitats.erase(m_habitats.begin() + randHab);
+        int hab = getintHab(randHab+1, Race);
+        cout << "random habitat " << randHab << " int habitat random " << hab << endl;
+        m_habitats.erase(m_habitats.begin() + hab);
         if (Race == "aigle")
             cout << "un feu s'est declare dans ton habitat d'" << Race << "\nTout tes Animaux dans cet habitat sont morts. Chaud" << endl;
         else
@@ -146,9 +148,14 @@ void Zoo::UpdateAge()
         while (Id != nbrani)
         {
             todo = (*it)->UpdateAge(Id);
-            if (todo == "A Kill")
+            if (todo == "A Kill 1")
             {
                 (*it)->delAnimal(Id, "Creve");
+                Id--;
+            }
+            if (todo == "A Kill 2")
+            {
+                (*it)->delAnimal(Id, "Malade");
                 Id--;
             }
             Id++;
@@ -326,7 +333,23 @@ void Zoo::ReproductionTigre()
         it++;
     }
 }
-
+void Zoo::ReproductionTigre(string state)
+{
+    if (state == "ded")
+    {
+        HabitatIterator it = m_habitats.begin();
+        while (it != m_habitats.end())
+        {
+            if ((*it)->getType() == "tigre" && (*it)->getEagleEggs() > 0)
+            {
+                cout << "les bb sont ded" << endl;
+                (*it)->SetEagleEggs(0);
+            }
+            it++;
+        }
+    }
+    
+}
 void Zoo::ReproductionPoule(int date)
 {
     int P = 0, C = 0, randDeath = 0, mort = 0;
@@ -451,14 +474,13 @@ void Zoo::VolDanimal(string state)
     if (GetHabitatNbrByRace(state) != 0)
     {
         int randhab = rand() % GetHabitatNbrByRace(state);
-        if (m_habitats[randhab]->getnbrAnimals() != 0)
+        int hab = getintHab(randhab+1, state);
+        if (m_habitats[hab]->getnbrAnimals() != 0)
         {
-            int randani = rand() % m_habitats[randhab]->getnbrAnimals();
-            m_habitats[randhab]->delAnimal(randani, "Vol");
-            if (state == "poule")
-                cout << "Une " << state << " a ete vole" << endl;
-            else
-                cout << "Un " << state << " a ete vole" << endl;
+            int randani = rand() % m_habitats[hab]->getnbrAnimals();
+            m_habitats[hab]->delAnimal(randani, "Vol");
+            if (state == "poule") cout << "Une poule a ete vole" << endl;
+            else if (state != "poule") cout << "Un " << state << " a ete vole" << endl;
         }
         else
             cout << "Il y a eu une tentative de vol dans un de tes habitats,\nHeureusement il etait vide." << endl;
@@ -763,6 +785,11 @@ void Zoo::setMeat(float food)
 void Zoo::setSeed(float Seed)
 {
     graines = Seed;
+}
+
+void Zoo::setName(string name)
+{
+    m_name = name;
 }
 
 //Set the year

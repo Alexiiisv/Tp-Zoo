@@ -1,7 +1,15 @@
 #include "../header/ihabitat.h"
 #include <iostream>
+#include <random>
 // #include<bits/stdc++.h>
 using namespace std;
+
+int randomnbre(int max)
+{
+    mt19937 generator{random_device{}()};
+    uniform_int_distribution<int> distribution{1, max};
+    return distribution(generator);
+}
 
 IHabitat::IHabitat()
     : m_type("habitat sans race")
@@ -42,6 +50,7 @@ void IHabitat::delAnimal(int qtt, string state)
     if (m_capacity < nbr_animals && state == "Plein" && random == 1 && child && m_type == "aigle")
     {
         cout << "un animal va canner : " << m_animals[qtt]->getName() << endl;
+        SetFertilite(qtt);
         m_animals.erase(m_animals.begin()+qtt);
         nbr_animals--;
     }
@@ -70,38 +79,72 @@ void IHabitat::delAnimal(int qtt, string state)
     if (state == "Vol")
     {
         cout << "un animal a ete vole : " << m_animals[qtt]->getName() << endl;
+        SetFertilite(qtt);
         m_animals.erase(m_animals.begin()+qtt);
         nbr_animals--;
     }
     if (state == "Vente")
     {
         cout << "un animal a ete vendu : " << m_animals[qtt]->getName() << endl;
+        SetFertilite(qtt);
         m_animals.erase(m_animals.begin()+qtt);
         nbr_animals--;
     }
     if (state == "Creve")
     {
         cout << "un animal a canner de vieillesse : " << m_animals[qtt]->getName() << endl;
-        cout << getnbrAnimals() << endl;
+        SetFertilite(qtt);
         m_animals.erase(m_animals.begin()+qtt);
         nbr_animals -= 1;
-        cout << nbr_animals << endl;
+    }
+    if (state == "Malade")
+    {
+        cout << "un animal a canner de maladie : " << m_animals[qtt]->getName() << endl;
+        SetFertilite(qtt);
+        m_animals.erase(m_animals.begin()+qtt);
+        nbr_animals -= 1;
     }
     
     
 }
 
+void IHabitat::SetFertilite(int qtt)
+{
+    if (m_type == "aigle")
+    {
+        int id = m_animals[qtt]->getMat();
+        if (id != 0)
+        {
+            AnimalIterator it = m_animals.begin();
+            while (it != m_animals.end())
+            {
+                if (id == (*it)->getId())
+                {
+                    cout << "ptdr t'on mec/meuf est mort " << (*it)->getFertile() << endl;
+                    (*it)->SetFertile(0);
+                    (*it)->SetAlive(0);
+                }
+                it++;
+            }
+        }
+    }
+}
 string IHabitat::UpdateAge(int id)
 {
         m_animals[id]->UpdateAge();
         if (m_animals[id]->getAge() == 300 && m_type == "aigle")
         {
-            return "A Kill";
+            return "A Kill 1";
         }
         if (m_animals[id]->getAge() == 180 && m_type == "poule")
         {
-            return "A Kill";
+            return "A Kill 1";
         }
+        if (m_animals[id]->getMalade() == 1 && randomnbre(10) == 6)
+        {
+            return "A Kill 2";
+        }
+        
         return "Alive";
 }
 
@@ -134,6 +177,9 @@ void IHabitat::UpdMating()
                 {
                     (*an1)->SetMat((*an2)->getId());
                     (*an2)->SetMat((*an1)->getId());
+                    (*an1)->SetAlive(1);
+                    (*an2)->SetAlive(1);
+                    break;
                 }
                 an2++;
             }

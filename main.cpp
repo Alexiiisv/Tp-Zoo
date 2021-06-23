@@ -59,8 +59,18 @@ void AffichageSuccess(bool nbEagleSuccess, bool moneySuccess, bool nbTotalVisito
 // Menu de début de jeu
 void StartGame(Zoo &zoo, int &nbYearZoo)
 {
-    int choice = 0, nbyear = 0, budg = 0;
-    cout << "Bienvenue dans ZooPtyCoon, la simulation de zoo la plus realiste de 2021\nQue voulez-vous faire ?" << endl;
+    char zooName[15];
+    int choice = 0, nbyear = 0, budg = 0, choix = 0;
+    cout << "Bienvenue dans ZooPtycon, la simulation de zoo la plus realiste de 2021\nVoulez-vous donner un nom a votre zoo ?\n1 | Oui\t 0 | Non" << endl;
+    scanf("%d", &choix);
+    if (choix == 1)
+    {
+        cout << "quel est le nom ?" << endl;
+        scanf("%15s", &zooName);
+        zoo.setName(zooName);
+    }
+
+    cout << "\nQue voulez-vous faire ?" << endl;
     while (choice != 1 && choice != 2)
     {
         cout << "1 | Partie rapide : 80000$, 2 couples d'aigle, 2 couples de tigre, 2 coqs, 8 poules sur 10 ans\n2 | Partie personnalise" << endl;
@@ -299,24 +309,25 @@ void switchHabitat(Zoo zoo)
             while (skip != 0)
             {
                 // choix de l'habitat de départ
-                cout << "Depuis l'habitat numero __ , vous deplacez l'aigle numero __ , vers l'habitat d'aigle numero __" << endl;
+                cout << "Depuis l'habitat numero __ , vous deplacez l'aigle numero __ , vers l'habitat numero __" << endl;
                 cout << "De quel habitat voulez-vous deplacer l'animal\nVous avez "
                      << zoo.GetHabitatNbrByRace("aigle") << " habitat pour les aigles" << endl;
                 scanf("%d", &initialHabitat);
 
                 // choix de l'animal a déplacer
-                cout << "Quel animal de cet habitat voulez-vous deplacer ?\n" << endl;
+                cout << "Quel animal de cet habitat voulez-vous deplacer ?\n"
+                     << endl;
                 zoo.GetHabitatAnimal(to_string(initialHabitat), "aigle");
-                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez l'aigle numero __ , vers l'habitat d'aigle numero __" << endl;
+                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez l'aigle numero __ , vers l'habitat numero __" << endl;
                 scanf("%d", &animal);
 
                 // choix de l'habitat de destination
-                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez l'aigle numero " << animal << " vers l'habitat d'aigle numero __" << endl;
+                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez l'aigle numero " << animal << " vers l'habitat numero __" << endl;
                 cout << "Dans quel habitat voulez-vous placer l'animal choisi" << endl;
                 zoo.GetHabitatAnimal("aigle");
                 scanf("%d", &destination);
 
-                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez l'aigle numero " << animal << " vers l'habitat d'aigle numero " << destination << endl;
+                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez l'aigle numero " << animal << " vers l'habitat numero " << destination << endl;
                 cout << "Appuyez sur 0 pour confirmer" << endl;
                 scanf("%d", &skip);
             }
@@ -326,19 +337,23 @@ void switchHabitat(Zoo zoo)
             while (skip != 0)
             {
                 // choix de l'habitat de départ
-                cout << "De quel habitat voulez-vous deplacer l'animal\nVous avez "
-                     << zoo.GetHabitatNbrByRace("tigre") << " habitat pour les tigres" << endl;
+                cout << "Depuis l'habitat numero __ , vous deplacez le tigre numero __ , vers l'habitat numero __" << endl;
+                cout << "De quel habitat voulez-vous deplacer l'animal\nVous avez " << zoo.GetHabitatNbrByRace("tigre") << " habitat pour les tigres" << endl;
                 scanf("%d", &initialHabitat);
+
                 // choix de l'animal a déplacer
-                cout << "Quel animal de cet habitat voulez-vous deplacer ?\n"
-                     << endl;
+                cout << "Quel animal de cet habitat voulez-vous deplacer ?\n" << endl;
                 zoo.GetHabitatAnimal(to_string(initialHabitat), "tigre");
+                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez le tigre numero __ , vers l'habitat numero __" << endl;
                 scanf("%d", &animal);
+
                 // choix de l'habitat de destination
                 cout << "Dans quel habitat voulez-vous placer l'animal choisi" << endl;
                 zoo.GetHabitatAnimal("tigre");
+                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez le tigre numero " << animal << " vers l'habitat numero __" << endl;
                 scanf("%d", &destination);
 
+                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez le tigre numero " << animal << " vers l'habitat numero " << destination << endl;
                 cout << "Appuyez sur 0 pour confirmer" << endl;
                 scanf("%d", &skip);
             }
@@ -348,19 +363,23 @@ void switchHabitat(Zoo zoo)
             while (skip != 0)
             {
                 // choix de l'habitat de départ
-                cout << "De quel habitat voulez-vous deplacer l'animal\nVous avez "
-                     << zoo.GetHabitatNbrByRace("poule") << " habitats pour les poules" << endl;
+                cout << "Depuis l'habitat numero __, vous deplacez le la poule numero __ vers l'habitat numero __" << endl;
+                cout << "De quel habitat voulez-vous deplacer l'animal\nVous avez " << zoo.GetHabitatNbrByRace("poule") << " habitats pour les poules" << endl;
                 scanf("%d", &initialHabitat);
+
                 // choix de l'animal a déplacer
-                cout << "Quel animal de cet habitat voulez-vous deplacer ?\n"
-                     << endl;
+                cout << "Quel animal de cet habitat voulez-vous deplacer ?\n" << endl;
                 zoo.GetHabitatAnimal(to_string(initialHabitat), "poule");
+                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez l'aigle numero __ vers l'habitat numero __" << endl;
                 scanf("%d", &animal);
+
                 // choix de l'habitat de destination
                 cout << "Dans quel habitat voulez-vous placer l'animal choisi" << endl;
                 zoo.GetHabitatAnimal("poule");
+                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez l'aigle numero " << animal << " vers l'habitat numero __" << endl;
                 scanf("%d", &destination);
 
+                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez l'aigle numero " << animal << " vers l'habitat numero " << destination << endl;
                 cout << "Appuyez sur 0 pour confirmer" << endl;
                 scanf("%d", &skip);
             }
@@ -370,19 +389,24 @@ void switchHabitat(Zoo zoo)
             while (skip != 0)
             {
                 // choix de l'habitat de départ
+                cout << "Depuis l'habitat numero __, vous deplacez l'aigle numero __ vers l'habitat numero __" << endl;
                 cout << "De quel habitat voulez-vous deplacer l'animal\nVous avez "
                      << zoo.GetHabitatNbrByRace("poule") << " habitats pour les poules" << endl;
                 scanf("%d", &initialHabitat);
+
                 // choix de l'animal a déplacer
-                cout << "Quel animal de cet habitat voulez-vous deplacer ?\n"
-                     << endl;
+                cout << "Quel animal de cet habitat voulez-vous deplacer ?\n" << endl;
                 zoo.GetHabitatAnimal(to_string(initialHabitat), "poule");
+                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez l'aigle numero __ vers l'habitat numero __" << endl;
                 scanf("%d", &animal);
+
                 // choix de l'habitat de destination
                 cout << "Dans quel habitat voulez-vous placer l'animal choisi" << endl;
                 zoo.GetHabitatAnimal("poule");
+                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez l'aigle numero " << animal << " vers l'habitat numero __" << endl;
                 scanf("%d", &destination);
 
+                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez l'aigle numero " << animal << " vers l'habitat numero " << destination << endl;
                 cout << "Appuyez sur 0 pour confirmer" << endl;
                 scanf("%d", &skip);
             }
@@ -427,7 +451,7 @@ int VisitorRevenue(int visitor)
 // Get number of visitors
 int Visitor(int tiger, int eagle, int chicken, int month)
 {
-    double variation = randomnbr(0,40) - 20; // generate random number (-20 / 20)
+    double variation = randomnbr(0, 40) - 20; // generate random number (-20 / 20)
     if (month >= 5 && month <= 9)
     {
         // Saison haute
@@ -747,7 +771,7 @@ void buyHabitats(Zoo &zoo)
 void actionMonth(Zoo &zoo)
 {
     int whichRace = 0, habitat = 0, whatToBuy = 1, animal = 0;
-    float food, seed;
+    float food = 0, seed = 0;
     while (whatToBuy != 0)
     {
         cout << "Que voulez-vous faire :\nAcheter :\t1 | Habitats\t\t2 | Animaux\t\t3 | viandes\t\t4 | Graines\t\t0 pour quitter le menu\nVendre :\t5 | Habitat\t\t6 | Animaux" << endl;
@@ -928,11 +952,11 @@ void actionMonth(Zoo &zoo)
 void specialEvent(Zoo &zoo)
 {
     int fireEvent = 0, stealingEvent = 0, nuisiblesEvent = 0, rottenEvent = 0;
-    fireEvent = randomnbr(1,100);
+    fireEvent = randomnbr(1, 100);
     if (fireEvent == 1) // nice random number
     {
-        cout << "FEU !!!!" << endl;
-        int randhab = randomnbr(1,3);
+        int randhab = randomnbr(0, 2);
+        cout << "\nFEU !!!!  " << randhab << endl;
         // Détruit un habitat d'une race en aléatoire
         switch (randhab)
         {
@@ -947,17 +971,14 @@ void specialEvent(Zoo &zoo)
             break;
         }
     }
-    stealingEvent = randomnbr(1,100);
+    stealingEvent = randomnbr(1, 100);
     if (stealingEvent == 1) // nice random number
     {
-        cout << "VOL !!!!" << endl;
-        switch (randomnbr(1,4))
+        cout << "\nVOL !!!!" << endl;
+        switch (randomnbr(0, 3))
         {
         case 0:
             zoo.VolDanimal("poule");
-            break;
-        case 1:
-            zoo.VolDanimal("coq");
             break;
         case 2:
             zoo.VolDanimal("aigle");
@@ -967,21 +988,22 @@ void specialEvent(Zoo &zoo)
             break;
         }
     }
-    nuisiblesEvent = randomnbr(1,100);
+    nuisiblesEvent = randomnbr(1, 100);
     if (nuisiblesEvent < 20)
     {
-        cout << "NUISIBLE !!!!" << endl;
+        cout << "\nNUISIBLE !!!!" << endl;
         zoo.setSeed(zoo.getSeed() * 0.9);
         cout << "tu n'as plus que " << zoo.getSeed() << "Kg de graines." << endl;
     }
-    rottenEvent = randomnbr(1,100);
+    rottenEvent = randomnbr(1, 100);
     if (rottenEvent < 10)
     {
-        cout << "VIANDE AVARIEE !!!!" << endl;
+        cout << "\nVIANDE AVARIEE !!!!" << endl;
         zoo.setMeat(zoo.getMeat() * 0.8);
         cout << "tu n'as plus que " << zoo.getMeat() << "Kg de viandes." << endl;
     }
 }
+// Verifie la quantité de nourriture et empeche les animaux d'être fertile quand ils ont faim
 void checkingFoodStorage(Zoo zoo, bool &enoughMeat, bool &enoughSeed)
 {
     // Affiche la quantité de viande
@@ -1022,6 +1044,7 @@ void checkingFoodStorage(Zoo zoo, bool &enoughMeat, bool &enoughSeed)
         enoughSeed = true;
     }
 }
+// Permet aux animaux de se reproduire quand ils ont de la nourriture
 void animalsReproduction(Zoo zoo, bool enoughMeat, bool enoughSeed)
 {
     if (enoughMeat || zoo.getMonth() % 12 == 5) // PONTES D'OEUFS DES AIGLES (lorsqu'il y a assez de viande ou en avril lorsque les oeufs éclosent)
@@ -1032,6 +1055,10 @@ void animalsReproduction(Zoo zoo, bool enoughMeat, bool enoughSeed)
     {
         zoo.ReproductionTigre();
     }
+    else
+    {
+        zoo.ReproductionTigre("ded");
+    }
     if (enoughSeed || zoo.getMonth() % 2 == 1) // Reproduction des poules lorsqu'il y a assez de graines (mois pairs) et éclosions des oeufs (mois impairs)
     {
         zoo.ReproductionPoule(zoo.getMonth() % 12);
@@ -1039,7 +1066,7 @@ void animalsReproduction(Zoo zoo, bool enoughMeat, bool enoughSeed)
 }
 int main()
 {
-    Zoo zoo(randomStr(120)); //nom du zoo
+    Zoo zoo("ZooPtycon"); // déclaration du nom par défaut
     int visitor = 0, all_visitors = 0, nextMonth = 0, nbYearZoo = 0;
     bool enoughMeat, enoughSeed = false;
     bool nbEagleSuccess = false, moneySuccess = false, nbTotalVisitorSuccess = false, nbMonthVisitorsSuccess = false;

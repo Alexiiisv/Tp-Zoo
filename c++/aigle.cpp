@@ -14,16 +14,8 @@ Aigle::Aigle(string name, string race, string gender, float food, int age)
     id++;
     IAnimal::SetMat(0);
     IAnimal::SetMaladeOnce(0);
-    if (age < 48 || age >= 168)
-    {
-        IAnimal::SetFertile(0);
-        IAnimal::SetMalade(0, 0);
-    }
-    else
-    {
-        IAnimal::SetFertile(1);
-        IAnimal::SetMalade(0, 1);
-    }
+    IAnimal::SetAlive(0);
+    IAnimal::SetMalade(0, 0);
 }
 Aigle::Aigle(string name, string race, string gender, float food, int age, int fertilite, int malade, int ide, int mat, int maladeonce)
     : IAnimal(name)

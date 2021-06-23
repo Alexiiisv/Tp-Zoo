@@ -28,8 +28,8 @@ public:
     void UpdateMalade();
     void ReproductionAigle(int state);
     void ReproductionTigre();
+    void ReproductionTigre(string state);
     void ReproductionPoule(int date);
-    // void reproduction(int state);
     void UpdateMeat();
     void UpdateSeed();
     void UpdateHabitat();
@@ -63,6 +63,7 @@ public:
     //setter
     void setMeat(float food);
     void setSeed(float Seed);
+    void setName(string name);
     void setMonth(float month);
     void setYear(float year);
     void setBudget(float budget);
