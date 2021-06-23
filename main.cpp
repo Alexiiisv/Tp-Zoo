@@ -53,6 +53,97 @@ void AffichageSuccess(bool nbEagleSuccess, bool moneySuccess, bool nbTotalVisito
     cout << boolalpha << nbTotalVisitorSucess << "\t| Plus apprecie que les maisons closes\tAtteindre 150 en un seul mois\n"
          << endl;
 }
+void StartGame(Zoo &zoo, int &nbYearZoo)
+{
+    int choice = 0, nbyear = 0, budg = 0;
+    cout << "Bienvenue dans ZooTicon, la simulation de zoo la plus realiste de 2021\nQue voulez-vous faire ?" << endl;
+    while (choice != 1 && choice != 2)
+    {
+        cout << "1 | Partie rapide : 80000$, 2 couples d'aigle, 2 couples de tigre, 2 coqs, 8 poules sur 10 ans\n2 | Partie personnalise" << endl;
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 1:
+            // set le budget
+            zoo.setBudget(86300);
+            // achete un habitat d'aigle et 2 couples d'aigle
+            zoo.addHabitat(new EagleHabitat("aigle"));
+            zoo.addAnimal(new Aigle("AigleMale1", "aigle", "Male", 0.25, 12 * 4), 0);
+            zoo.addAnimal(new Aigle("AigleMale2", "aigle", "Male", 0.25, 12 * 4), 0);
+            zoo.addAnimal(new Aigle("AigleFemelle1", "aigle", "Female", 0.3, 12 * 4), 0);
+            zoo.addAnimal(new Aigle("AigleFemelle2", "aigle", "Female", 0.3, 12 * 4), 0);
+            // achete un habitat de tigre et 2 couples de tigre
+            zoo.addHabitat(new TigerHabitat("tigre"));
+            zoo.addHabitat(new TigerHabitat("tigre"));
+            zoo.addAnimal(new Tigre("TigreMale1", "tigre", "Male", 12, 12 * 6), 0);
+            zoo.addAnimal(new Tigre("TigreMale2", "tigre", "Male", 12, 12 * 6), 1);
+            zoo.addAnimal(new Tigre("TigreFemelle1", "tigre", "Female", 10, 12 * 4), 1);
+            zoo.addAnimal(new Tigre("TigreFemelle2", "tigre", "Female", 10, 12 * 4), 0);
+            // achete un habitat de poule, 2 coqs et 8 poules
+            zoo.addHabitat(new ChickenHabitat("poule"));
+            zoo.addAnimal(new Coq("Coq1", "coq", 0.18, 6), 0);
+            zoo.addAnimal(new Coq("Coq2", "coq", 0.18, 6), 0);
+            for (int i = 0; i < 8; i++)
+            {
+                zoo.addAnimal(new Poule("Poulette", "poule", 0.15, 6), 0);
+            }
+            // Règle la durée à 10 ans
+            nbYearZoo = 10;
+            break;
+        case 2:
+            while (nbyear != 1 && nbyear != 2 && nbyear != 3 && nbyear != 4 && nbyear != 5)
+            {
+                cout << "Combien d'année voulez-voulez jouer ?\n1 | 2 ans\t\t2 | 5 ans\t\t3 | 10 ans\t\t4 | 20 ans\t\t5 | 50 ans" << endl;
+                scanf("%d", &nbyear);
+                switch (nbyear)
+                {
+                case 1:
+                    nbYearZoo = 2;
+                    break;
+                case 2:
+                    nbYearZoo = 5;
+                    break;
+                case 3:
+                    nbYearZoo = 10;
+                    break;
+                case 4:
+                    nbYearZoo = 20;
+                    break;
+                case 5:
+                    nbYearZoo = 50;
+                    break;
+                default:
+                    break;
+                }
+                cout << "Quel budget vous-voulez avoir ?\n1 | 20000$\t\t2 | 50000$\t\t3 | 100000$\t\t4 | 150000$\t\t5 | 500000$" << endl;
+                scanf("%d", &budg);
+                switch (budg)
+                {
+                case 1:
+                    zoo.setBudget(20000);
+                    break;
+                case 2:
+                    zoo.setBudget(50000);
+                    break;
+                case 3:
+                    zoo.setBudget(100000);
+                    break;
+                case 4:
+                    zoo.setBudget(150000);
+                    break;
+                case 5:
+                    zoo.setBudget(500000);
+                    break;
+                default:
+                    break;
+                }
+            }
+            break;
+        default:
+            break;
+        }
+    }
+}
 void printEndGame(Zoo zoo, int all_visitors, bool nbEagleSuccess, bool moneySuccess, bool nbTotalVisitorSuccess, bool nbMonthVisitorsSuccess)
 {
     int yesSir;
@@ -844,7 +935,6 @@ void specialEvent(Zoo &zoo)
         cout << "tu n'as plus que " << zoo.getMeat() << "Kg de viandes." << endl;
     }
 }
-
 void checkingFoodStorage(Zoo zoo, bool &enoughMeat, bool &enoughSeed)
 {
     // Affiche la quantité de viande
@@ -903,13 +993,13 @@ void animalsReproduction(Zoo zoo, bool enoughMeat, bool enoughSeed)
 int main()
 {
     Zoo zoo(randomStr(120)); //nom du zoo
-    zoo.setBudget(80000);
-    int visitor = 0, all_visitors = 0, nextMonth = 0;
+    int visitor = 0, all_visitors = 0, nextMonth = 0, nbYearZoo = 0;
     int tiger = 0, chicken = 0, coq = 0;
     bool enoughMeat, enoughSeed = false;
     bool nbEagleSuccess = false, moneySuccess = false, nbTotalVisitorSuccess = false, nbMonthVisitorsSuccess = false;
+    StartGame(zoo, nbYearZoo);
 
-    while (zoo.getYear() < 10)
+    while (zoo.getYear() < nbYearZoo)
     // Tous les mois
     {
         if (zoo.getMonth() != 0) // tous les mois sauf celui quand le code se lance
