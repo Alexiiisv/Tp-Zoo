@@ -1,7 +1,15 @@
 #include "../header/ianimal.h"
 #include <iostream>
 #include <time.h>
+#include <random>
 using namespace std;
+
+int randomnbr(int max)
+{
+    mt19937 generator{random_device{}()};
+    uniform_int_distribution<int> distribution{1, max};
+    return distribution(generator);
+}
 
 IAnimal::IAnimal(string name)
     : m_name(name)
@@ -53,6 +61,11 @@ int IAnimal::getId()
     return m_id;
 }
 
+int IAnimal::getIntMalade()
+{
+    return intmalade;
+}
+
 int IAnimal::getMat()
 {
     return m_mat;
@@ -82,6 +95,11 @@ void IAnimal::SetId(int Id)
     m_id = Id;
 }
 
+void IAnimal::SetIntMalade(int IntMalade)
+{
+    intmalade = IntMalade;
+}
+
 void IAnimal::SetMat(int mat)
 {
     m_mat = mat;
@@ -108,10 +126,8 @@ void IAnimal::SetFertile(int fertile)
     m_fertile = fertile;
 }
 
-int age;
 void IAnimal::UpdateAge()
 {
-    srand(time(0));
     m_age += 1;
     if (m_race == "aigle")
     {
@@ -120,27 +136,24 @@ void IAnimal::UpdateAge()
             m_fertile = 1;
             cout << "aigle fertile" << endl;
         }
-
         if (m_age == 168 && m_fertile == 1)
         {
             m_fertile = 0;
             cout << "aigle plus fertile" << endl;
         }
-
         if (m_mat != 0 && m_age < 168 && m_age >= 48)
         {
             m_fertile = 1;
             cout << "aigle devenue fidèle" << endl;
         }
-        
-        if (getMalade() == 0 && rand()%5 == 1 && getMaladeOnce() == 0)
+        if (getMalade() == 0 && randomnbr(5) == 1 && getMaladeOnce() == 0)
         {
             SetMalade(1, 0);
             SetMaladeOnce(1);
-            age = getAge();
+            SetIntMalade(getAge());
             cout << getName() << " est tombe malade" << endl;
         }
-        if (getMalade() == 1 && age+1 == getAge() && getMaladeOnce() == 1)
+        if (getMalade() == 1 && getIntMalade()+1 == getAge() && getMaladeOnce() == 1)
         {
             if (getFertile() == 1)
             {
@@ -166,14 +179,14 @@ void IAnimal::UpdateAge()
         }
 
         //maladie poule
-        if (getMalade() == 0 && rand()%10 == 1 && getMaladeOnce() == 0)
+        if (getMalade() == 0 && randomnbr(10) == 1 && getMaladeOnce() == 0)
         {
             SetMalade(1, 0);
             SetMaladeOnce(1);
-            age = getAge();
+            SetIntMalade(getAge());
             cout << getName() << " est tombe malade" << endl;
         }
-        if (getMalade() == 1 && age+1 == getAge() && getMaladeOnce() == 1)
+        if (getMalade() == 1 && getIntMalade()+1 == getAge() && getMaladeOnce() == 1)
         {
             if (getFertile() == 1)
             {
@@ -196,11 +209,28 @@ void IAnimal::UpdateAge()
             m_fertile = 1;
             cout << "tigre homme fertile" << endl;
         }
-
         if (m_age == 168 && m_fertile == 1)
         {
             m_fertile = 0;
             cout << "tigre plus fertile" << endl;
+        }
+        //maladie tigre
+        if (getMalade() == 0 && randomnbr(2) == 1 && getMaladeOnce() == 0)
+        {
+            SetMalade(1, 0);
+            SetMaladeOnce(1);
+            SetIntMalade(getAge());
+            cout << getName() << " est tombe malade" << endl;
+        }
+        if (getMalade() == 1 && getIntMalade()+1 == getAge() && getMaladeOnce() == 1)
+        {
+            if (getFertile() == 1)
+            {
+                SetMalade(0, 1);
+            }else {
+                SetMalade(0, 0);
+            }
+            cout << getName() << " n'est plus malade" << endl;
         }
 
     }

@@ -13,7 +13,7 @@ class IAnimal
     int m_id;
     int m_fertile;
     int m_mat;
-    int m_Maladeonce = 0;
+    int m_Maladeonce = 0, intmalade = 0;
     int m_age;
     float m_food;
 
@@ -28,6 +28,7 @@ public:
     virtual void SetFertile(int fertile);
     virtual void SetAge(int Age);
     virtual void SetId(int Id);
+    virtual void SetIntMalade(int IntMalade);
     virtual void SetMat(int Mat);
     virtual void SetMaladeOnce(int Monce);
     virtual void SetMalade(int malade, int fertile);
@@ -40,6 +41,7 @@ public:
     virtual int getFertile();
     virtual int getMalade();
     virtual int getId();
+    virtual int getIntMalade();
     virtual int getMat();
     virtual int getMaladeOnce();
     virtual int getAge();

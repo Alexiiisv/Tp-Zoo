@@ -5,26 +5,24 @@
 using namespace std;
 
 Tigre::Tigre(string name, string race, string gender, float food, int age)
-    :IAnimal(name)
+    : IAnimal(name)
 {
-        IAnimal::SetRace(race);
-        IAnimal::SetAge(age);
-        IAnimal::SetGender(gender);
-        IAnimal::SetFood(food);
-        IAnimal::SetMaladeOnce(0);
-        // if (gender == "Male" && age < 72)
-        // {
-        //     IAnimal::SetMalade(0, 0);
-        // }
-        // else
-        // {
-        // }
-            IAnimal::SetMalade(0, 1);
-        
+    IAnimal::SetRace(race);
+    IAnimal::SetAge(age);
+    IAnimal::SetGender(gender);
+    IAnimal::SetFood(food);
+    IAnimal::SetMaladeOnce(0);
+    // if (gender == "Male" && age < 72)
+    // {
+    //     IAnimal::SetMalade(0, 0);
+    // }
+    // else
+    // {
+    // }
+    IAnimal::SetMalade(0, 1);
 }
 Tigre::~Tigre()
 {
-
 }
 
 string Tigre::getName()

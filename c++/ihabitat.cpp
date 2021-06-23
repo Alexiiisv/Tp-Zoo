@@ -45,6 +45,12 @@ void IHabitat::delAnimal(int qtt, string state)
         m_animals.erase(m_animals.begin()+qtt);
         nbr_animals--;
     }
+    if (m_capacity < nbr_animals && state == "Plein" && random == 1 && child && m_type == "tigre")
+    {
+        cout << "un animal va canner : " << m_animals[qtt]->getName() << endl;
+        m_animals.erase(m_animals.begin()+qtt);
+        nbr_animals--;
+    }
     else if (m_capacity < nbr_animals && state == "Plein" && random == 1 && child && m_type == "poule")
     {
         for (int i = 0; i < 4; i++)
@@ -179,8 +185,17 @@ float IHabitat::getMeat()
         
         it++;
     }
-    fmenseinte = getEagleEggs()/2;
-    food += (0.3*fmenseinte)*30;
+    if (m_type == "aigle")
+    {
+        fmenseinte = getEagleEggs()/2;
+        food += (0.3*fmenseinte)*30;
+    }
+    else if (m_type == "tigre")
+    {
+        fmenseinte = getEagleEggs()/3;
+        food += (10*fmenseinte)*30;
+    }
+    
     return food;
 }
 bool IHabitat::getAccouche()
@@ -300,6 +315,21 @@ float IHabitat::getSingleAnimalInfoI(string info, int id)
             }else if (info == "Food")
             {
                 return (*it)->getMeat();
+            }else if (info == "fertilite")
+            {
+                return (*it)->getFertile();
+            }else if (info == "mat")
+            {
+                return (*it)->getMat();
+            }else if (info == "malade")
+            {
+                return (*it)->getMalade();
+            }else if (info == "id")
+            {
+                return (*it)->getId();
+            }else if (info == "maladeonce")
+            {
+                return (*it)->getMaladeOnce();
             }
         }
         it++;

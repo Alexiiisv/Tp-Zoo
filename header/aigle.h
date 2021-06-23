@@ -9,6 +9,7 @@ class Aigle:public IAnimal
 {
 public:
     Aigle(string name, string race, string gender, float food, int age);
+    Aigle(string name, string race, string gender, float food, int age, int fertilite, int malade, int id, int mat, int maladeonce);
     ~Aigle();
     virtual void UpdateAge();
 

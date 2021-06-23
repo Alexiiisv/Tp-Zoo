@@ -48,6 +48,7 @@ public:
     int getHAigle();
     int getHTigre();
     int getHPoules();
+    int getintHab(int id, string race);
     float getConsobyRace(string race);
     int getAGender(string gender, string race);
     void getInfo();
@@ -57,6 +58,7 @@ public:
     int GetAnimalNbrByRace(string State);
     int GetHabitatNbrByRace(string type);
     void GetHabitatAnimal(string State);
+    void GetHabitatAnimal(string State, string race);
 
     //setter
     void setMeat(float food);

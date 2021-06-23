@@ -3,11 +3,6 @@
 #include <time.h>
 #include <stdlib.h>
 #include <random>
-#ifdef _WIN32
-#include <Windows.h>
-#else
-#include <unistd.h>
-#endif
 #include "./header/zoo.h"
 #include "./header/aigle.h"
 #include "./header/eagleHabitat.h"
@@ -16,8 +11,11 @@
 #include "./header/poule.h"
 #include "./header/tigre.h"
 #include "./header/coq.h"
-// #include "tigre.h"
-
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
 using namespace std;
 
 void Clear()
@@ -27,10 +25,16 @@ void Clear()
     //clrscr(); // including header file : conio.h
 #elif defined(__LINUX__) || defined(__gnu_linux__) || defined(__linux__)
     system("clear");
-    //std::cout<< u8"\033[2J\033[1;1H"; //Using ANSI Escape Sequences
 #elif defined(__APPLE__)
     system("clear");
 #endif
+}
+
+int randomnbr(int min, int max)
+{
+    mt19937 generator{random_device{}()};
+    uniform_int_distribution<int> distribution{min, max};
+    return distribution(generator);
 }
 
 // Génère un string random
@@ -41,10 +45,9 @@ string randomStr(int len)
     string rand_str(len, '\0');
     for (auto &dis : rand_str)
         dis = distribution(generator);
-
     return rand_str;
 }
-
+// Affiche les succes deverouillé et non deverouillé
 void AffichageSuccess(bool nbEagleSuccess, bool moneySuccess, bool nbTotalVisitorSucess, bool nbMonthVisitorSuccess)
 {
     cout << boolalpha << nbEagleSuccess << "\t| Ami des aigles\t\t\tAvoir plus de 12 aigles" << endl;
@@ -53,10 +56,11 @@ void AffichageSuccess(bool nbEagleSuccess, bool moneySuccess, bool nbTotalVisito
     cout << boolalpha << nbTotalVisitorSucess << "\t| Plus apprecie que les maisons closes\tAtteindre 150 en un seul mois\n"
          << endl;
 }
+// Menu de début de jeu
 void StartGame(Zoo &zoo, int &nbYearZoo)
 {
     int choice = 0, nbyear = 0, budg = 0;
-    cout << "Bienvenue dans ZooTicon, la simulation de zoo la plus realiste de 2021\nQue voulez-vous faire ?" << endl;
+    cout << "Bienvenue dans ZooPtyCoon, la simulation de zoo la plus realiste de 2021\nQue voulez-vous faire ?" << endl;
     while (choice != 1 && choice != 2)
     {
         cout << "1 | Partie rapide : 80000$, 2 couples d'aigle, 2 couples de tigre, 2 coqs, 8 poules sur 10 ans\n2 | Partie personnalise" << endl;
@@ -72,7 +76,7 @@ void StartGame(Zoo &zoo, int &nbYearZoo)
             zoo.addAnimal(new Aigle("AigleMale2", "aigle", "Male", 0.25, 12 * 4), 0);
             zoo.addAnimal(new Aigle("AigleFemelle1", "aigle", "Female", 0.3, 12 * 4), 0);
             zoo.addAnimal(new Aigle("AigleFemelle2", "aigle", "Female", 0.3, 12 * 4), 0);
-            // achete un habitat de tigre et 2 couples de tigre
+            // achete deux habitats de tigre et 2 couples de tigre
             zoo.addHabitat(new TigerHabitat("tigre"));
             zoo.addHabitat(new TigerHabitat("tigre"));
             zoo.addAnimal(new Tigre("TigreMale1", "tigre", "Male", 12, 12 * 6), 0);
@@ -93,7 +97,7 @@ void StartGame(Zoo &zoo, int &nbYearZoo)
         case 2:
             while (nbyear != 1 && nbyear != 2 && nbyear != 3 && nbyear != 4 && nbyear != 5)
             {
-                cout << "Combien d'année voulez-voulez jouer ?\n1 | 2 ans\t\t2 | 5 ans\t\t3 | 10 ans\t\t4 | 20 ans\t\t5 | 50 ans" << endl;
+                cout << "Combien d'annee voulez-voulez jouer ?\n1 | 2 ans\t\t2 | 5 ans\t\t3 | 10 ans\t\t4 | 20 ans\t\t5 | 50 ans" << endl;
                 scanf("%d", &nbyear);
                 switch (nbyear)
                 {
@@ -144,6 +148,7 @@ void StartGame(Zoo &zoo, int &nbYearZoo)
         }
     }
 }
+// Affichage de fin de jeu
 void printEndGame(Zoo zoo, int all_visitors, bool nbEagleSuccess, bool moneySuccess, bool nbTotalVisitorSuccess, bool nbMonthVisitorsSuccess)
 {
     int yesSir;
@@ -181,7 +186,6 @@ void printEndGame(Zoo zoo, int all_visitors, bool nbEagleSuccess, bool moneySucc
         }
     }
 }
-
 // Avoir toutes les infos à propos du zoo
 void infoZoo(Zoo zoo, bool nbEagleSuccess, bool moneySuccess, bool nbTotalVisitorSucess, bool nbMonthVisitorSuccess)
 {
@@ -295,25 +299,50 @@ void switchHabitat(Zoo zoo)
             while (skip != 0)
             {
                 // choix de l'habitat de départ
+                cout << "Depuis l'habitat numero __ , vous deplacez l'aigle numero __ , vers l'habitat d'aigle numero __" << endl;
                 cout << "De quel habitat voulez-vous deplacer l'animal\nVous avez "
                      << zoo.GetHabitatNbrByRace("aigle") << " habitat pour les aigles" << endl;
                 scanf("%d", &initialHabitat);
+
                 // choix de l'animal a déplacer
-                cout << "Quel animal de cet habitat voulez-vous deplacer ?\n"
-                     << endl;
-                zoo.GetHabitatAnimal(to_string(initialHabitat));
+                cout << "Quel animal de cet habitat voulez-vous deplacer ?\n" << endl;
+                zoo.GetHabitatAnimal(to_string(initialHabitat), "aigle");
+                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez l'aigle numero __ , vers l'habitat d'aigle numero __" << endl;
                 scanf("%d", &animal);
+
                 // choix de l'habitat de destination
+                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez l'aigle numero " << animal << " vers l'habitat d'aigle numero __" << endl;
                 cout << "Dans quel habitat voulez-vous placer l'animal choisi" << endl;
                 zoo.GetHabitatAnimal("aigle");
                 scanf("%d", &destination);
 
+                cout << "Depuis l'habitat numero " << initialHabitat << ", vous deplacez l'aigle numero " << animal << " vers l'habitat d'aigle numero " << destination << endl;
                 cout << "Appuyez sur 0 pour confirmer" << endl;
                 scanf("%d", &skip);
             }
             zoo.SwitchHabitat(initialHabitat, animal, destination, "aigle");
             break;
         case 2: // Déplacer un tigre
+            while (skip != 0)
+            {
+                // choix de l'habitat de départ
+                cout << "De quel habitat voulez-vous deplacer l'animal\nVous avez "
+                     << zoo.GetHabitatNbrByRace("tigre") << " habitat pour les tigres" << endl;
+                scanf("%d", &initialHabitat);
+                // choix de l'animal a déplacer
+                cout << "Quel animal de cet habitat voulez-vous deplacer ?\n"
+                     << endl;
+                zoo.GetHabitatAnimal(to_string(initialHabitat), "tigre");
+                scanf("%d", &animal);
+                // choix de l'habitat de destination
+                cout << "Dans quel habitat voulez-vous placer l'animal choisi" << endl;
+                zoo.GetHabitatAnimal("tigre");
+                scanf("%d", &destination);
+
+                cout << "Appuyez sur 0 pour confirmer" << endl;
+                scanf("%d", &skip);
+            }
+            zoo.SwitchHabitat(initialHabitat, animal, destination, "tigre");
             break;
         case 3: // Déplacer poule
             while (skip != 0)
@@ -325,7 +354,7 @@ void switchHabitat(Zoo zoo)
                 // choix de l'animal a déplacer
                 cout << "Quel animal de cet habitat voulez-vous deplacer ?\n"
                      << endl;
-                zoo.GetHabitatAnimal(to_string(initialHabitat));
+                zoo.GetHabitatAnimal(to_string(initialHabitat), "poule");
                 scanf("%d", &animal);
                 // choix de l'habitat de destination
                 cout << "Dans quel habitat voulez-vous placer l'animal choisi" << endl;
@@ -347,7 +376,7 @@ void switchHabitat(Zoo zoo)
                 // choix de l'animal a déplacer
                 cout << "Quel animal de cet habitat voulez-vous deplacer ?\n"
                      << endl;
-                zoo.GetHabitatAnimal(to_string(initialHabitat));
+                zoo.GetHabitatAnimal(to_string(initialHabitat), "poule");
                 scanf("%d", &animal);
                 // choix de l'habitat de destination
                 cout << "Dans quel habitat voulez-vous placer l'animal choisi" << endl;
@@ -398,9 +427,7 @@ int VisitorRevenue(int visitor)
 // Get number of visitors
 int Visitor(int tiger, int eagle, int chicken, int month)
 {
-    cout << "nbr de poulet/coq " << chicken << endl;
-    srand(time(0));
-    double variation = (rand() % 41) - 20; // generate random number (-20 / 20)
+    double variation = randomnbr(0,40) - 20; // generate random number (-20 / 20)
     if (month >= 5 && month <= 9)
     {
         // Saison haute
@@ -412,7 +439,7 @@ int Visitor(int tiger, int eagle, int chicken, int month)
 // Add money each year
 float subvention(int tiger, int eagle, int month, int year)
 {
-    float subvention = eagle * 2190; // Calcul de la subvention en fonction de l'animal
+    float subvention = tiger * 43800 + eagle * 2190; // Calcul de la subvention en fonction de l'animal
     cout << "New Year ! subvention : " << subvention << endl;
     return subvention;
 }
@@ -688,7 +715,7 @@ void buyAnimal(Zoo &zoo)
         }
         else
         {
-            cout << "Vous n'avez pas assez d'argent pour acheter une poule" << endl;
+            cout << "Vous n'avez pas assez d'argent pour acheter un coq" << endl;
         }
     }
 }
@@ -787,14 +814,37 @@ void actionMonth(Zoo &zoo)
             switch (whichRace)
             {
             case 1: // vente tigre
-                cout << "vente d'un tigre" << endl;
+                habitat = 0;
+                animal = 0;
+                while (habitat == 0)
+                {
+                    zoo.GetHabitatAnimal("tigre"); // affiche tout les habitats des tigres
+                    cout << "Dans quel habitat se situe le tigre que vous voulez vendre ?" << endl;
+                    scanf("%d", &habitat);
+                    if (habitat > zoo.GetHabitatNbrByRace("tigre"))
+                    {
+                        habitat = 0; // reinitialise la variable si elle ne correspond pas au nb d'habitat
+                    }
+                }
+                cout << "L'habitat de tigre numero " << habitat << endl;
+                zoo.GetHabitatAnimal(to_string(habitat)); // affiche l'habitat selectionné
+                while (animal == 0)
+                {
+                    cout << "Quel tigre de l'habitat choisi voulez-vous vendre ?" << endl;
+                    scanf("%d", &animal);
+                    if (animal > zoo.GetAnimalNbrByRace(to_string(habitat)))
+                    {
+                        animal = 0;
+                    }
+                }
+                zoo.SellAnimal(animal, habitat);
                 break;
             case 2: // vente poule
                 habitat = 0;
                 animal = 0;
                 while (habitat == 0)
                 {
-                    zoo.GetHabitatAnimal("poule"); // affiche tout les habitats d'aigles
+                    zoo.GetHabitatAnimal("poule"); // affiche tout les habitats des poules
                     cout << "Dans quel habitat se situe la poule que vous voulez vendre ?" << endl;
                     scanf("%d", &habitat);
                     if (habitat > zoo.GetHabitatNbrByRace("poule"))
@@ -821,7 +871,7 @@ void actionMonth(Zoo &zoo)
                 while (habitat == 0)
                 {
                     zoo.GetHabitatAnimal("aigle"); // affiche tout les habitats d'aigles
-                    cout << "Dans quel habitat se situe l'aigle que vous voulez vendre ?" << endl;
+                    cout << "Dans quel habitat se situe l'aigle que vous-voulez vendre ?" << endl;
                     scanf("%d", &habitat);
                     if (habitat > zoo.GetHabitatNbrByRace("aigle"))
                     {
@@ -832,7 +882,7 @@ void actionMonth(Zoo &zoo)
                 zoo.GetHabitatAnimal(to_string(habitat)); // affiche l'habitat selectionné
                 while (animal == 0)
                 {
-                    cout << "Quel aigle de l'habitat choisi voulez vous vendre ?" << endl;
+                    cout << "Quel aigle de l'habitat choisi voulez-vous vendre ?" << endl;
                     scanf("%d", &animal);
                     if (animal > zoo.GetAnimalNbrByRace(to_string(habitat)))
                     {
@@ -846,7 +896,7 @@ void actionMonth(Zoo &zoo)
                 animal = 0;
                 while (habitat == 0)
                 {
-                    zoo.GetHabitatAnimal("poule"); // affiche tout les habitats d'aigles
+                    zoo.GetHabitatAnimal("poule"); // affiche tout les habitats des coqs
                     cout << "Dans quel habitat se situe le coq que vous voulez vendre ?" << endl;
                     scanf("%d", &habitat);
                     if (habitat > zoo.GetHabitatNbrByRace("poule"))
@@ -858,7 +908,7 @@ void actionMonth(Zoo &zoo)
                 zoo.GetHabitatAnimal(to_string(habitat)); // affiche l'habitat selectionné
                 while (animal == 0)
                 {
-                    cout << "Quel coq de l'habitat choisi voulez vous vendre ?" << endl;
+                    cout << "Quel coq de l'habitat choisi voulez-vous vendre ?" << endl;
                     scanf("%d", &animal);
                     if (animal > zoo.GetAnimalNbrByRace(to_string(habitat)))
                     {
@@ -878,56 +928,53 @@ void actionMonth(Zoo &zoo)
 void specialEvent(Zoo &zoo)
 {
     int fireEvent = 0, stealingEvent = 0, nuisiblesEvent = 0, rottenEvent = 0;
-    srand(time(0));
-    fireEvent = rand() % 100;
-    if (fireEvent == 69) // nice random number
+    fireEvent = randomnbr(1,100);
+    if (fireEvent == 1) // nice random number
     {
         cout << "FEU !!!!" << endl;
-        int randhab = rand() % 3;
+        int randhab = randomnbr(1,3);
         // Détruit un habitat d'une race en aléatoire
         switch (randhab)
         {
         case 0:
-            // zoo.FireHabitat("tigre");
-            cout << "Un habitat de tigre a cramer" << endl;
+            zoo.FireHabitat("tigre");
             break;
         case 1:
             zoo.FireHabitat("aigle");
             break;
         default:
-            // zoo.FireHabitat("poule");
-            cout << "Un habitat de poulet a cramer" << endl;
+            zoo.FireHabitat("poule");
             break;
         }
     }
-    stealingEvent = rand() % 100;
-    if (stealingEvent == 69) // nice random number
+    stealingEvent = randomnbr(1,100);
+    if (stealingEvent == 1) // nice random number
     {
         cout << "VOL !!!!" << endl;
-        switch (rand() % 4)
+        switch (randomnbr(1,4))
         {
         case 0:
-            cout << "Une poule a ete vole" << endl;
+            zoo.VolDanimal("poule");
             break;
         case 1:
-            cout << "Un coq a ete vole" << endl;
+            zoo.VolDanimal("coq");
             break;
         case 2:
             zoo.VolDanimal("aigle");
             break;
         default:
-            cout << "Un tigre a ete vole" << endl;
+            zoo.VolDanimal("tigre");
             break;
         }
     }
-    nuisiblesEvent = rand() % 100;
+    nuisiblesEvent = randomnbr(1,100);
     if (nuisiblesEvent < 20)
     {
         cout << "NUISIBLE !!!!" << endl;
         zoo.setSeed(zoo.getSeed() * 0.9);
         cout << "tu n'as plus que " << zoo.getSeed() << "Kg de graines." << endl;
     }
-    rottenEvent = rand() % 100;
+    rottenEvent = randomnbr(1,100);
     if (rottenEvent < 10)
     {
         cout << "VIANDE AVARIEE !!!!" << endl;
@@ -994,13 +1041,11 @@ int main()
 {
     Zoo zoo(randomStr(120)); //nom du zoo
     int visitor = 0, all_visitors = 0, nextMonth = 0, nbYearZoo = 0;
-    int tiger = 0, chicken = 0, coq = 0;
     bool enoughMeat, enoughSeed = false;
     bool nbEagleSuccess = false, moneySuccess = false, nbTotalVisitorSuccess = false, nbMonthVisitorsSuccess = false;
     StartGame(zoo, nbYearZoo);
 
-    while (zoo.getYear() < nbYearZoo)
-    // Tous les mois
+    while (zoo.getYear() < nbYearZoo) // Tous les mois
     {
         if (zoo.getMonth() != 0) // tous les mois sauf celui quand le code se lance
         {
@@ -1022,8 +1067,7 @@ int main()
         zoo.getInfo();                                    // affiche l'année, le mois et le budget, chaque mois
         animalsReproduction(zoo, enoughMeat, enoughSeed); // Reproduction des animaux
 
-        nextMonth = 0;
-        // Action pour le mois
+        nextMonth = 0; // Action pour le mois
         while (zoo.getYear() < 10 && nextMonth != 1)
         {
             cout << "\n1 | Passer le mois\t\t2 | Achat / Vente\t\t3 | Avoir des information sur le zoo\n4 | Changer un animal d'habitat\t0 | Quitter" << endl;
@@ -1056,7 +1100,6 @@ int main()
             checkingFoodStorage(zoo, enoughMeat, enoughSeed);                                                                      // Affiche et verifie la quantité de nourriture
         }
     }
-    // fin de la partie
     printEndGame(zoo, all_visitors, nbEagleSuccess, moneySuccess, nbTotalVisitorSuccess, nbMonthVisitorsSuccess); // affiche la fin de la partie
     return 0;
 }
