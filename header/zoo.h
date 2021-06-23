@@ -21,7 +21,7 @@ public:
     void addAnimal(IAnimal* animal, int habitat);
     void addHabitat(IHabitat* habitat);
     void SellHabitat(string Race);
-    void SellAnimal(int IdAni, int IdHab);
+    void SellAnimal(int IdAni, int IdHab, string race);
     void FireHabitat(string Race);
     void NextMonth();
     void UpdateAge();

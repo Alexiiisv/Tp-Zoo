@@ -21,10 +21,10 @@ string randomStre(int len)
     return rand_str;
 }
 // Génère un string random
-int randomnbr()
+int randomNbr(int min, int max)
 {
     mt19937 generator{random_device{}()};
-    uniform_int_distribution<int> distribution{0, 1};
+    uniform_int_distribution<int> distribution{min, max};
     return distribution(generator);
 }
 //Create the zoo
@@ -52,64 +52,64 @@ void Zoo::addHabitat(IHabitat *habitat)
         aigle_Habitat += 1;
         budget -= 2000;
         m_habitats.push_back(habitat);
+        cout << "Tu viens d'acheter un habitat d'aigle ; tu en as maintenant " << GetHabitatNbrByRace("aigle") << endl;
     }
     else if (habitat->getType() == "poule" && budget - 300 >= 0)
     {
         poules_Habitat += 1;
         budget -= 300;
         m_habitats.push_back(habitat);
+        cout << "Tu viens d'acheter un habitat de poule ; tu en as maintenant " << GetHabitatNbrByRace("poule") << endl;
     }
     else if (habitat->getType() == "tigre" && budget - 2000 >= 0)
     {
         tigre_Habitat += 1;
         budget -= 2000;
         m_habitats.push_back(habitat);
+        cout << "Tu viens d'acheter un habitat de tigre ; tu en as maintenant " << GetHabitatNbrByRace("tigre") << endl;
     }
     else
-    {
         cout << "tu n'as pas assez d'argent pour acheter un habitat pour les " << habitat->getType() << endl;
-    }
+    cout << endl;
 }
 //Sell a habitat
 void Zoo::SellHabitat(string Race)
 {
     int less = 0, id = 0;
+    bool nohab = false;
+    if (GetHabitatNbrByRace(Race) != 0)
+    {
+        while (m_habitats[less]->getType() != Race)
+            less++;
+    }
+
     HabitatIterator it = m_habitats.begin();
     while (it != m_habitats.end())
     {
-        if ((*it)->getnbrAnimals() < m_habitats[less]->getnbrAnimals() && (*it)->getType() == Race)
+
+        if ((*it)->getnbrAnimals() <= m_habitats[less]->getnbrAnimals() && (*it)->getType() == Race)
         {
             less = id;
+            nohab = true;
         }
         id++;
         it++;
     }
-    cout << less << endl;
-    m_habitats.erase(m_habitats.begin() + less);
-    if (Race == "poule")
-    {
+    if (nohab)
+        m_habitats.erase(m_habitats.begin() + less);
+
+    if (Race == "poule" && nohab)
         budget += 50;
-    }
-    else
-    {
+    else if (nohab && Race != "poule")
         budget += 500;
-    }
 }
 
-void Zoo::SellAnimal(int IdAni, int IdHab)
+void Zoo::SellAnimal(int IdAni, int IdHab, string race)
 {
     int id = 1;
-    HabitatIterator it = m_habitats.begin();
-    while (it != m_habitats.end())
-    {
-        if (IdHab == id)
-        {
-            budget += (*it)->getAnimalValue(IdAni);
-            (*it)->delAnimal(IdAni - 1, "Vente");
-        }
-        it++;
-        id++;
-    }
+    IdHab = getintHab(IdHab, race);
+            budget += m_habitats[IdHab]->getAnimalValue(IdAni);
+            m_habitats[IdHab]->delAnimal(IdAni - 1, "Vente");
 }
 
 //Fire event
@@ -117,8 +117,8 @@ void Zoo::FireHabitat(string Race)
 {
     if (GetHabitatNbrByRace(Race) != 0)
     {
-        int randHab = rand() % GetHabitatNbrByRace(Race);
-        int hab = getintHab(randHab+1, Race);
+        int randHab = randomNbr(0, GetHabitatNbrByRace(Race));
+        int hab = getintHab(randHab + 1, Race);
         cout << "random habitat " << randHab << " int habitat random " << hab << endl;
         m_habitats.erase(m_habitats.begin() + hab);
         if (Race == "aigle")
@@ -127,9 +127,7 @@ void Zoo::FireHabitat(string Race)
             cout << "un feu s'est declare dans ton habitat de " << Race << "\nTout tes Animaux dans cet habitat sont morts. Chaud" << endl;
     }
     else
-    {
         cout << "Un feu s'est declare dans ton zoo fort heureusement les pompiers l'ont maitrise avant d'atteindre un habitat." << endl;
-    }
 }
 //increase the month value by one
 void Zoo::NextMonth()
@@ -172,9 +170,7 @@ void Zoo::UpdateMalade()
     while (it != m_habitats.end())
     {
         if (getYear() > 0 && getMonth() == 1)
-        {
             (*it)->UpdateMalade(getYear(), getMonth());
-        }
         it++;
     }
 }
@@ -193,7 +189,7 @@ void Zoo::ReproductionAigle(int state)
                 F = (*it)->getAGender("Female", "aigle", 2);
                 M = (*it)->getAGender("Male", "aigle", 2);
                 cout << "\tfemme " << F << "\n\thomme " << M << endl;
-                if (F >= M)
+                if (F >= M && (*it)->getnbrAnimals() > 1)
                 {
                     int ratio = F - M;
                     int nbFemellePonte = F - ratio;
@@ -201,12 +197,12 @@ void Zoo::ReproductionAigle(int state)
                     cout << "nombre d'oeufs d'aigle : " << (*it)->getEagleEggs() << endl;
                 }
             }
-            else if (state == 5)
+            else if (state == 5 && (*it)->getEagleEggs() > 0)
             {
                 // range over each eggs to see if they die
                 for (int i = 0; i < (*it)->getEagleEggs(); i++)
                 {
-                    randDeath = rand() % 2; // Generate 0 or 1
+                    randDeath = randomNbr(0, 1); // Generate 0 or 1
                     // Lorsqu'un aigle est mort né
                     if (randDeath == 1)
                     {
@@ -214,12 +210,11 @@ void Zoo::ReproductionAigle(int state)
                         mort++;
                     }
                 }
-                cout << "nb de bb aigles : " << (*it)->getEagleEggs() << endl;
-                cout << "nb de bb aigles MORT : " << mort << endl;
+                cout << "nb de bb aigles : " << (*it)->getEagleEggs() << " ; nb de bb aigles MORT : " << mort << endl;
                 for (int i = 0; i < (*it)->getEagleEggs(); i++)
                 {
                     srand(time(0));
-                    int randSex = rand() % 2;
+                    int randSex = randomNbr(0, 1);
                     float food;
                     string sex;
                     char name[16];
@@ -256,11 +251,8 @@ void Zoo::ReproductionTigre()
     {
         if ((*it)->getType() == "tigre")
         {
-            cout << "initial " << (*it)->getTbb() << endl;
             if ((*it)->getAccouche() && (*it)->getTbb() < 20)
-            {
                 (*it)->SetTbb((*it)->getTbb() + 1);
-            }
             else if ((*it)->getAccouche() && (*it)->getTbb() == 20)
             {
                 (*it)->SetTbb(0);
@@ -281,15 +273,13 @@ void Zoo::ReproductionTigre()
             }
             else if ((*it)->getTbb() > 0)
             {
-                cout << "before " << (*it)->getTbb() << endl;
                 (*it)->SetTbb((*it)->getTbb() + 1);
-                cout << "after " << (*it)->getTbb() << endl;
                 if ((*it)->getTbb() == 4)
                 {
                     // range over each eggs to see if they die
                     for (int i = 0; i < (*it)->getEagleEggs(); i++)
                     {
-                        randDeath = rand() % 3; // Generate 0 or 1 or 2
+                        randDeath = randomNbr(0, 2); // Generate 0 or 1 or 2
                         // Lorsqu'un tigre est mort né
                         if (randDeath == 1)
                         {
@@ -297,12 +287,11 @@ void Zoo::ReproductionTigre()
                             mort++;
                         }
                     }
-                    cout << "nb de bb tigres : " << (*it)->getEagleEggs() << endl;
-                    cout << "nb de bb tigres MORT : " << mort << endl;
+                    cout << "nb de bb tigres : " << (*it)->getEagleEggs() << "; nb de bb tigres MORT : " << mort << endl;
                     for (int i = 0; i < (*it)->getEagleEggs(); i++)
                     {
                         srand(time(0));
-                        int randSex = rand() % 2;
+                        int randSex = randomNbr(0, 1);
                         float food;
                         string sex;
                         char name[16];
@@ -341,14 +330,10 @@ void Zoo::ReproductionTigre(string state)
         while (it != m_habitats.end())
         {
             if ((*it)->getType() == "tigre" && (*it)->getEagleEggs() > 0)
-            {
-                cout << "les bb sont ded" << endl;
                 (*it)->SetEagleEggs(0);
-            }
             it++;
         }
     }
-    
 }
 void Zoo::ReproductionPoule(int date)
 {
@@ -370,12 +355,12 @@ void Zoo::ReproductionPoule(int date)
                 (*it)->SetEagleEggs(nbFemellePonte * 4); // chaque poule pond 4 oeufs tout les 2 mois
                 cout << "nombre d'oeufs de poule : " << (*it)->getEagleEggs() << endl;
             }
-            if (date % 2 == 1)
+            if (date % 2 == 1 && (*it)->getEagleEggs() > 0)
             {
                 // // range over each eggs to see if they die
                 for (int i = 0; i < (*it)->getEagleEggs(); i++)
                 {
-                    randDeath = rand() % 2; // Generate 0 or 1
+                    randDeath = randomNbr(0, 1); // Generate 0 or 1
                     // Lorsqu'un aigle est mort né
                     if (randDeath == 1)
                     {
@@ -383,12 +368,10 @@ void Zoo::ReproductionPoule(int date)
                         mort++;
                     }
                 }
-                cout << "nb de bb poule/coq : " << (*it)->getEagleEggs() << endl;
-                cout << "nb de bb poule/coq MORT : " << mort << endl;
+                cout << "\nnb de bb poule/coq : " << (*it)->getEagleEggs() << " ; nb de bb poule/coq MORT : " << mort << endl;
                 for (int i = 0; i < (*it)->getEagleEggs(); i++)
                 {
-                    int random = randomnbr();
-                    cout << random << endl;
+                    int random = randomNbr(0, 1);
                     switch (random)
                     {
                     case 0: //poule
@@ -452,17 +435,13 @@ void Zoo::UpdateHabitat()
     {
         if ((*it)->getType() == "aigle")
         {
-            (*it)->delAnimal(rand() % 5, "Plein");
+            (*it)->delAnimal(randomNbr(0, 4), "Plein");
             (*it)->UpdMating();
         }
         if ((*it)->getType() == "poule")
-        {
-            (*it)->delAnimal(rand() % 11, "Plein");
-        }
+            (*it)->delAnimal(randomNbr(0, 10), "Plein");
         if ((*it)->getType() == "tigre")
-        {
-            (*it)->delAnimal(rand() % 3, "Plein");
-        }
+            (*it)->delAnimal(randomNbr(0, 2), "Plein");
 
         it++;
         i++;
@@ -473,20 +452,22 @@ void Zoo::VolDanimal(string state)
 {
     if (GetHabitatNbrByRace(state) != 0)
     {
-        int randhab = rand() % GetHabitatNbrByRace(state);
-        int hab = getintHab(randhab+1, state);
+        int randhab = randomNbr(0, GetHabitatNbrByRace(state));
+        int hab = getintHab(randhab + 1, state);
         if (m_habitats[hab]->getnbrAnimals() != 0)
         {
-            int randani = rand() % m_habitats[hab]->getnbrAnimals();
+            int randani = randomNbr(0, m_habitats[hab]->getnbrAnimals());
             m_habitats[hab]->delAnimal(randani, "Vol");
-            if (state == "poule") cout << "Une poule a ete vole" << endl;
-            else if (state != "poule") cout << "Un " << state << " a ete vole" << endl;
+            if (state == "poule")
+                cout << "Une poule a ete vole" << endl;
+            else if (state != "poule")
+                cout << "Un " << state << " a ete vole" << endl;
         }
         else
             cout << "Il y a eu une tentative de vol dans un de tes habitats,\nHeureusement il etait vide." << endl;
     }
     else
-        cout << "tu n'as pas d'habitat qui accueille les " << state << endl;
+        cout << "Il y a eu une tentative de vol dans ton zoo,\nHeureusement la police a arreter les cambrioleurs a temps." << state << endl;
 }
 //Update the budget the zoo have
 void Zoo::UpdateBudget(float Budget)
@@ -632,7 +613,17 @@ int Zoo::getAGender(string gender, string race)
 //Get the information about the zoo
 void Zoo::getInfo()
 {
-    cout << getName() << "\nYear : " << getYear() << "\nMonth : " << getMonth() << "\nBudget : " << getBudget() << endl;
+    cout << "\t\t\t-------------------------" << endl;
+    if (getBudget() < 10000)
+    {
+        cout << "\t\t\t| " << getName() << "\t\t|\n\t\t\t| Year : " << getYear() << "\t\t|\n\t\t\t| Month : " << getMonth() << "\t\t|\n\t\t\t| Budget : " << getBudget() << "\t\t|" << endl;
+    }
+    else
+    {
+        cout << "\t\t\t| " << getName() << "\t\t|\n\t\t\t| Year : " << getYear() << "\t\t|\n\t\t\t| Month : " << getMonth() << "\t\t|\n\t\t\t| Budget : " << getBudget() << "\t|" << endl;
+    }
+    cout << "\t\t\t-------------------------\n"
+         << endl;
 }
 //Get all the information about all the animal per race
 void Zoo::getAllInfo(string race)

@@ -18,7 +18,6 @@ IAnimal::IAnimal(string name)
 
 IAnimal::~IAnimal()
 {
-    cout << "tamer" << endl;
 }
 
 string IAnimal::getName()
@@ -144,12 +143,10 @@ void IAnimal::UpdateAge()
         if (m_age == 168 && m_fertile == 1)
         {
             m_fertile = 0;
-            cout << "aigle plus fertile" << endl;
         }
         if (m_alive == 1 && m_age < 168 && m_age >= 48)
         {
             m_fertile = 1;
-            cout << "aigle est fidele" << endl;
         }
         if (getMalade() == 0 && randomnbr(5) == 1 && getMaladeOnce() == 0)
         {
@@ -177,12 +174,10 @@ void IAnimal::UpdateAge()
         if (m_age == 6 && m_fertile == 0)
         {
             m_fertile = 1;
-            cout << "poule / coq fertile" << endl;
         }
         if (m_age == 96 && m_fertile == 1)
         {
             m_fertile = 0;
-            cout << "poule / coq plus fertile" << endl;
         }
 
         //maladie poule
@@ -211,17 +206,14 @@ void IAnimal::UpdateAge()
         if (m_age == 48 && m_fertile == 0 && m_gender == "Female")
         {
             m_fertile = 1;
-            cout << "tigre femme fertile" << endl;
         }
         if (m_age == 72 && m_fertile == 0 && m_gender == "Male")
         {
             m_fertile = 1;
-            cout << "tigre homme fertile" << endl;
         }
         if (m_age == 168 && m_fertile == 1)
         {
             m_fertile = 0;
-            cout << "tigre plus fertile" << endl;
         }
         //maladie tigre
         if (getMalade() == 0 && randomnbr(5) == 1 && getMaladeOnce() == 0)
