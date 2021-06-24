@@ -148,7 +148,7 @@ void StartGame(Zoo &zoo, int &nbYearZoo)
     Clear();
 }
 // Affichage de fin de jeu
-void printEndGame(Zoo zoo, int all_visitors, bool nbEagleSuccess, bool moneySuccess, bool nbTotalVisitorSuccess, bool nbMonthVisitorsSuccess)
+void printEndGame(Zoo &zoo, int all_visitors, bool nbEagleSuccess, bool moneySuccess, bool nbTotalVisitorSuccess, bool nbMonthVisitorsSuccess)
 {
     int yesSir;
     Clear();
@@ -227,7 +227,7 @@ void infoPoule(Zoo &zoo)
     }
 }
 // Avoir toutes les infos à propos du zoo
-void infoZoo(Zoo zoo, bool nbEagleSuccess, bool moneySuccess, bool nbTotalVisitorSucess, bool nbMonthVisitorSuccess)
+void infoZoo(Zoo &zoo, bool nbEagleSuccess, bool moneySuccess, bool nbTotalVisitorSucess, bool nbMonthVisitorSuccess)
 {
     int info = 1;
     while (info != 0)

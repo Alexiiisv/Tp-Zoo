@@ -12,7 +12,7 @@
 using namespace std;
 
 // Check les succès
-void checkSuccess(Zoo zoo, bool &nbEagleSuccess, bool &moneySuccess, int all_visitors, bool &nbTotalVisitorSuccess, bool &nbMonthVisitorsSuccess, int visitor)
+void checkSuccess(Zoo &zoo, bool &nbEagleSuccess, bool &moneySuccess, int all_visitors, bool &nbTotalVisitorSuccess, bool &nbMonthVisitorsSuccess, int visitor)
 {
     string message;
     if ((nbEagleSuccess == false && (zoo.getAGender("Female", "aigle") + zoo.getAGender("Male", "aigle")) >= 12) || (moneySuccess == false && zoo.getBudget() >= 300000) || (nbTotalVisitorSuccess == false && all_visitors >= 20000) || (nbMonthVisitorsSuccess == false && visitor >= 500))

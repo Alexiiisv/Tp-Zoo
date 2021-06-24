@@ -49,7 +49,7 @@ void infoGraines(Zoo &zoo, bool &enoughSeed)
 }
 
 // Verifie la quantité de nourriture et empeche les animaux d'être fertile quand ils ont faim
-void checkingFoodStorage(Zoo zoo, bool &enoughMeat, bool &enoughSeed)
+void checkingFoodStorage(Zoo &zoo, bool &enoughMeat, bool &enoughSeed)
 {
     infoViandes(zoo, enoughMeat);
     infoGraines(zoo, enoughSeed);

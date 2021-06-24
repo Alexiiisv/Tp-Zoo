@@ -832,7 +832,7 @@ void specialEvent(Zoo &zoo)
 }
 
 // Permet aux animaux de se reproduire quand ils ont de la nourriture
-void animalsReproduction(Zoo zoo, bool enoughMeat, bool enoughSeed)
+void animalsReproduction(Zoo &zoo, bool enoughMeat, bool enoughSeed)
 {
     if (enoughMeat || zoo.getMonth() % 12 == 5) // PONTES D'OEUFS DES AIGLES (lorsqu'il y a assez de viande ou en avril lorsque les oeufs éclosent)
     {
