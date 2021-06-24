@@ -56,9 +56,9 @@ void checkSuccess(Zoo zoo, bool &nbEagleSuccess, bool &moneySuccess, int all_vis
 // Affiche les succes deverouillé et non deverouillé
 void AffichageSuccess(bool nbEagleSuccess, bool moneySuccess, bool nbTotalVisitorSucess, bool nbMonthVisitorSuccess)
 {
-    cout << boolalpha << nbEagleSuccess << "\t| Ami des aigles\t\t\tAvoir plus de 12 aigles" << endl;
-    cout << boolalpha << moneySuccess << "\t| Riche as fuck\t\t\t\tAtteindre plus de 300000$" << endl;
-    cout << boolalpha << nbTotalVisitorSucess << "\t| Parc d'attraction\t\t\tAtteindre plus de 20000 visiteurs" << endl;
-    cout << boolalpha << nbTotalVisitorSucess << "\t| Plus apprecie que les maisons closes\tAtteindre 500 en un seul mois\n"
+    cout << "\n\t" << boolalpha << nbEagleSuccess << "\t| Ami des aigles\t\t\tAvoir plus de 12 aigles" << endl;
+    cout << "\t" << boolalpha << moneySuccess << "\t| Riche as fuck\t\t\t\tAtteindre plus de 300000$" << endl;
+    cout << "\t" << boolalpha << nbTotalVisitorSucess << "\t| Parc d'attraction\t\t\tAtteindre plus de 20000 visiteurs" << endl;
+    cout << "\t" << boolalpha << nbTotalVisitorSucess << "\t| Plus apprecie que les maisons closes\tAtteindre 500 en un seul mois\n"
          << endl;
 }

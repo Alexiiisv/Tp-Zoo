@@ -91,7 +91,7 @@ int main()
             }
 
             checkSuccess(zoo, nbEagleSuccess, moneySuccess, all_visitors, nbTotalVisitorSuccess, nbMonthVisitorsSuccess, visitor); // Verifie si un succes a été débloqué
-            if (mois+1 = zoo.getMonth())
+            if (mois+1 == zoo.getMonth())
             {
                 specialEvent(zoo);                                                                                                     // créé les événements spéciaux
                 mois = zoo.getMonth();
