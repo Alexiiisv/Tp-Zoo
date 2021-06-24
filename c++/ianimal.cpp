@@ -148,7 +148,7 @@ void IAnimal::UpdateAge()
         {
             m_fertile = 1;
         }
-        if (getMalade() == 0 && randomnbr(5) == 1 && getMaladeOnce() == 0)
+        if (getMalade() == 0 && randomnbr(100) <= 8 && getMaladeOnce() == 0)
         {
             SetMalade(1, 0);
             SetMaladeOnce(1);
@@ -181,7 +181,7 @@ void IAnimal::UpdateAge()
         }
 
         //maladie poule
-        if (getMalade() == 0 && randomnbr(10) == 1 && getMaladeOnce() == 0)
+        if (getMalade() == 0 && randomnbr(100) <= 5 && getMaladeOnce() == 0)
         {
             SetMalade(1, 0);
             SetMaladeOnce(1);
@@ -216,7 +216,7 @@ void IAnimal::UpdateAge()
             m_fertile = 0;
         }
         //maladie tigre
-        if (getMalade() == 0 && randomnbr(5) == 1 && getMaladeOnce() == 0)
+        if (getMalade() == 0 && randomnbr(100) <= 10 && getMaladeOnce() == 0)
         {
             SetMalade(1, 0);
             SetMaladeOnce(1);

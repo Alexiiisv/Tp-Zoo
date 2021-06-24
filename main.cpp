@@ -53,7 +53,7 @@ int main()
             case 4: // changement d'habitat pour un animal
                 switchHabitat(zoo);
                 Clear();
-                zoo.getInfo();
+                zoo.getInfo(); // Affiche la date du nouveau mois + le budget
                 break;
             case 3: // Affichage des infos du zoo
                 infoZoo(zoo, nbEagleSuccess, moneySuccess, nbTotalVisitorSuccess, nbMonthVisitorsSuccess);
@@ -61,22 +61,22 @@ int main()
             case 2: // Actions pour le mois actuel
                 actionMonth(zoo);
                 Clear();
-                zoo.getInfo();
+                zoo.getInfo(); // Affiche la date du nouveau mois + le budget
                 break;
-            case 1:              // Lorsque le mois est passé, met a jour la nourriture et l'age des animaux
-                zoo.NextMonth(); // incrémente la variable tout les mois
-                if (zoo.getMonth() == 13)          // Nouvelle année
+            case 1:                       // Lorsque le mois est passé, met a jour la nourriture et l'age des animaux
+                zoo.NextMonth();          // incrémente la variable tout les mois
+                if (zoo.getMonth() == 13) // Nouvelle année
                 {
-                    zoo.setMonth(1);    // reset le mois à 1 pour janvier
-                    zoo.setYear(1);     // ajoute 1 aux années
-                    zoo.UpdateMalade(); // Reset la possibilité qu'un animal soit malade
+                    zoo.setMonth(1);              // reset le mois à 1 pour janvier
+                    zoo.setYear(1);               // ajoute 1 aux années
+                    zoo.UpdateMalade();           // Reset la possibilité qu'un animal soit malade
                     Subvention = subvention(zoo); // calcul les subventions
                     zoo.UpdateBudget(Subvention); // ajoute les subventions
                 }
-                visitor = Visitor(zoo);            // calcul le nb de visiteur
-                all_visitors += visitor;           // calcul le nb de visiteurs total
-                revenue = VisitorRevenue(visitor); // calcul du revenue par rapport aux visiteurs
-                zoo.UpdateBudget(revenue);         // calcul le revenue lié aux visiteurs
+                visitor = Visitor(zoo);                           // calcul le nb de visiteur
+                all_visitors += visitor;                          // calcul le nb de visiteurs total
+                revenue = VisitorRevenue(visitor);                // calcul du revenue par rapport aux visiteurs
+                zoo.UpdateBudget(revenue);                        // calcul le revenue lié aux visiteurs
                 zoo.getInfo();                                    // Affiche la date du nouveau mois + le budget
                 zoo.UpdateAge();                                  // ajoute un mois à l'age de chaque animaux
                 zoo.UpdateMeat();                                 // Réduit la quantité de viande en fonction des tigres et aigles
@@ -87,17 +87,19 @@ int main()
             case -1:
                 printEndGame(zoo, all_visitors, nbEagleSuccess, moneySuccess, nbTotalVisitorSuccess, nbMonthVisitorsSuccess); // affiche la fin de la partie
                 return 0;
+            default:
+                zoo.getInfo(); // Affiche la date du nouveau mois + le budget
+                break;
             }
-
             checkSuccess(zoo, nbEagleSuccess, moneySuccess, all_visitors, nbTotalVisitorSuccess, nbMonthVisitorsSuccess, visitor); // Verifie si un succes a été débloqué
-            if (mois+1 == zoo.getMonth())
+            if (mois + 1 == zoo.getMonth())
             {
-                specialEvent(zoo);                                                                                                     // créé les événements spéciaux
+                specialEvent(zoo); // créé les événements spéciaux
                 mois = zoo.getMonth();
             }
-            checkingFoodStorage(zoo, enoughMeat, enoughSeed);                                                                      // Affiche et verifie la quantité de nourriture
+            checkingFoodStorage(zoo, enoughMeat, enoughSeed); // Affiche et verifie la quantité de nourriture
             cout << "\nRevenus pour " << visitor << " visiteurs : " << revenue << endl;
-            if (zoo.getMonth() == 1)
+            if (zoo.getMonth() == 1 && zoo.getYear() != 0)
             {
                 cout << "New Year ! subvention : " << Subvention << endl;
                 mois = 1;

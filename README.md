@@ -22,6 +22,8 @@ UrMum : 10/10
     - [Evenements exceptionnels](#evenements-exceptionnels)
     - [Autres informations](#autres-informations)
 - [Comment jouer ?](#comment-jouer)
+    - [Commande pour VS code](#commande-pour-vs-code)
+- [Modification des valeurs de base du sujet](#modification-des-valeurs-de-base-du-sujet)
 - [L'équipe de développement](#l-equipe-de-developpement)
 <br><br>
 
@@ -55,7 +57,7 @@ Dans le jeu tu pourras acheter et vendre des animaux et leur habitat ainsi que d
 - Mort infantile : Il existe un risque assez important que les bébés meurent à la naissance, ce nombre est aléatoire.
 - Fin de vie d'un individu : Lorsqu'il atteint un âge avancé, l'animal meurt. (25 ans pour les aigles et les tigres, 15 pour les poules et les coqs)
 - Surpopulation : Comme évoqué précedemment, le nombre d'individus par habitat est limité (2 pour les tigres, 4 pour les aigles, 10 pour les poules/coqs). Lorsque ce nombre est dépassé, il y a 50% de risque qu'un individu meurt (4 individus pour les poules/coqs)
-- Maladie : La maladie des animaux durent environ un mois. Lorsqu'ils sont malade, ils ne se reproduisent plus et ont même un risque de mourir (10%). Chaque animal ne peut être malade qu'une fois par année
+- Maladie : La maladie des animaux durent environ un mois. Lorsqu'ils sont malade, ils ne se reproduisent plus et ont même un risque de mourir (10%). Chaque animal ne peut être malade qu'une fois par année. Les pourcentages de risque de tomber malade pour chaque espèce par mois : tigre 10%, aigles 8%, poules 5%.
 <br><br>
 
 ## Evenements exceptionnels
@@ -77,8 +79,15 @@ Dans le jeu tu pourras acheter et vendre des animaux et leur habitat ainsi que d
 
 Le programme a été créé sur VScode. Vous pouvez utiliser tout autre IDE, cependant par soucis de compatibilité, il serait plus judicieux de compilé sur VScode. (CLion ne prend pas en compte notre fonction Clear, qui "clear" le terminal a certains moment pour le rendre plus lisible). Il est également préférable de lancer le fichier .exe créé plutôt que sur le terminal de l'IDE et de mettre la fenêtre en plein écran.
 
-## Commande pour VScode : <br>
+## Commande pour VS code
+<br>
 gcc main.cpp ./c++/zoo.cpp ./c++/aigle.cpp ./c++/poule.cpp ./c++/coq.cpp ./c++/tigre.cpp ./c++/ianimal.cpp ./c++/eagleHabitat.cpp ./c++/chickenHabitat.cpp ./c++/tigerHabitat.cpp ./c++/ihabitat.cpp ./c++/actionMonth.cpp ./c++/success.cpp ./c++/visitor.cpp ./c++/utils.cpp ./c++/infoZoo.cpp ./c++/foodStorage.cpp -lstdc++ -o main.exe
+<br><br>
+
+# Modification des valeurs du sujet de base
+Certaines valeurs du sujet ont été changé pour le bien du jeu :
+- Pourcentage de maladie: Le pourcentage a été réduit pour éviter que tous les animaux ne soient malade dès les premiers mois de l'année
+- Nombre d'oeufs de poule: Gérer les poules est assez long et 200 oeufs par an et par poules était beaucoup trop important
 <br><br>
 
 # L equipe de developpement

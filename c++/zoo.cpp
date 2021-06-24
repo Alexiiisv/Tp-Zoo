@@ -263,8 +263,8 @@ void Zoo::ReproductionTigre()
                 if (ratio < 0)
                     ratio = 0;
                 int nbFemellePonte = F - ratio;
-                (*it)->SetEagleEggs(nbFemellePonte * 3); // chaque tigre femelle pond 3 enfants
-                cout << "nombre de tigre enceinte : " << (*it)->getEagleEggs() / 3 << endl;
+                (*it)->SetEagleEggs(nbFemellePonte * 3); // chaque tigresse pond 3 enfants
+                cout << "nombre de tigresse enceinte : " << (*it)->getEagleEggs() / 3 << endl;
                 (*it)->SetTbb((*it)->getTbb() + 1);
             }
             else if ((*it)->getTbb() > 0)

@@ -193,7 +193,7 @@ void buyAigle(Zoo &zoo)
                 if (zoo.getBudget() - 1000 < 0)
                 {
                     nomoni = false;
-                    cout << "t'as pas la tune pour acheter un aigle" << endl;
+                    cout << "t'as pas la thune pour acheter un aigle" << endl;
                     break;
                 }
                 else if (zoo.getBudget() - 1000 >= 0)
@@ -207,7 +207,7 @@ void buyAigle(Zoo &zoo)
                 if (zoo.getBudget() - 4000 < 0)
                 {
                     nomoni = false;
-                    cout << "t'as pas la tune pour acheter un aigle" << endl;
+                    cout << "t'as pas la thune pour acheter un aigle" << endl;
                     break;
                 }
                 else if (zoo.getBudget() - 4000 >= 0)
@@ -222,7 +222,7 @@ void buyAigle(Zoo &zoo)
                 if (zoo.getBudget() - 2000 < 0)
                 {
                     nomoni = false;
-                    cout << "t'as pas la tune pour acheter un aigle" << endl;
+                    cout << "t'as pas la thune pour acheter un aigle" << endl;
                     break;
                 }
                 else if (zoo.getBudget() - 2000 >= 0)
@@ -484,7 +484,7 @@ void buyHabitats(Zoo &zoo)
     while (whatToBuy != 0 && whatToBuy != 3 && whatToBuy != 4 && whatToBuy != 5)
     {
         Clear();
-        cout << "que voulez-vous acheter ?\n3 | Habitat aigles\t\t4 | Habitat tigres\t\t0 | pour quitter le menu\n5 | Habitat poules\nentrez un des numeros pour acheter un habitat" << endl;
+        cout << "Que voulez-vous acheter ?\n3 | Habitat aigles\t\t4 | Habitat tigres\t\t0 | pour quitter le menu\n5 | Habitat poules\nentrez un des numeros pour acheter un habitat" << endl;
         scanf("%d", &whatToBuy);
         Clear();
         switch (whatToBuy)
@@ -554,7 +554,7 @@ void actionMonth(Zoo &zoo)
     {
         if (VG) zoo.getInfo();
         VG = true;
-        cout << "\nQue voulez-vous faire :\nAcheter :\t1 | Habitats\t\t2 | Animaux\t\t3 | viandes\t\t4 | Graines\t\t0 pour quitter le menu\nVendre :\t5 | Habitat\t\t6 | Animaux" << endl;
+        cout << "\nQue voulez-vous faire :\nAcheter :\t1 | Habitats\t\t2 | Animaux\t\t3 | viandes\t\t4 | Graines\nVendre :\t5 | Habitat\t\t6 | Animaux\n\t\t0 | pour quitter le menu" << endl;
         scanf("%d", &whatToBuy);
 
         switch (whatToBuy)

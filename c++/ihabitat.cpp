@@ -12,7 +12,7 @@ int randomnbre(int max)
 }
 
 IHabitat::IHabitat()
-    : m_type("habitat sans race")
+    : m_type("habitat sans nom")
 {
 }
 
@@ -49,19 +49,20 @@ void IHabitat::delAnimal(int qtt, string state)
     int random = rand()%2;
     if (m_capacity < nbr_animals && state == "Plein" && random == 1 && child && m_type == "aigle")
     {
-        cout << "un animal va canner : " << m_animals[qtt]->getName() << endl;
+        cout << "un animal est mort due a la surpopulation" << endl;
         SetFertilite(qtt);
         m_animals.erase(m_animals.begin()+qtt);
         nbr_animals--;
     }
     if (m_capacity < nbr_animals && state == "Plein" && random == 1 && child && m_type == "tigre")
     {
-        cout << "un animal va canner : " << m_animals[qtt]->getName() << endl;
+        cout << "un animal est mort due a la surpopulation" << endl;
         m_animals.erase(m_animals.begin()+qtt);
         nbr_animals--;
     }
     else if (m_capacity < nbr_animals && state == "Plein" && random == 1 && child && m_type == "poule")
     {
+        cout << "plusieur poules/coq sont mort" << endl;
         for (int i = 0; i < 4; i++)
         {
             m_animals.erase(m_animals.begin());
@@ -92,14 +93,14 @@ void IHabitat::delAnimal(int qtt, string state)
     }
     if (state == "Creve")
     {
-        cout << "un animal a canner de vieillesse : " << m_animals[qtt]->getName() << endl;
+        cout << "un animal est mort de vieillesse" << endl;
         SetFertilite(qtt);
         m_animals.erase(m_animals.begin()+qtt);
         nbr_animals -= 1;
     }
     if (state == "Malade")
     {
-        cout << "un animal a canner de maladie : " << m_animals[qtt]->getName() << endl;
+        cout << "un animal est mort de maladie"<< endl;
         SetFertilite(qtt);
         m_animals.erase(m_animals.begin()+qtt);
         nbr_animals -= 1;
@@ -120,7 +121,7 @@ void IHabitat::SetFertilite(int qtt)
             {
                 if (id == (*it)->getId())
                 {
-                    cout << "ptdr t'on mec/meuf est mort " << (*it)->getFertile() << endl;
+                    cout << "un aigle est mort, son compagnon est devenu veuf " << (*it)->getFertile() << endl;
                     (*it)->SetFertile(0);
                     (*it)->SetAlive(0);
                 }
@@ -222,7 +223,7 @@ void IHabitat::getAnimal()
         cout << "\t\tfertilite\t\t" << fer << endl;
         cout << "\t\tmalade\t\t\t" << mal << endl;
         cout << "\t\tdeja tombe malade\t" << dejmal << endl;
-        if (it+1 == m_animals.end()) cout << "\n_________________________________________________________________________" << endl;
+        if (it+1 == m_animals.end()) cout << "\n-------------------------------------------------------------------------" << endl;
         else cout << "\n-------------------------------------------------------------------------\n" << endl;
         
         it++;
