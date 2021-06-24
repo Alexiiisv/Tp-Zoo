@@ -56,6 +56,7 @@ public:
     void GetHabitatSize();
     void GetHabitatType(string type);
     int GetAnimalNbrByRace(string State);
+    int GetAnimalNbrByRace(string State, string race);
     int GetHabitatNbrByRace(string type);
     void GetHabitatAnimal(string State);
     void GetHabitatAnimal(string State, string race);

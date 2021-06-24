@@ -485,30 +485,29 @@ void Zoo::SwitchHabitat(int hab1, int IdAni, int hab2, string race)
         if ((*it) == m_habitats[hab1] && race == "aigle")
         {
             m_habitats[hab2]->addAnimal(new Aigle((*it)->getSingleAnimalInfoS("Name", IdAni - 1), (*it)->getSingleAnimalInfoS("Race", IdAni - 1), (*it)->getSingleAnimalInfoS("Gender", IdAni - 1), (*it)->getSingleAnimalInfoI("Food", IdAni - 1), (*it)->getSingleAnimalInfoI("Age", IdAni - 1), (*it)->getSingleAnimalInfoI("fertilite", IdAni - 1), (*it)->getSingleAnimalInfoI("malade", IdAni - 1), (*it)->getSingleAnimalInfoI("id", IdAni - 1), (*it)->getSingleAnimalInfoI("mat", IdAni - 1), (*it)->getSingleAnimalInfoI("maladeonce", IdAni - 1)));
-            m_habitats[hab2]->getAnimal();
             m_habitats[hab1]->delAnimal(IdAni - 1, "Deplacement");
+            m_habitats[hab2]->getAnimal();
             break;
         }
         if ((*it) == m_habitats[hab1] && race == "tigre")
         {
-            cout << "habitat1 id " << hab1 << "animal1 id " << IdAni << "habitat2 id " << hab2 << endl;
             m_habitats[hab2]->addAnimal(new Tigre((*it)->getSingleAnimalInfoS("Name", IdAni - 1), (*it)->getSingleAnimalInfoS("Race", IdAni - 1), (*it)->getSingleAnimalInfoS("Gender", IdAni - 1), (*it)->getSingleAnimalInfoI("Food", IdAni - 1), (*it)->getSingleAnimalInfoI("Age", IdAni - 1))); //zoo.addAnimal(new Aigle(nom, "aigle", gender[genre], food, age), habitat - 1);
-            m_habitats[hab2]->getAnimal();
             m_habitats[hab1]->delAnimal(IdAni - 1, "Deplacement");
+            m_habitats[hab2]->getAnimal();
             break;
         }
         else if ((*it) == m_habitats[hab1] && race == "poule")
         {
             m_habitats[hab2]->addAnimal(new Poule((*it)->getSingleAnimalInfoS("Name", IdAni - 1), (*it)->getSingleAnimalInfoS("Race", IdAni - 1), (*it)->getSingleAnimalInfoI("Food", IdAni - 1), (*it)->getSingleAnimalInfoI("Age", IdAni - 1))); //zoo.addAnimal(new Poule(randomStr(6), "poule", 0.15, 6), habitat - 1);
-            m_habitats[hab2]->getAnimal();
             m_habitats[hab1]->delAnimal(IdAni - 1, "Deplacement");
+            m_habitats[hab2]->getAnimal();
             break;
         }
         else if ((*it) == m_habitats[hab1] && race == "coq")
         {
             m_habitats[hab2]->addAnimal(new Coq((*it)->getSingleAnimalInfoS("Name", IdAni - 1), (*it)->getSingleAnimalInfoS("Race", IdAni - 1), (*it)->getSingleAnimalInfoI("Food", IdAni - 1), (*it)->getSingleAnimalInfoI("Age", IdAni - 1))); //zoo.addAnimal(new Poule(randomStr(6), "poule", 0.15, 6), habitat - 1);
-            m_habitats[hab2]->getAnimal();
             m_habitats[hab1]->delAnimal(IdAni - 1, "Deplacement");
+            m_habitats[hab2]->getAnimal();
             break;
         }
 
@@ -628,12 +627,22 @@ void Zoo::getInfo()
 //Get all the information about all the animal per race
 void Zoo::getAllInfo(string race)
 {
-    int i;
+    int i = 1;
+    bool yes = true;
     HabitatIterator it = m_habitats.begin();
-    cout << "-------------------" << endl;
     while (it != m_habitats.end())
     {
-        (*it)->getAnimal();
+        if ((*it)->getType() == race)
+        {
+            if (yes)
+            {
+                cout << "\n-------------------------------------------------------------------------" << endl;
+                yes = false;
+            }
+            cout << "|\t\t\t\t\t\t\t\t\t|\n|\tDans l'habitat " << (*it)->getType() << " numero " << i << " il y a les animaux suivant\t|\n|\t\t\t\t\t\t\t\t\t|" << endl;
+            (*it)->getAnimal();
+            i++;
+        }
         it++;
     }
 }
@@ -664,23 +673,40 @@ void Zoo::GetHabitatType(string type)
 void Zoo::GetHabitatAnimal(string State)
 {
     int i = 1;
+    bool yes = true;
     HabitatIterator it = m_habitats.begin();
     while (it != m_habitats.end())
     {
         if (State == "All Habitat")
         {
-            cout << "habitat " << (*it)->getType() << endl;
+            if (yes)
+            {
+                cout << "\n-------------------------------------------------------------------------" << endl;
+                yes = false;
+            }
+            cout << "|\t\t\t\t\t\t\t\t\t|\n|\t\tDans cet habitat il y a les animaux suivant\t\t|\n|\t\t\t\t\t\t\t\t\t|" << endl;
             (*it)->getAnimal();
+            
         }
         else if (State == (*it)->getType())
         {
-            cout << "habitat " << (*it)->getType() << " " << i << endl;
+            if (yes)
+            {
+                cout << "\n-------------------------------------------------------------------------" << endl;
+                yes = false;
+            }
+            cout << "|\t\t\t\t\t\t\t\t\t|\n|\tDans l'habitat " << (*it)->getType() << " numero " << i << " il y a les animaux suivant\t|\n|\t\t\t\t\t\t\t\t\t|" << endl;
             (*it)->getAnimal();
             i++;
         }
         else if (State != "poule" && State != "aigle" && State != "tigre" && stoi(State) == i)
         {
-            cout << "habitat " << (*it)->getType() << " " << i << endl;
+            if (yes)
+            {
+                cout << "\n-------------------------------------------------------------------------" << endl;
+                yes = false;
+            }
+            cout << "|\t\t\t\t\t\t\t\t\t|\n|\tDans l'habitat " << (*it)->getType() << " numero " << i << " il y a les animaux suivant\t|\n|\t\t\t\t\t\t\t\t\t|" << endl;
             (*it)->getAnimal();
             break;
         }
@@ -691,25 +717,41 @@ void Zoo::GetHabitatAnimal(string State)
 void Zoo::GetHabitatAnimal(string State, string race)
 {
     int i = 1;
+    bool yes = true;
     HabitatIterator it = m_habitats.begin();
     while (it != m_habitats.end())
     {
         if (State == "All Habitat")
         {
-            cout << "habitat " << (*it)->getType() << endl;
+            if (yes)
+            {
+                cout << "\n-------------------------------------------------------------------------" << endl;
+                yes = false;
+            }
+            cout << "|\t\t\t\t\t\t\t\t\t|\n|\t\tDans cet habitat il y a les animaux suivant\t\t|\n|\t\t\t\t\t\t\t\t\t|" << endl;
             (*it)->getAnimal();
         }
         if (State == (*it)->getType())
         {
-            cout << "habitat " << (*it)->getType() << " " << i << endl;
+            if (yes)
+            {
+                cout << "\n-------------------------------------------------------------------------" << endl;
+                yes = false;
+            }
+            cout << "|\t\t\t\t\t\t\t\t\t|\n|\tDans l'habitat " << (*it)->getType() << " numero " << i << " il y a les animaux suivant\t|\n|\t\t\t\t\t\t\t\t\t|" << endl;
             (*it)->getAnimal();
             i++;
         }
         if (State != "poule" && State != "aigle" && State != "tigre" && stoi(State) == i && (*it)->getType() == race)
         {
-            cout << "habitat " << (*it)->getType() << " " << i << endl;
-            i++;
+            if (yes)
+            {
+                cout << "\n-------------------------------------------------------------------------" << endl;
+                yes = false;
+            }
+            cout << "|\t\t\t\t\t\t\t\t\t|\n|\tDans l'habitat " << (*it)->getType() << " numero " << i << " il y a les animaux suivant\t|\n|\t\t\t\t\t\t\t\t\t|" << endl;
             (*it)->getAnimal();
+            i++;
             break;
         }
         else if (State != "poule" && State != "aigle" && State != "tigre" && stoi(State) != i && (*it)->getType() == race)
@@ -745,6 +787,38 @@ int Zoo::GetAnimalNbrByRace(string State)
 
         it++;
         id++;
+    }
+    return result;
+}
+//Get the amount of animal per race
+int Zoo::GetAnimalNbrByRace(string State, string race)
+{
+    int result = 0, id = 1;
+    HabitatIterator it = m_habitats.begin();
+    while (it != m_habitats.end())
+    {
+        if ((*it)->getType() == State) //tigre/aigle/poules
+        {
+            result += (*it)->getnbrAnimals();
+            if (State == "aigle")
+            {
+                result -= (*it)->getEagleEggs() / 2;
+            }
+            if (State == "tigre")
+            {
+                result -= (*it)->getEagleEggs() / 3;
+            }
+        }
+        else if (State != "poule" && State != "aigle" && State != "tigre" && id == stoi(State) && race == (*it)->getType())
+        {
+            return (*it)->getnbrAnimals();
+        }
+        else if (State != "poule" && State != "aigle" && State != "tigre" && id != stoi(State) && race == (*it)->getType())
+        {
+            id++;
+        }
+
+        it++;
     }
     return result;
 }

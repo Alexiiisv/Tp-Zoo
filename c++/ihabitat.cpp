@@ -196,24 +196,36 @@ IHabitat::~IHabitat()
 void IHabitat::getAnimal()
 {
     int id= 1;
+    string mal = "non", fer = "non", dejmal = "non", mat = "celib";
+    if (nbr_animals == 0) cout << "-------------------------------------------------------------------------" << endl;
+    else cout << "-------------------------------------------------------------------------\n" << endl;
     AnimalIterator it = m_animals.begin();
     while (it != m_animals.end())
     {
-        cout << "-------------------" << endl;
-        cout << (*it)->getRace() << "\t" << id << endl;
-        cout << "\nNom\t\t\t" << (*it)->getName() << endl;
+        if ((*it)->getMaladeOnce() == 1) dejmal = "oui";
+        else dejmal = "non";
+        if ((*it)->getFertile() == 1) fer = "oui";
+        else fer = "non";
+        if ((*it)->getMalade() == 1) mal = "oui";
+        else mal = "non";
+        cout << "\t\t" << (*it)->getRace() << "\t" << id << endl;
+        cout << "\n\tNom\t\t\t" << (*it)->getName() << endl;
         if ((*it)->getRace() == "aigle")
         {
-        cout << "Id\t\t\t" << (*it)->getId() << endl;
-        cout << "mate\t\t\t" << (*it)->getMat() << endl;
+            if ((*it)->getMat() != 0) mat = to_string((*it)->getMat());
+            else mat = "celib";
+            cout << "\tId\t\t\t" << (*it)->getId() << endl;
+            cout << "\tmate\t\t\t" << mat << endl;
         }
-        cout << "Sexe\t\t\t" << (*it)->getGender() << endl;
-        cout << "Age\t\t\t" << (*it)->getAge()/12 << " ans " << (*it)->getAge()%12 << " mois" << endl;
-        cout << "food\t\t\t" << (*it)->getMeat() << endl;
-        cout << "fertilite\t\t" << (*it)->getFertile() << endl;
-        cout << "malade\t\t\t" << (*it)->getMalade() << endl;
-        cout << "deja tombe malade\t" << (*it)->getMaladeOnce() << endl;
-        cout << "-------------------" << endl;
+        cout << "\tSexe\t\t\t" << (*it)->getGender() << endl;
+        cout << "\tAge\t\t\t" << (*it)->getAge()/12 << " ans " << (*it)->getAge()%12 << " mois" << endl;
+        cout << "\tfood\t\t\t" << (*it)->getMeat() << endl;
+        cout << "\tfertilite\t\t" << fer << endl;
+        cout << "\tmalade\t\t\t" << mal << endl;
+        cout << "\tdeja tombe malade\t" << dejmal << endl;
+        if (it+1 == m_animals.end()) cout << "\n-------------------------------------------------------------------------" << endl;
+        else cout << "\n-------------------------------------------------------------------------\n" << endl;
+        
         it++;
         id++;
     }
