@@ -1,12 +1,12 @@
 #include "../header/zoo.h"
-#include "../header./aigle.h"
-#include "../header./tigre.h"
-#include "../header./poule.h"
-#include "../header./coq.h"
+#include "../header/aigle.h"
+#include "../header/tigre.h"
+#include "../header/poule.h"
+#include "../header/coq.h"
 #include "../header/eagleHabitat.h"
 #include "../header/chickenHabitat.h"
 #include "../header/tigerHabitat.h"
-#include "utils.h"
+#include "../header/utils.h"
 
 #include <random>
 #include <iostream>

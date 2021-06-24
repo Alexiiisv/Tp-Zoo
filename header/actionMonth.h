@@ -1,7 +1,7 @@
 #ifndef ACTIONMONTH_H
 #define ACTIONMONTH_H
 
-#include "../header/zoo.h"
+#include "zoo.h"
 
 void actionMonth(Zoo &zoo);
 void buyHabitats(Zoo &zoo);

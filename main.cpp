@@ -11,12 +11,12 @@
 #include "./header/poule.h"
 #include "./header/tigre.h"
 #include "./header/coq.h"
-#include "./Sources/utils.h"
-#include "./Sources/actionMonth.h"
-#include "./Sources/success.h"
-#include "./Sources/visitor.h"
-#include "./Sources/infoZoo.h"
-#include "./Sources/foodStorage.h"
+#include "./header/utils.h"
+#include "./header/actionMonth.h"
+#include "./header/success.h"
+#include "./header/visitor.h"
+#include "./header/infoZoo.h"
+#include "./header/foodStorage.h"
 #ifdef _WIN32
 #include <Windows.h>
 #else

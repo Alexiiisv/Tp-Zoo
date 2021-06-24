@@ -1,7 +1,7 @@
 #ifndef FOODSTORAGE_H
 #define FOODSTORAGE_H
 
-#include "../header/zoo.h"
+#include "zoo.h"
 
 void checkingFoodStorage(Zoo zoo, bool &enoughMeat, bool &enoughSeed);
 

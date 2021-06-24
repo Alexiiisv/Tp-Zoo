@@ -1,7 +1,7 @@
 #ifndef INFOZOO_H
 #define INFOZOO_H
 
-#include "../header/zoo.h"
+#include "zoo.h"
 
 void StartGame(Zoo &zoo, int &nbYearZoo);
 void infoZoo(Zoo zoo, bool nbEagleSuccess, bool moneySuccess, bool nbTotalVisitorSucess, bool nbMonthVisitorSuccess);

@@ -1,14 +1,15 @@
 #include "../header/zoo.h"
 #include <stdlib.h>
-#include "utils.h"
-#include "../header./aigle.h"
-#include "../header./tigre.h"
-#include "../header./poule.h"
-#include "../header./coq.h"
+#include "../header/utils.h"
+#include "../header/aigle.h"
+#include "../header/tigre.h"
+#include "../header/poule.h"
+#include "../header/coq.h"
 #include "../header/eagleHabitat.h"
 #include "../header/chickenHabitat.h"
 #include "../header/tigerHabitat.h"
-#include "success.h"
+#include "../header/success.h"
+#include <string.h>
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -106,7 +107,7 @@ void partieRapide(Zoo &zoo, int &nbYearZoo)
 // Menu de début de jeu
 void StartGame(Zoo &zoo, int &nbYearZoo)
 {
-    char zooName[15];
+    char zooName[20];
     int choice = 0, nbyear = 0, budg = 0, choix = 0;
     Clear();
     cout << "Bienvenue dans ZooPtycon, la simulation de zoo la plus realiste de 2021\n\nVoulez-vous donner un nom a votre zoo ?\n1 | Oui\t\t 0 | Non" << endl;
@@ -114,7 +115,7 @@ void StartGame(Zoo &zoo, int &nbYearZoo)
     Clear();
     if (choix == 1)
     {
-        cout << "Comment s'appel votre Zoo ?" << endl;
+        cout << "Comment s'appel votre Zoo ? !! Ne pas depasser les 13 caracteres !!" << endl;
         scanf("%15s", &zooName);
         Clear();
         zoo.setName(zooName);
@@ -124,6 +125,7 @@ void StartGame(Zoo &zoo, int &nbYearZoo)
          << endl;
     while (choice != 1 && choice != 2 && choice != 3)
     {
+        scanf("%s", zooName);
         cout << "1 | Partie rapide : 80000$, 2 couples d'aigle, 2 couples de tigre, 2 coqs, 8 poules sur 10 ans\n2 | Partie personnalise\n3 | SandBox" << endl;
         scanf("%d", &choice);
         switch (choice)

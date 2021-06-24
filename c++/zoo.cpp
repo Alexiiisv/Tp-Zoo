@@ -613,11 +613,19 @@ int Zoo::getAGender(string gender, string race)
 void Zoo::getInfo()
 {
     cout << "\t\t\t-------------------------" << endl;
-    if (getBudget() < 10000)
+    if (getBudget() < 10000 && getName().length() < 6)
     {
-        cout << "\t\t\t| " << getName() << "\t\t|\n\t\t\t| Year : " << getYear() << "\t\t|\n\t\t\t| Month : " << getMonth() << "\t\t|\n\t\t\t| Budget : " << getBudget() << "\t\t|" << endl;
+        cout << "\t\t\t| " << getName() << "\t\t\t|\n\t\t\t| Year : " << getYear() << "\t\t|\n\t\t\t| Month : " << getMonth() << "\t\t|\n\t\t\t| Budget : " << getBudget() << "\t\t|" << endl;
     }
-    else
+    else if (getBudget() > 10000 && getName().length() < 6)
+    {
+        cout << "\t\t\t| " << getName() << "\t\t\t|\n\t\t\t| Year : " << getYear() << "\t\t|\n\t\t\t| Month : " << getMonth() << "\t\t|\n\t\t\t| Budget : " << getBudget() << "\t|" << endl;
+    }
+    else if (getBudget() < 10000 && getName().length() >= 6)
+    {
+        cout << "\t\t\t| " << getName() << "\t\t\t|\n\t\t\t| Year : " << getYear() << "\t\t|\n\t\t\t| Month : " << getMonth() << "\t\t|\n\t\t\t| Budget : " << getBudget() << "\t|" << endl;
+    }
+    else if (getBudget() > 10000 && getName().length() >= 6)
     {
         cout << "\t\t\t| " << getName() << "\t\t|\n\t\t\t| Year : " << getYear() << "\t\t|\n\t\t\t| Month : " << getMonth() << "\t\t|\n\t\t\t| Budget : " << getBudget() << "\t|" << endl;
     }
@@ -862,7 +870,7 @@ void Zoo::setSeed(float Seed)
 
 void Zoo::setName(string name)
 {
-    m_name = name;
+    m_name = name.substr(0, 13);
 }
 
 //Set the year

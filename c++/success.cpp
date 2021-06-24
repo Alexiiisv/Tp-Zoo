@@ -1,5 +1,5 @@
 #include "../header/zoo.h"
-#include "utils.h"
+#include "../header/utils.h"
 #include <stdlib.h>
 
 #ifdef _WIN32

@@ -1,7 +1,7 @@
 #ifndef VISITOR_H
 #define VISITOR_H
 
-#include "../header/zoo.h"
+#include "zoo.h"
 
 int Visitor(Zoo &zoo);
 int VisitorRevenue(int visitor);
