@@ -2,8 +2,8 @@
 #include <iostream>
 using namespace std;
 
-// Verifie la quantité de nourriture et empeche les animaux d'être fertile quand ils ont faim
-void checkingFoodStorage(Zoo zoo, bool &enoughMeat, bool &enoughSeed)
+// Vérifie le nombre de viandes restant
+void infoViandes(Zoo &zoo, bool &enoughMeat)
 {
     // Affiche la quantité de viande
     cout << "\n-------------------------\n\nConsommation de viande par mois : " << zoo.getConsobyRace("aigle") + zoo.getConsobyRace("tigre") << endl;
@@ -23,7 +23,10 @@ void checkingFoodStorage(Zoo zoo, bool &enoughMeat, bool &enoughSeed)
     {
         enoughMeat = true;
     }
-
+}
+// Vérifie le nombre de graines restant
+void infoGraines(Zoo &zoo, bool &enoughSeed)
+{
     // Affiche la quantité de graines
     cout << "\nConsommation de graines par mois : " << zoo.getConsobyRace("poule") << endl;
     cout << "Quantite de graine actuel : " << zoo.getSeed() << endl;
@@ -43,4 +46,11 @@ void checkingFoodStorage(Zoo zoo, bool &enoughMeat, bool &enoughSeed)
         enoughSeed = true;
     }
     cout << "\n-------------------------" << endl;
+}
+
+// Verifie la quantité de nourriture et empeche les animaux d'être fertile quand ils ont faim
+void checkingFoodStorage(Zoo zoo, bool &enoughMeat, bool &enoughSeed)
+{
+    infoViandes(zoo, enoughMeat);
+    infoGraines(zoo, enoughSeed);
 }

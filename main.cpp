@@ -65,11 +65,6 @@ int main()
                 break;
             case 1:              // Lorsque le mois est passé, met a jour la nourriture et l'age des animaux
                 zoo.NextMonth(); // incrémente la variable tout les mois
-                
-                visitor = Visitor(zoo);            // calcul le nb de visiteur
-                all_visitors += visitor;           // calcul le nb de visiteurs total
-                revenue = VisitorRevenue(visitor); // calcul du revenue par rapport aux visiteurs
-                zoo.UpdateBudget(revenue);         // calcul le revenue lié aux visiteurs
                 if (zoo.getMonth() == 13)          // Nouvelle année
                 {
                     zoo.setMonth(1);    // reset le mois à 1 pour janvier
@@ -78,6 +73,10 @@ int main()
                     Subvention = subvention(zoo); // calcul les subventions
                     zoo.UpdateBudget(Subvention); // ajoute les subventions
                 }
+                visitor = Visitor(zoo);            // calcul le nb de visiteur
+                all_visitors += visitor;           // calcul le nb de visiteurs total
+                revenue = VisitorRevenue(visitor); // calcul du revenue par rapport aux visiteurs
+                zoo.UpdateBudget(revenue);         // calcul le revenue lié aux visiteurs
                 zoo.getInfo();                                    // Affiche la date du nouveau mois + le budget
                 zoo.UpdateAge();                                  // ajoute un mois à l'age de chaque animaux
                 zoo.UpdateMeat();                                 // Réduit la quantité de viande en fonction des tigres et aigles

@@ -208,22 +208,22 @@ void IHabitat::getAnimal()
         else fer = "non";
         if ((*it)->getMalade() == 1) mal = "oui";
         else mal = "non";
-        cout << "\t\t" << (*it)->getRace() << "\t" << id << endl;
-        cout << "\n\tNom\t\t\t" << (*it)->getName() << endl;
+        cout << "\t\t\t" << (*it)->getRace() << "\t" << id << endl;
+        cout << "\n\t\tNom\t\t\t" << (*it)->getName() << endl;
         if ((*it)->getRace() == "aigle")
         {
             if ((*it)->getMat() != 0) mat = to_string((*it)->getMat());
             else mat = "celib";
-            cout << "\tId\t\t\t" << (*it)->getId() << endl;
-            cout << "\tmate\t\t\t" << mat << endl;
+            cout << "\t\tId\t\t\t" << (*it)->getId() << endl;
+            cout << "\t\tmate\t\t\t" << mat << endl;
         }
-        cout << "\tSexe\t\t\t" << (*it)->getGender() << endl;
-        cout << "\tAge\t\t\t" << (*it)->getAge()/12 << " ans " << (*it)->getAge()%12 << " mois" << endl;
-        cout << "\tfood\t\t\t" << (*it)->getMeat() << endl;
-        cout << "\tfertilite\t\t" << fer << endl;
-        cout << "\tmalade\t\t\t" << mal << endl;
-        cout << "\tdeja tombe malade\t" << dejmal << endl;
-        if (it+1 == m_animals.end()) cout << "\n-------------------------------------------------------------------------" << endl;
+        cout << "\t\tSexe\t\t\t" << (*it)->getGender() << endl;
+        cout << "\t\tAge\t\t\t" << (*it)->getAge()/12 << " ans " << (*it)->getAge()%12 << " mois" << endl;
+        cout << "\t\tfood\t\t\t" << (*it)->getMeat() << endl;
+        cout << "\t\tfertilite\t\t" << fer << endl;
+        cout << "\t\tmalade\t\t\t" << mal << endl;
+        cout << "\t\tdeja tombe malade\t" << dejmal << endl;
+        if (it+1 == m_animals.end()) cout << "\n_________________________________________________________________________" << endl;
         else cout << "\n-------------------------------------------------------------------------\n" << endl;
         
         it++;

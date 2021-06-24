@@ -69,6 +69,8 @@ Dans le jeu tu pourras acheter et vendre des animaux et leur habitat ainsi que d
 
 # Comment jouer
 
-## VScode : <br>
+Le programme a été créé sur VScode. Vous pouvez utiliser tout autre IDE, cependant par souçis de compatibilité, il serait plus judicieux de compilé sur VScode. (CLion ne prend pas en compte notre fonction Clear, qui "clear" le terminal a certains moment pour le rendre plus lisible). Il est également préférable de lancer le fichier .exe créé plutôt que sur le terminal de l'IDE et de mettre la fenêtre en plein écran.
+
+## Commande pour VScode : <br>
 gcc main.cpp ./c++/zoo.cpp ./c++/aigle.cpp ./c++/poule.cpp ./c++/coq.cpp ./c++/tigre.cpp ./c++/ianimal.cpp ./c++/eagleHabitat.cpp ./c++/chickenHabitat.cpp ./c++/tigerHabitat.cpp ./c++/ihabitat.cpp ./Sources/actionMonth.cpp ./Sources/success.cpp ./Sources/visitor.cpp ./Sources/utils.cpp ./Sources/infoZoo.cpp ./Sources/foodStorage.cpp -lstdc++ -o main.exe;
 

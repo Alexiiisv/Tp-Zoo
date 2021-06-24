@@ -19,6 +19,90 @@
 #include <iostream>
 using namespace std;
 
+void partiePerso(Zoo &zoo, int &nbYearZoo)
+{
+    int nbyear = 0, budg = 0;
+    while (nbyear != 1 && nbyear != 2 && nbyear != 3 && nbyear != 4 && nbyear != 5)
+    {
+        Clear();
+        cout << "Combien d'annee voulez-voulez jouer ?\n1 | 2 ans\t\t2 | 5 ans\t\t3 | 10 ans\t\t4 | 20 ans\t\t5 | 50 ans" << endl;
+        scanf("%d", &nbyear);
+        switch (nbyear)
+        {
+        case 1:
+            nbYearZoo = 2;
+            break;
+        case 2:
+            nbYearZoo = 5;
+            break;
+        case 3:
+            nbYearZoo = 10;
+            break;
+        case 4:
+            nbYearZoo = 20;
+            break;
+        case 5:
+            nbYearZoo = 50;
+            break;
+        default:
+            break;
+        }
+        Clear();
+        cout << "Quel budget vous-voulez avoir ?\n1 | 20000$\t\t2 | 50000$\t\t3 | 100000$\t\t4 | 150000$\t\t5 | 500000$" << endl;
+        scanf("%d", &budg);
+        switch (budg)
+        {
+        case 1:
+            zoo.setBudget(20000);
+            break;
+        case 2:
+            zoo.setBudget(50000);
+            break;
+        case 3:
+            zoo.setBudget(100000);
+            break;
+        case 4:
+            zoo.setBudget(150000);
+            break;
+        case 5:
+            zoo.setBudget(500000);
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+// Créé les éléments nécessaire pour la partie rapide
+void partieRapide(Zoo &zoo, int &nbYearZoo)
+{
+    // set le budget
+    zoo.setBudget(86300);
+    // achete un habitat d'aigle et 2 couples d'aigle
+    zoo.addHabitat(new EagleHabitat("aigle"));
+    zoo.addAnimal(new Aigle("AigleMale1", "aigle", "Male", 0.25, 12 * 4), 0);
+    zoo.addAnimal(new Aigle("AigleMale2", "aigle", "Male", 0.25, 12 * 4), 0);
+    zoo.addAnimal(new Aigle("AigleFemelle1", "aigle", "Female", 0.3, 12 * 4), 0);
+    zoo.addAnimal(new Aigle("AigleFemelle2", "aigle", "Female", 0.3, 12 * 4), 0);
+    // achete deux habitats de tigre et 2 couples de tigre
+    zoo.addHabitat(new TigerHabitat("tigre"));
+    zoo.addHabitat(new TigerHabitat("tigre"));
+    zoo.addAnimal(new Tigre("TigreMale1", "tigre", "Male", 12, 12 * 6), 0);
+    zoo.addAnimal(new Tigre("TigreMale2", "tigre", "Male", 12, 12 * 6), 1);
+    zoo.addAnimal(new Tigre("TigreFemelle1", "tigre", "Female", 10, 12 * 4), 1);
+    zoo.addAnimal(new Tigre("TigreFemelle2", "tigre", "Female", 10, 12 * 4), 0);
+    // achete un habitat de poule, 2 coqs et 8 poules
+    zoo.addHabitat(new ChickenHabitat("poule"));
+    zoo.addAnimal(new Coq("Coq1", "coq", 0.18, 6), 0);
+    zoo.addAnimal(new Coq("Coq2", "coq", 0.18, 6), 0);
+    for (int i = 0; i < 8; i++)
+    {
+        zoo.addAnimal(new Poule("Poulette", "poule", 0.15, 6), 0);
+    }
+    // Règle la durée à 10 ans
+    nbYearZoo = 10;
+}
+
 // Menu de début de jeu
 void StartGame(Zoo &zoo, int &nbYearZoo)
 {
@@ -44,91 +128,16 @@ void StartGame(Zoo &zoo, int &nbYearZoo)
         scanf("%d", &choice);
         switch (choice)
         {
-        case 1:
-            // set le budget
-            zoo.setBudget(86300);
-            // achete un habitat d'aigle et 2 couples d'aigle
-            zoo.addHabitat(new EagleHabitat("aigle"));
-            zoo.addAnimal(new Aigle("AigleMale1", "aigle", "Male", 0.25, 12 * 4), 0);
-            zoo.addAnimal(new Aigle("AigleMale2", "aigle", "Male", 0.25, 12 * 4), 0);
-            zoo.addAnimal(new Aigle("AigleFemelle1", "aigle", "Female", 0.3, 12 * 4), 0);
-            zoo.addAnimal(new Aigle("AigleFemelle2", "aigle", "Female", 0.3, 12 * 4), 0);
-            // achete deux habitats de tigre et 2 couples de tigre
-            zoo.addHabitat(new TigerHabitat("tigre"));
-            zoo.addHabitat(new TigerHabitat("tigre"));
-            zoo.addAnimal(new Tigre("TigreMale1", "tigre", "Male", 12, 12 * 6), 0);
-            zoo.addAnimal(new Tigre("TigreMale2", "tigre", "Male", 12, 12 * 6), 1);
-            zoo.addAnimal(new Tigre("TigreFemelle1", "tigre", "Female", 10, 12 * 4), 1);
-            zoo.addAnimal(new Tigre("TigreFemelle2", "tigre", "Female", 10, 12 * 4), 0);
-            // achete un habitat de poule, 2 coqs et 8 poules
-            zoo.addHabitat(new ChickenHabitat("poule"));
-            zoo.addAnimal(new Coq("Coq1", "coq", 0.18, 6), 0);
-            zoo.addAnimal(new Coq("Coq2", "coq", 0.18, 6), 0);
-            for (int i = 0; i < 8; i++)
-            {
-                zoo.addAnimal(new Poule("Poulette", "poule", 0.15, 6), 0);
-            }
-            // Règle la durée à 10 ans
-            nbYearZoo = 10;
+        case 1: // partie Rapide
+            partieRapide(zoo, nbYearZoo);
             break;
-        case 2:
-            while (nbyear != 1 && nbyear != 2 && nbyear != 3 && nbyear != 4 && nbyear != 5)
-            {
-                Clear();
-                cout << "Combien d'annee voulez-voulez jouer ?\n1 | 2 ans\t\t2 | 5 ans\t\t3 | 10 ans\t\t4 | 20 ans\t\t5 | 50 ans" << endl;
-                scanf("%d", &nbyear);
-                switch (nbyear)
-                {
-                case 1:
-                    nbYearZoo = 2;
-                    break;
-                case 2:
-                    nbYearZoo = 5;
-                    break;
-                case 3:
-                    nbYearZoo = 10;
-                    break;
-                case 4:
-                    nbYearZoo = 20;
-                    break;
-                case 5:
-                    nbYearZoo = 50;
-                    break;
-                default:
-                    break;
-                }
-                Clear();
-                cout << "Quel budget vous-voulez avoir ?\n1 | 20000$\t\t2 | 50000$\t\t3 | 100000$\t\t4 | 150000$\t\t5 | 500000$" << endl;
-                scanf("%d", &budg);
-                switch (budg)
-                {
-                case 1:
-                    zoo.setBudget(20000);
-                    break;
-                case 2:
-                    zoo.setBudget(50000);
-                    break;
-                case 3:
-                    zoo.setBudget(100000);
-                    break;
-                case 4:
-                    zoo.setBudget(150000);
-                    break;
-                case 5:
-                    zoo.setBudget(500000);
-                    break;
-                default:
-                    break;
-                }
-            }
+        case 2: // partie Personnalisée
+            partiePerso(zoo, nbYearZoo);
             break;
-        case 3:
-            // set le budget
+        case 3: // partie SandBox
             zoo.setBudget(999999999);
-            // set la nourriture
             zoo.setMeat(999999999);
             zoo.setSeed(999999999);
-            // Règle la durée à 10 ans
             nbYearZoo = 100;
         default:
             break;
@@ -175,12 +184,50 @@ void printEndGame(Zoo zoo, int all_visitors, bool nbEagleSuccess, bool moneySucc
     }
 }
 
+void infoAigle(Zoo &zoo)
+{
+    int info = 0;
+    cout << "\n          ///,        ////\n          \\  /,      /  >.\n           \\  /,   _/  /.\n            \\_  /_/   /.\n             \\__/_   <\n             /<<< \\_\\_\n            /,)^>>_._ \\\n            (/   \\\\ /\\\\\\\n                 // ````\n                ((`\n\n"
+         << endl;
+    cout << "Nombre d'aigle actuel : " << zoo.GetAnimalNbrByRace("aigle") << endl;                                                           //nb d'aigle
+    cout << "Vous avez " << zoo.getAGender("Male", "aigle") << " male(s) et " << zoo.getAGender("Female", "aigle") << " femelle(s)" << endl; // nb de male et de femelle
+    cout << "Vous-voulez plus d'informations sur vos aigles ?\n1 | Oui\t\t0 | Non\t\t" << endl;                                              // demande d'info supplémentaire
+    scanf("%d", &info);
+    if (info == 1)
+    {
+        zoo.getAllInfo("aigle");
+    }
+}
+void infoTigre(Zoo &zoo)
+{
+    int info = 0;
+    cout << "\n   _\n  ( \\                ..-----..__\n   \\.'.        _.--'`  [   '  ' ```'-._\n    `. `'-..-'' `    '  ' '   .  ;   ; `-'''-.,__/|/_\n      `'-.;..-''`|'  `.  '.    ;     '  `    '   `'  `,\n                 \\ '   .    ' .     '   ;   .`   . ' 7 \\\n                  '.' . '- . \\    .`   .`  .   .\\     `Y\n                    '-.' .   ].  '   ,    '    /'`\"\"';:'\n                      /Y   '.] '-._ /    ' _.-'\n                      \\'\\_   ; (`'.'.'  .\"/\n                       ' )` /  `.'   .-'.'\n                        '\\  \\).'  .-'--\"\n                          `. `,_'`\n                            `.__)  \n\n"
+         << endl;
+    cout << "Nombre de tigre actuel : " << zoo.GetAnimalNbrByRace("tigre") << endl;                                                          //nb d'aigle
+    cout << "Vous avez " << zoo.getAGender("Male", "tigre") << " male(s) et " << zoo.getAGender("Female", "tigre") << " femelle(s)" << endl; // nb de male et de femelle
+    cout << "Vous-voulez plus d'informations sur vos tigres ?\n1 | Oui\t\t0 | Non\t\t" << endl;                                              // demande d'info supplémentaire
+    scanf("%d", &info);
+    if (info == 1)
+    {
+        zoo.getAllInfo("tigre");
+    }
+}
+void infoPoule(Zoo &zoo)
+{
+    int info = 0;
+    cout << "\n                                              _\n                                   .-.  .--''` )\n                                _ |  |/`   .-'`\n                               ( `\\      /`\n                               _)   _.  -'._\n                             /`  .'     .-.-;\n                             `).'      /  \\  \\\n                            (`,        \\_o/_o/__\n                             /           .-''`  ``'-.\n                             {         /` ,___.--''`\n                             {   ;     '-. \\ \\\n           _   _             {   |'-....-`'.\\_\\\n          / './ '.           \\   \\          `\"`\n       _  \\   \\  |            \\   \\\n      ( '-.J     \\_..----.._ __)   `\\--..__\n     .-`                    `        `\\    ''--...--.\n    (_,.--\"\"`/`         .-             `\\       .__ _)\n            |          (                 }    .__ _)\n            \\_,         '.               }_  - _.'\n               \\_,         '.            } `'--'\n                  '._.     ,_)          /\n                     |    /           .'\n                      \\   |    _   .-'\n                       \\__/;--.||-'\n                        _||   _||__   __\n                 _ __.-` \"`)(` `\"  ```._)\n                (_`,-   ,-'  `''-.   '-._)\n               (  (    /          '.__.'\n                `\"`'--'\n\n"
+         << endl;
+    cout << "Vous-voulez plus d'informations sur vos poules / coq ?\n1 | Oui\t\t0 | Non\t\t" << endl; // demande d'info supplémentaire
+    scanf("%d", &info);
+    if (info == 1)
+    {
+        zoo.getAllInfo("poule");
+    }
+}
 // Avoir toutes les infos à propos du zoo
 void infoZoo(Zoo zoo, bool nbEagleSuccess, bool moneySuccess, bool nbTotalVisitorSucess, bool nbMonthVisitorSuccess)
 {
-    int Gender = 2;
     int info = 1;
-    float food;
     while (info != 0)
     {
         cout << "Que voulez-vous afficher ?\n1 | Infos sur les animaux\t\t2 | Nombre d'habitats\t\t0 pour quitter le menu\n3 | Quantite de nourriture\t\t4 | Les succes" << endl;
@@ -196,41 +243,15 @@ void infoZoo(Zoo zoo, bool nbEagleSuccess, bool moneySuccess, bool nbTotalVisito
             switch (info)
             {
             case 3: // infos sur les aigles
-                cout << "\n          ///,        ////\n          \\  /,      /  >.\n           \\  /,   _/  /.\n            \\_  /_/   /.\n             \\__/_   <\n             /<<< \\_\\_\n            /,)^>>_._ \\\n            (/   \\\\ /\\\\\\\n                 // ````\n                ((`\n\n"
-                     << endl;
-
-                cout << "Nombre d'aigle actuel : " << zoo.GetAnimalNbrByRace("aigle") << endl;                                                           //nb d'aigle
-                cout << "Vous avez " << zoo.getAGender("Male", "aigle") << " male(s) et " << zoo.getAGender("Female", "aigle") << " femelle(s)" << endl; // nb de male et de femelle
-                cout << "Vous-voulez plus d'informations sur vos aigles ?\n1 | Oui\t\t0 | Non\t\t" << endl;                                              // demande d'info supplémentaire
-                scanf("%d", &info);
-                if (info == 1)
-                {
-                    zoo.getAllInfo("aigle");
-                }
+                infoAigle(zoo);
                 break;
             case 4: // infos sur les tigres
-                cout << "\n   _\n  ( \\                ..-----..__\n   \\.'.        _.--'`  [   '  ' ```'-._\n    `. `'-..-'' `    '  ' '   .  ;   ; `-'''-.,__/|/_\n      `'-.;..-''`|'  `.  '.    ;     '  `    '   `'  `,\n                 \\ '   .    ' .     '   ;   .`   . ' 7 \\\n                  '.' . '- . \\    .`   .`  .   .\\     `Y\n                    '-.' .   ].  '   ,    '    /'`\"\"';:'\n                      /Y   '.] '-._ /    ' _.-'\n                      \\'\\_   ; (`'.'.'  .\"/\n                       ' )` /  `.'   .-'.'\n                        '\\  \\).'  .-'--\"\n                          `. `,_'`\n                            `.__)  \n\n"
-                     << endl;
-                cout << "Nombre de tigre actuel : " << zoo.GetAnimalNbrByRace("tigre") << endl;                                                          //nb d'aigle
-                cout << "Vous avez " << zoo.getAGender("Male", "tigre") << " male(s) et " << zoo.getAGender("Female", "tigre") << " femelle(s)" << endl; // nb de male et de femelle
-                cout << "Vous-voulez plus d'informations sur vos tigres ?\n1 | Oui\t\t0 | Non\t\t" << endl;                                              // demande d'info supplémentaire
-                scanf("%d", &info);
-                if (info == 1)
-                {
-                    zoo.getAllInfo("tigre");
-                }
+                infoTigre(zoo);
                 break;
-            case 5: // infos sur les tigres
-                cout << "\n                                              _\n                                   .-.  .--''` )\n                                _ |  |/`   .-'`\n                               ( `\\      /`\n                               _)   _.  -'._\n                             /`  .'     .-.-;\n                             `).'      /  \\  \\\n                            (`,        \\_o/_o/__\n                             /           .-''`  ``'-.\n                             {         /` ,___.--''`\n                             {   ;     '-. \\ \\\n           _   _             {   |'-....-`'.\\_\\\n          / './ '.           \\   \\          `\"`\n       _  \\   \\  |            \\   \\\n      ( '-.J     \\_..----.._ __)   `\\--..__\n     .-`                    `        `\\    ''--...--.\n    (_,.--\"\"`/`         .-             `\\       .__ _)\n            |          (                 }    .__ _)\n            \\_,         '.               }_  - _.'\n               \\_,         '.            } `'--'\n                  '._.     ,_)          /\n                     |    /           .'\n                      \\   |    _   .-'\n                       \\__/;--.||-'\n                        _||   _||__   __\n                 _ __.-` \"`)(` `\"  ```._)\n                (_`,-   ,-'  `''-.   '-._)\n               (  (    /          '.__.'\n                `\"`'--'\n\n"
-                     << endl;
-                cout << "Vous-voulez plus d'informations sur vos poules / coq ?\n1 | Oui\t\t0 | Non\t\t" << endl; // demande d'info supplémentaire
-                scanf("%d", &info);
-                if (info == 1)
-                {
-                    zoo.getAllInfo("poule");
-                }
+            case 5: // infos sur les poules/coq
+                infoPoule(zoo);
                 break;
-            default: // infos sur les poules
+            default: // quitter
                 break;
             }
             break;

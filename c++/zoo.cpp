@@ -684,8 +684,15 @@ void Zoo::GetHabitatAnimal(string State)
                 cout << "\n-------------------------------------------------------------------------" << endl;
                 yes = false;
             }
-            cout << "|\t\t\t\t\t\t\t\t\t|\n|\t\tDans cet habitat il y a les animaux suivant\t\t|\t " << (*it)->getType() << endl;
-            cout << "|\t\t\t\t\t\t\t\t\t|" << endl;
+            if ((*it)->getnbrAnimals() == 0)
+            {
+                cout << "|\t\t\t\t\t\t\t\t\t|\n|\t\tDans cet habitat il y a les animaux suivant\t\t|\t " << (*it)->getType() << "\n|\t\t\t\t\t\t\t\t\t|" << endl;
+            }
+            else
+            {
+                cout << "|\t\t\t\t\t\t\t\t\t|\n|\t\tDans cet habitat il y a les animaux suivant\t\t|\n|\t\t\t\t\t\t\t\t\t|" << endl;
+            }
+            
             (*it)->getAnimal();
             
         }
