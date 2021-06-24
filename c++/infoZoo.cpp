@@ -98,7 +98,8 @@ void partieRapide(Zoo &zoo, int &nbYearZoo)
     zoo.addAnimal(new Coq("Coq2", "coq", 0.18, 6), 0);
     for (int i = 0; i < 8; i++)
     {
-        zoo.addAnimal(new Poule("Poulette", "poule", 0.15, 6), 0);
+        string name = "poulette" + to_string(i+1);
+        zoo.addAnimal(new Poule(name, "poule", 0.15, 6), 0);
     }
     // Règle la durée à 10 ans
     nbYearZoo = 10;
@@ -125,7 +126,6 @@ void StartGame(Zoo &zoo, int &nbYearZoo)
          << endl;
     while (choice != 1 && choice != 2 && choice != 3)
     {
-        scanf("%s", zooName);
         cout << "1 | Partie rapide : 80000$, 2 couples d'aigle, 2 couples de tigre, 2 coqs, 8 poules sur 10 ans\n2 | Partie personnalise\n3 | SandBox" << endl;
         scanf("%d", &choice);
         switch (choice)

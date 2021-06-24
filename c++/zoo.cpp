@@ -3,7 +3,6 @@
 #include "../header./tigre.h"
 #include "../header./poule.h"
 #include "../header./coq.h"
-// #include "../main.cpp"
 #include <random>
 #include <time.h>
 #include <iostream>
@@ -119,7 +118,6 @@ void Zoo::FireHabitat(string Race)
     {
         int randHab = randomNbr(0, GetHabitatNbrByRace(Race));
         int hab = getintHab(randHab + 1, Race);
-        cout << "random habitat " << randHab << " int habitat random " << hab << endl;
         m_habitats.erase(m_habitats.begin() + hab);
         if (Race == "aigle")
             cout << "un feu s'est declare dans ton habitat d'" << Race << "\nTout tes Animaux dans cet habitat sont morts. Chaud" << endl;
@@ -188,7 +186,6 @@ void Zoo::ReproductionAigle(int state)
 
                 F = (*it)->getAGender("Female", "aigle", 2);
                 M = (*it)->getAGender("Male", "aigle", 2);
-                cout << "\tfemme " << F << "\n\thomme " << M << endl;
                 if (F >= M && (*it)->getnbrAnimals() > 1)
                 {
                     int ratio = F - M;
@@ -262,7 +259,6 @@ void Zoo::ReproductionTigre()
             {
                 F = (*it)->getAGender("Female", "tigre", 2);
                 M = (*it)->getAGender("Male", "tigre", 2);
-                cout << "\tfemme " << F << "\n\thomme " << M << endl;
                 int ratio = F - M;
                 if (ratio < 0)
                     ratio = 0;
@@ -347,7 +343,6 @@ void Zoo::ReproductionPoule(int date)
             {
                 P = (*it)->getARace("poule", 2);
                 C = (*it)->getARace("coq", 2);
-                cout << "\tpoule " << P << "\n\tcoq " << C << endl;
                 int ratio = P - C * 4;
                 if (ratio < 0)
                     ratio = 0;
@@ -664,7 +659,6 @@ void Zoo::GetHabitatSize()
         it++;
     }
 }
-//Inutile
 void Zoo::GetHabitatType(string type)
 {
     HabitatIterator it = m_habitats.begin();

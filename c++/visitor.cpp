@@ -14,19 +14,19 @@ int VisitorRevenue(int visitor)
     case 0: // que des familles de 4
         result = (visitor / 2 * 17) + (visitor / 2 * 13);
         break;
-    case 1: // famille de 4 + un weeb tout seul
+    case 1: // famille de 4 + un adulte tout seul
         visitor -= 1;
         result = (visitor / 2 * 17) + (visitor / 2 * 13);
         result += 17;
         visitor += 1;
         break;
-    case 2: // famille de 4 + deux gays
+    case 2: // famille de 4 + deux adultes
         visitor -= 2;
         result = (visitor / 2 * 17) + (visitor / 2 * 13);
         result += 17 * 2;
         visitor += 2;
         break;
-    default: // famille de 4 + deux gays et un enfant adopté
+    default: // famille de 4 + deux adulte et un enfant
         visitor -= 3;
         result = (visitor / 2 * 17) + (visitor / 2 * 13);
         result += 17 * 2 + 13;

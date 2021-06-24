@@ -164,7 +164,6 @@ void IHabitat::UpdateMalade(int year, int month)
 
 void IHabitat::UpdMating()
 {
-    //"Female" "Male"
     AnimalIterator an1 = m_animals.begin();
     while (an1 != m_animals.end())
     {
