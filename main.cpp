@@ -27,7 +27,7 @@ using namespace std;
 int main()
 {
     Zoo zoo("ZooPtycon"); // déclaration du nom par défaut
-    int visitor = 0, all_visitors = 0, nextMonth = 0, nbYearZoo = 0, revenue = 0, mois = 0;
+    int visitor = 0, all_visitors = 0, nextMonth = 0, nbYearZoo = 0, revenue = 0, mois = 1;
     float Subvention = 0;
     bool enoughMeat, enoughSeed = false;
     bool nbEagleSuccess = false, moneySuccess = false, nbTotalVisitorSuccess = false, nbMonthVisitorsSuccess = false;
@@ -65,7 +65,7 @@ int main()
                 break;
             case 1:              // Lorsque le mois est passé, met a jour la nourriture et l'age des animaux
                 zoo.NextMonth(); // incrémente la variable tout les mois
-                mois = zoo.getMonth();
+                
                 visitor = Visitor(zoo);            // calcul le nb de visiteur
                 all_visitors += visitor;           // calcul le nb de visiteurs total
                 revenue = VisitorRevenue(visitor); // calcul du revenue par rapport aux visiteurs
@@ -91,15 +91,17 @@ int main()
             }
 
             checkSuccess(zoo, nbEagleSuccess, moneySuccess, all_visitors, nbTotalVisitorSuccess, nbMonthVisitorsSuccess, visitor); // Verifie si un succes a été débloqué
-            if (mois = zoo.getMonth())
+            if (mois+1 = zoo.getMonth())
             {
                 specialEvent(zoo);                                                                                                     // créé les événements spéciaux
+                mois = zoo.getMonth();
             }
             checkingFoodStorage(zoo, enoughMeat, enoughSeed);                                                                      // Affiche et verifie la quantité de nourriture
             cout << "\nRevenus pour " << visitor << " visiteurs : " << revenue << endl;
             if (zoo.getMonth() == 1)
             {
                 cout << "New Year ! subvention : " << Subvention << endl;
+                mois = 1;
             }
         }
     }
