@@ -3,6 +3,6 @@
 
 #include "zoo.h"
 
-void checkingFoodStorage(Zoo zoo, bool &enoughMeat, bool &enoughSeed);
+void checkingFoodStorage(Zoo &zoo, bool &enoughMeat, bool &enoughSeed);
 
 #endif
